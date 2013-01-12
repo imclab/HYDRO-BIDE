@@ -202,7 +202,7 @@ while t < time: # looping one time unit at a time
         COBcomm = comlist[0] # the newly decreased community
         num_a -= int(comlist[1]) # account for the number of lost active individuals
     
-    """ recalculate paramater values """
+    """ recalculate parameter values """
     N = len(COBcomm)  # total community size will have decreased
     num_A -= num_a # number of active individuals may decrease
     R -= (R/V) * r # total resources decreases according to the
