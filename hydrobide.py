@@ -90,17 +90,17 @@ def death_emigration(COBcom,num_out):
     Some values for cow rumen obtainable here: http://microbewiki.kenyon.edu/index.php/Bovine_Rumen """
     
 V = 1000.0       # volume of the COB                                                                                                  
-r = 10.0        # influent rate (unit volume/unit time)                                                                  
+r = 10.0         # influent rate (unit volume/unit time)                                                                  
 prop_dens = 50.0 # propagule density, (cells or biomass per unit volume of inflowing medium)
 
-res_dens = 0.1  # growth limiting resource concentration of inflowing medium,
-                # e.g. (grams cellulose + grams x + grams y) / (liters of medium flowing in) 
+res_dens = 0.5  # growth limiting resource concentration of inflowing medium,
+                # e.g. (grams cellulose + grams x + grams y) / (grams of medium flowing in) 
                 
                 # Assume initially that resource concentration of the influent equals
                 # the resource concentration of the COB. This makes sense if we're 
                 # starting with a community of zero individuals.
 
-dorm_lim = 0.01 # dormancy threshold; dormancy is undertaken if per capita resource availability
+dorm_lim = 0.1 # dormancy threshold; dormancy is undertaken if per capita resource availability
                 # is below some threshhold (low resources -> low metabolism -> slow growth = go dormant)
                 # This could be made to vary among species
 
