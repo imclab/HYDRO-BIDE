@@ -75,9 +75,9 @@ def death_emigration(COBcomm,num_out):
     ct = 0
     num_A = 0
     while ct < num_out:
-        random_i = randrange(0,len(CODcomm)) # randomly pick an individual
-        if CODcomm[random_i][1] == 1: num_A += 1 # count the number of active individuals lost
-        CODcomm.pop(random_i) # die/emigrate
+        random_i = randrange(0,len(COBcomm)) # randomly pick an individual
+        if COBcomm[random_i][1] == 1: num_A += 1 # count the number of active individuals lost
+        COBcomm.pop(random_i) # die/emigrate
     
     return [COBcomm,num_A]
 
@@ -110,6 +110,9 @@ num_A = comlist[1]  # number of active individuals in COBcomm
                     # Each list will contain the individual species label and reveal whether the          
                     # individual is dormant or active, and how close the individuals is to          
                     # being reproductively viable.                                                  
+
+print COBcom
+sys.exit()
             
 """ Things that will change as the community changes """         
 c = 1.0 # a constant of proportionality
@@ -130,7 +133,7 @@ dorm_lim = 0.10 # dormancy threshold; dormancy is undertaken if per capita resou
     dormancy, compositional and noncompositional community structure, population structure,
     replacement, & turnover will all ride on random drift. """
     
-time = 10.0*4   # length of the experiment
+time = 4   # length of the experiment
 t = 0
 while t < time: # looping one time unit at a time
     
@@ -152,7 +155,7 @@ while t < time: # looping one time unit at a time
     # Simulation should reflect that the flow of individuals and resources
     # into the COB occurs independently of the community dynamics inside.
        
-    for i, v in enumerate(CODcomm):
+    for i, v in enumerate(COBcomm):
         
         if v[1] == 1:  # if the individual is active
             
@@ -162,19 +165,19 @@ while t < time: # looping one time unit at a time
                 x = choice([1,2]) # assume 50/50 chance of going dormant 
                                   # this could be made to vary among taxa
                 if x == 2:
-                    CODcomm[i][1] = 2 # go dormant
+                    COBcomm[i][1] = 2 # go dormant
                     num_A -= 1
                 elif x == 1: 
-                    CODcomm.pop(i) # starve and die
+                    COBcomm.pop(i) # starve and die
                     N -= 1
                     
             else: # if there are enough resources to grow or reproduce
                 if v[2] >= 100.0:
-                    CODcomm.append([i[0],1,0.0) # reproduce if mature, offspring are active
-                    CODcomm[i][2] = 0.0         # one individual produces two sister cells at growth level 0  
+                    COBcomm.append([i[0],1,0.0]) # reproduce if mature, offspring are active
+                    COBcomm[i][2] = 0.0         # one individual produces two sister cells at growth level 0  
                 
                 else:
-                    CODcomm[i][2] += ind_grow # grow if not mature
+                    COBcomm[i][2] += ind_grow # grow if not mature
                     # individual growth decreases R, which decreases
                     # per capita resource availability and
                     # per capita growth rate
@@ -185,7 +188,7 @@ while t < time: # looping one time unit at a time
                     
         elif v[1] == 2: # if the individual is dormant
             if ind_res > dorm_lim: # if per capita resource availability > the dormancy threshold
-                CODcomm[i][1] = 'a' # go active
+                COBcomm[i][1] = 'a' # go active
                 num_A += 1
                 
     """ outflow of individuals, i.e., death/emigration """
