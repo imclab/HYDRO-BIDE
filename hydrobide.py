@@ -22,6 +22,8 @@ from random import randrange#                             |   |     \           
 #                                    To intestines & beyond  
 
 
+""" WARNING: THIS SCRIPT IS 99.9% FINISHED, DO NOT TRYING RUNNING YET """
+
 """  The following is a simulation-based ecological neutral model for a                                                       
      chemostat/organ/bioreactor (COB) scenario. There is 1 source, 1 community, and
      1 outlet. This model incorporates dormancy and per capita resource limitation.
