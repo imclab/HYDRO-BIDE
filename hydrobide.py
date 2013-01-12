@@ -143,7 +143,7 @@ dorm_lim = 0.01 # dormancy threshold; dormancy is undertaken if per capita resou
 time = 10000   # length of the experiment
 t = 0
 while t < time: # looping one time unit at a time
-    print 'time',t,' ','size =',N,'number active',num_A
+    #print 'time',t,' ','size =',N,'number active',num_A # print statement to follow COBcom through time
     """ inflow of individuals, i.e., immigration """
     comlist = immigration(COBcom, im_rate) # add some propagules to the community
     COBcom = comlist[0]
@@ -182,8 +182,9 @@ while t < time: # looping one time unit at a time
             else: # if there are enough resources to grow or reproduce
                 if v[2] >= 100.0:
                     COBcom.append([v[0],1,0.0]) # reproduce if mature, offspring are active
-                    COBcom[i][2] = 0.0         # one individual produces two sister cells at growth level 0  
-                
+                    COBcom[i][2] = 0.0          # one individual produces two sister cells at growth level 0  
+                    num_A += 1
+                    
                 else:
                     COBcom[i][2] += ind_grow # grow if not mature
                     # individual growth decreases R, which decreases
@@ -205,7 +206,7 @@ while t < time: # looping one time unit at a time
     if num_out >= 1:
         comlist = death_emigration(COBcom, num_out)
         COBcom = comlist[0] # the newly decreased community
-        num_a -= int(comlist[1]) # account for the number of lost active individuals
+        num_a = int(comlist[1]) # account for the number of lost active individuals
     
     """ recalculate parameter values """
     N = len(COBcom)  # total community size will have decreased
