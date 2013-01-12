@@ -143,7 +143,7 @@ dorm_lim = 0.01 # dormancy threshold; dormancy is undertaken if per capita resou
 time = 10000   # length of the experiment
 t = 0
 while t < time: # looping one time unit at a time
-    #print 'time',t,' ','size =',N,'number active',num_A
+    print 'time',t,' ','size =',N,'number active',num_A
     """ inflow of individuals, i.e., immigration """
     comlist = immigration(COBcom, im_rate) # add some propagules to the community
     COBcom = comlist[0]
@@ -190,8 +190,7 @@ while t < time: # looping one time unit at a time
                     # per capita resource availability and
                     # per capita growth rate
                     R -= ind_grow
-                    if num_A == 0: num_A = 1 # prevent the following from killing the script  
-                    ind_res = R/num_A
+                    if num_A != 0: ind_res = R/num_A
                     ind_grow = a*ind_res
                     
         elif v[1] == 2: # if the individual is dormant
