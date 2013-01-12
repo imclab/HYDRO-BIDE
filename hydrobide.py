@@ -89,7 +89,7 @@ def death_emigration(COBcom,num_out):
 
     Some values for cow rumen obtainable here: http://microbewiki.kenyon.edu/index.php/Bovine_Rumen """
     
-V = 100.0       # volume of the COB                                                                                                  
+V = 1000.0       # volume of the COB                                                                                                  
 r = 10.0        # influent rate (unit volume/unit time)                                                                  
 prop_dens = 50.0 # propagule density, (cells or biomass per unit volume of inflowing medium)
 
@@ -99,6 +99,10 @@ res_dens = 0.1  # growth limiting resource concentration of inflowing medium,
                 # Assume initially that resource concentration of the influent equals
                 # the resource concentration of the COB. This makes sense if we're 
                 # starting with a community of zero individuals.
+
+dorm_lim = 0.01 # dormancy threshold; dormancy is undertaken if per capita resource availability
+                # is below some threshhold (low resources -> low metabolism -> slow growth = go dormant)
+                # This could be made to vary among species
 
 im_rate = int(round(prop_dens * r)) # immigration rate (cells/unit time)                                     
 res_rate = res_dens * r # resource delivery rate, (unit resource/unit time) 
@@ -132,9 +136,6 @@ ind_grow = a*ind_res # proportion growth towards reproductive viability achieved
                      # This makes per capita growth rate directly proportional to per capita resource availability.
                      # So, in general, individuals grow according to their share of resources
                      
-dorm_lim = 0.01 # dormancy threshold; dormancy is undertaken if per capita resource availability
-                # is below some threshhold (low resources -> low metabolism -> slow growth = go dormant)
-                # This could be made to vary among species
                 
 """ Having set up the community, it's time to turn it loose. From here on, community size, biomass,
     dormancy, compositional and noncompositional community structure, population structure,
@@ -143,7 +144,7 @@ dorm_lim = 0.01 # dormancy threshold; dormancy is undertaken if per capita resou
 time = 10000   # length of the experiment
 t = 0
 while t < time: # looping one time unit at a time
-    #print 'time',t,' ','size =',N,'number active',num_A # print statement to follow COBcom through time
+    print 'time',t,' ','size =',N,'number active',num_A
     """ inflow of individuals, i.e., immigration """
     comlist = immigration(COBcom, im_rate) # add some propagules to the community
     COBcom = comlist[0]
