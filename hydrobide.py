@@ -218,7 +218,7 @@ while t < time: # looping one time unit at a time
     viability. We can do a lot with this list of lists."""
     
 # write the list to a file
-OUT = open('/home/ken/Documents/COBcomm.txt','w')
+OUT = open('/home/ken/Documents/COBcomm.txt','w+')
 for _list in COBcomm:
     for i in _list:
         print>>OUT, i    
