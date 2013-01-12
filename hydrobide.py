@@ -1,4 +1,4 @@
-#!/usr/bin/env sage -python                                                                _____ 
+#!/usr/local/bin/python                                                                    _____ 
 #                                                                                        //  _  \
 from sage.all import *#                                                                  || | |_|
 import sys#                                              Esophagus                       || |  _  CHEMOSTAT
