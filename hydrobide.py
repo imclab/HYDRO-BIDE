@@ -21,8 +21,7 @@ from random import randrange#                             |   |     \           
 #                                              V
 #                                    To intestines & beyond  
 
-
-""" WARNING: THIS SCRIPT IS 99.9% FINISHED, DO NOT TRYING RUNNING YET """
+"""  This script runs nicely, but parameter values need to be examined  """
 
 """  The following is a simulation-based ecological neutral model for a                                                       
      chemostat/organ/bioreactor (COB) scenario. There is 1 source, 1 community, and
@@ -53,7 +52,7 @@ from random import randrange#                             |   |     \           
 
 
 """ Some functions to simulate immigration and death/emigration """                      
-def immigration(COBcomm,im_rate):
+def immigration(COBcom,im_rate):
     props = np.random.logseries(0.70,im_rate) # An initial set of propagules; a list of log-series distributed integers.
                                               # Assume the source community is infinite. Because large communities are
                                               # approximately log-series distributed (most things are rare and relatively
@@ -66,20 +65,20 @@ def immigration(COBcomm,im_rate):
         if state == 1: num_A += 1
         growth = float(np.random.randint(0,101))#       2. propagules have equal chances of being 0 to 100% reproductively viable  
         i = [p,state,growth] 
-        COBcomm.append(i) # adding the propagule's taxa label, activity state, and growth state to the community 
+        COBcom.append(i) # adding the propagule's taxa label, activity state, and growth state to the community 
     
-    return [COBcomm,num_A]
+    return [COBcom,num_A]
 
     
-def death_emigration(COBcomm,num_out):
+def death_emigration(COBcom,num_out):
     ct = 0
     num_A = 0
     while ct < num_out:
-        random_i = randrange(0,len(COBcomm)) # randomly pick an individual
-        if COBcomm[random_i][1] == 1: num_A += 1 # count the number of active individuals lost
-        COBcomm.pop(random_i) # die/emigrate
+        random_i = randrange(0,len(COBcom)) # randomly pick an individual
+        if COBcom[random_i][1] == 1: num_A += 1 # count the number of active individuals lost
+        COBcom.pop(random_i) # die/emigrate
     
-    return [COBcomm,num_A]
+    return [COBcom,num_A]
 
 
 
@@ -102,17 +101,18 @@ R = V * res_dens # Amount of resources in the COB before inoculation. If inflow 
                  # then the initial resource concentration would equal that of the inflow and outflow. Eventually,
                  # total resources (R) will change as a result of a changing community.
 
-""" The community (COBcomm) will be a list of lists: """
-comlist = immigration(COBcomm) # inoculate the community with propagules using the above function
+""" The community (COBcom) will be a list of lists: """
+COBcom = []
+comlist = immigration(COBcom, im_rate) # inoculate the community with propagules using the above function
 COBcom = comlist[0] # The community
 N = len(COBcom)     # size of the community
-num_A = comlist[1]  # number of active individuals in COBcomm 
+num_A = comlist[1]  # number of active individuals in COBcom 
                     # Each list will contain the individual species label and reveal whether the          
                     # individual is dormant or active, and how close the individuals is to          
                     # being reproductively viable.                                                  
 
-print COBcom
-sys.exit()
+#print COBcom
+#sys.exit()
             
 """ Things that will change as the community changes """         
 c = 1.0 # a constant of proportionality
@@ -136,13 +136,13 @@ dorm_lim = 0.10 # dormancy threshold; dormancy is undertaken if per capita resou
 time = 4   # length of the experiment
 t = 0
 while t < time: # looping one time unit at a time
-    
+    print 'time',t
     """ inflow of individuals, i.e., immigration """
-    comlist = immigration(COBcomm, im_rate) # add some propagules to the community
-    COBcomm = comlist[0]
+    comlist = immigration(COBcom, im_rate) # add some propagules to the community
+    COBcom = comlist[0]
     
     """ recalculate parameter values """
-    N = len(COBcomm)     # Total community size will increase
+    N = len(COBcom)     # Total community size will increase
     num_A += comlist[1]  # total number of active individuals may increase
     R += res_rate        # total resources increases
     ind_res = R/num_A  # per capita resource availability may change
@@ -155,7 +155,8 @@ while t < time: # looping one time unit at a time
     # Simulation should reflect that the flow of individuals and resources
     # into the COB occurs independently of the community dynamics inside.
        
-    for i, v in enumerate(COBcomm):
+    for i, v in enumerate(COBcom):
+        print i,v
         
         if v[1] == 1:  # if the individual is active
             
@@ -165,19 +166,19 @@ while t < time: # looping one time unit at a time
                 x = choice([1,2]) # assume 50/50 chance of going dormant 
                                   # this could be made to vary among taxa
                 if x == 2:
-                    COBcomm[i][1] = 2 # go dormant
+                    COBcom[i][1] = 2 # go dormant
                     num_A -= 1
                 elif x == 1: 
-                    COBcomm.pop(i) # starve and die
+                    COBcom.pop(i) # starve and die
                     N -= 1
                     
             else: # if there are enough resources to grow or reproduce
                 if v[2] >= 100.0:
-                    COBcomm.append([i[0],1,0.0]) # reproduce if mature, offspring are active
-                    COBcomm[i][2] = 0.0         # one individual produces two sister cells at growth level 0  
+                    COBcom.append([v[0],1,0.0]) # reproduce if mature, offspring are active
+                    COBcom[i][2] = 0.0         # one individual produces two sister cells at growth level 0  
                 
                 else:
-                    COBcomm[i][2] += ind_grow # grow if not mature
+                    COBcom[i][2] += ind_grow # grow if not mature
                     # individual growth decreases R, which decreases
                     # per capita resource availability and
                     # per capita growth rate
@@ -188,20 +189,20 @@ while t < time: # looping one time unit at a time
                     
         elif v[1] == 2: # if the individual is dormant
             if ind_res > dorm_lim: # if per capita resource availability > the dormancy threshold
-                COBcomm[i][1] = 'a' # go active
+                COBcom[i][1] = 'a' # go active
                 num_A += 1
                 
     """ outflow of individuals, i.e., death/emigration """
-    N = len(COBcomm)
+    N = len(COBcom)
     num_out = int(round(N/V * r)) # no. individuals lost per unit time
     num_a = 0
     if num_out >= 1:
-        comlist = death_emigration(COBcomm, num_out)
-        COBcomm = comlist[0] # the newly decreased community
+        comlist = death_emigration(COBcom, num_out)
+        COBcom = comlist[0] # the newly decreased community
         num_a -= int(comlist[1]) # account for the number of lost active individuals
     
     """ recalculate parameter values """
-    N = len(COBcomm)  # total community size will have decreased
+    N = len(COBcom)  # total community size will have decreased
     num_A -= num_a # number of active individuals may decrease
     R -= (R/V) * r # total resources decreases according to the
                    # amount of resources lost to outflow 
@@ -221,7 +222,7 @@ while t < time: # looping one time unit at a time
     viability. We can do a lot with this list of lists."""
     
 # write the list to a file
-OUT = open('/home/ken/Documents/COBcomm.txt','w+')
-for _list in COBcomm:
+OUT = open('/home/kenlocey/COBcom.txt','w+')
+for _list in COBcom:
     print>>OUT, _list[0],_list[1],_list[2]    
 OUT.close() 
