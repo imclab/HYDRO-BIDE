@@ -162,7 +162,7 @@ while t < time: # looping one time unit at a time
                 x = choice([1,2]) # assume 50/50 chance of going dormant 
                                   # this could be made to vary among taxa
                 if x == 2:
-                    CODcomm[i][1] == 2 # go dormant
+                    CODcomm[i][1] = 2 # go dormant
                     num_A -= 1
                 elif x == 1: 
                     CODcomm.pop(i) # starve and die
@@ -179,13 +179,13 @@ while t < time: # looping one time unit at a time
                     # per capita resource availability and
                     # per capita growth rate
                     R -= ind_grow
-                    if num_A == 0: num_A == 1 # prevent the following from killing the script  
+                    if num_A == 0: num_A = 1 # prevent the following from killing the script  
                     ind_res = R/num_A
                     ind_grow = a*ind_res
                     
         elif v[1] == 2: # if the individual is dormant
             if ind_res > dorm_lim: # if per capita resource availability > the dormancy threshold
-                CODcomm[i][1] == 'a' # go active
+                CODcomm[i][1] = 'a' # go active
                 num_A += 1
                 
     """ outflow of individuals, i.e., death/emigration """
