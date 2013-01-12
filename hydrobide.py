@@ -11,7 +11,7 @@ from random import randrange#                             |   |     \           
 #                                                         |         |                          || |_| |
 #                                                         / birth   | -biomass turnover?       ||  _ <  BIOREACTOR
 #                                                        /    &     |                          || |_| |
-#                                               ________/   death  /  -community structure?    ||_____/
+#                                               ________/   death  /  -community structure?    ||____/
 #                                              /  ___             /
 #                                             /  /  \            /    -dormancy dynamic?
 #                                              |     \__________/ 
