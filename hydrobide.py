@@ -3,11 +3,11 @@
 from sage.all import *#                                                                  || | |_|
 import sys#                                              Esophagus                       || |  _  CHEMOSTAT
 import numpy as np#                                         |                            || |_| |__ 
-import  matplotlib.pyplot as plt#      (inflow of resources & immigration )              \\_____/  \
+import  matplotlib.pyplot as plt#      (inflow of resources & immigration )              \\____/   \
 import re#                                                  |                               || | | |
 from pylab import *#                                      | V |                             || | | | ORGAN
 from random import choice#                                |   |_____                        || |_| |__           
-from random import randrange#                             |   |     \                       \\_____/  \
+from random import randrange#                             |   |     \                       \\____/   \
 #                                                         |         |                          || |_| |
 #                                                         / birth   | -biomass turnover?       ||  _ <  BIOREACTOR
 #                                                        /    &     |                          || |_| |
