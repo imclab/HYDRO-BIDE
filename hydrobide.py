@@ -107,15 +107,10 @@ comlist = immigration(COBcomm) # inoculate the community with propagules using t
 COBcom = comlist[0] # The community
 N = len(COBcom)     # size of the community
 num_A = comlist[1]  # number of active individuals in COBcomm 
-""" Each list will contain the individual species label and reveal whether the          
-    individual is dormant or active, and how close the individuals is to          
-    being reproductively viable.                                                  
+                    # Each list will contain the individual species label and reveal whether the          
+                    # individual is dormant or active, and how close the individuals is to          
+                    # being reproductively viable.                                                  
             
-    This list is going to carry a lot of information. Manipulating it won't
-    necessarily be slow because we don't care about the order of the list.
-    Individuals will be randomly drawn from it.  """
-
-
 """ Things that will change as the community changes """         
 c = 1.0 # a constant of proportionality
 R += res_rate # R increases due to inflow
