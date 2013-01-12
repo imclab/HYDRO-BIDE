@@ -1,6 +1,6 @@
 #!/usr/local/bin/python                                                                    _____ 
 #                                                                                        //  _  \
-from sage.all import *#                                                                  || | |_|
+#                                                                                        || | |_|
 import sys#                                              Esophagus                       || |  _  CHEMOSTAT
 import numpy as np#                                         |                            || |_| |__ 
 import  matplotlib.pyplot as plt#      (inflow of resources & immigration )              \\____/   \
