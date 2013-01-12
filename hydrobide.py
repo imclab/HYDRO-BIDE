@@ -145,6 +145,7 @@ time = 10000   # length of the experiment
 t = 0
 while t < time: # looping one time unit at a time
     print 'time',t,' ','size =',N,'number active',num_A
+    
     """ inflow of individuals, i.e., immigration """
     comlist = immigration(COBcom, im_rate) # add some propagules to the community
     COBcom = comlist[0]
