@@ -16,7 +16,7 @@ from random import randrange#                             |   |     \           
 #                                             /  /  \            /    -dormancy dynamic?
 #                                              |     \__________/ 
 #                                              |       
-#                    (emigration of dispersers & removal of waste and dead cells)      
+#                           (emigration & removal of waste and dead cells)      
 #                                              |
 #                                              V
 #                                    To intestines & beyond  
