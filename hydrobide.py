@@ -207,5 +207,19 @@ while t < time: # looping one time unit at a time
     
     t += 1
     
-    """ and that was one interval of inflow/outflow """
-        
+    """ Here, we have completed one time interval of inflow/outflow """
+    
+""" Here, we end the experiment and the result is
+    a huge list of small lists. Each small list
+    looks something like [1, 2, 50.0] with the 
+    first index representing the taxa label, the
+    second index representing active/dormant, & the
+    third index representing % growth to reproductive
+    viability. We can do a lot with this list of lists."""
+    
+# write the list to a file
+OUT = open('/home/ken/Documents/COBcomm.txt','w')
+for _list in COBcomm:
+    for i in _list:
+        print>>OUT, i    
+OUT.close() 
