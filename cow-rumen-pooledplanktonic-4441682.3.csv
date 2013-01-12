@@ -1,0 +1,124 @@
+metagenome,source,domain,phylum,class,order,family,genus,species,abundance,avg eValue,avg % ident,avg align len,# hits
+4441682.3,M5RNA,Archaea,Euryarchaeota,Halobacteria,Halobacteriales,Halobacteriaceae,Haloarcula,Haloarcula hispanica,1,-32,100,69,1
+4441682.3,M5RNA,Archaea,Euryarchaeota,Methanobacteria,Methanobacteriales,Methanobacteriaceae,Methanobacterium,Methanobacterium bryantii,1,-53,100,105,1
+4441682.3,M5RNA,Archaea,Euryarchaeota,Methanobacteria,Methanobacteriales,Methanobacteriaceae,Methanobrevibacter,Methanobrevibacter ruminantium,5,-43.4,100,88.6,1
+4441682.3,M5RNA,Archaea,Euryarchaeota,Methanobacteria,Methanobacteriales,Methanobacteriaceae,Methanobrevibacter,Methanobrevibacter smithii,7,-43.34,100,88.34,2
+4441682.3,M5RNA,Archaea,Euryarchaeota,Methanobacteria,Methanobacteriales,Methanobacteriaceae,Methanosphaera,Methanosphaera stadtmanae,1,-22,100,53,1
+4441682.3,M5RNA,Archaea,Euryarchaeota,Methanococci,Methanococcales,Methanococcaceae,Methanococcus,Methanococcus maripaludis,1,-22,100,52,1
+4441682.3,M5RNA,Bacteria,Actinobacteria,Actinobacteria (class),Bifidobacteriales,Bifidobacteriaceae,Bifidobacterium,Bifidobacterium pseudocatenulatum,2,-21,100,51,1
+4441682.3,M5RNA,Bacteria,Actinobacteria,Actinobacteria (class),Coriobacteriales,Coriobacteriaceae,Cryptobacterium,Cryptobacterium curtum,1,-28,100,63,1
+4441682.3,M5RNA,Bacteria,Actinobacteria,Actinobacteria (class),Coriobacteriales,Coriobacteriaceae,Slackia,Slackia exigua,2,-43,100,86,2
+4441682.3,M5RNA,Bacteria,Actinobacteria,Actinobacteria (class),Coriobacteriales,Coriobacteriaceae,Slackia,Slackia heliotrinireducens,1,-32,100,69,1
+4441682.3,M5RNA,Bacteria,Actinobacteria,Actinobacteria (class),Solirubrobacterales,Conexibacteraceae,Conexibacter,Conexibacter woesei,2,-38,100,79,1
+4441682.3,M5RNA,Bacteria,Bacteroidetes,Bacteroidia,Bacteroidales,Bacteroidaceae,Bacteroides,Bacteroides coprocola,1,-33,100,71,1
+4441682.3,M5RNA,Bacteria,Bacteroidetes,Bacteroidia,Bacteroidales,Bacteroidaceae,Bacteroides,Bacteroides coprosuis,1,-29,100,65,1
+4441682.3,M5RNA,Bacteria,Bacteroidetes,Bacteroidia,Bacteroidales,Bacteroidaceae,Bacteroides,Bacteroides intestinalis,1,-25,100,57,1
+4441682.3,M5RNA,Bacteria,Bacteroidetes,Bacteroidia,Bacteroidales,Porphyromonadaceae,Parabacteroides,Parabacteroides distasonis,1,-22,100,53,1
+4441682.3,M5RNA,Bacteria,Bacteroidetes,Bacteroidia,Bacteroidales,Porphyromonadaceae,Porphyromonas,Porphyromonas endodontalis,3,-26.33,100,59,1
+4441682.3,M5RNA,Bacteria,Bacteroidetes,Bacteroidia,Bacteroidales,Porphyromonadaceae,Porphyromonas,Porphyromonas gingivalis,1,-43,100,87,1
+4441682.3,M5RNA,Bacteria,Bacteroidetes,Bacteroidia,Bacteroidales,Prevotellaceae,Prevotella,Prevotella buccae,3,-33.67,100,72,1
+4441682.3,M5RNA,Bacteria,Bacteroidetes,Bacteroidia,Bacteroidales,Prevotellaceae,Prevotella,Prevotella buccalis,1,-47,100,95,1
+4441682.3,M5RNA,Bacteria,Bacteroidetes,Bacteroidia,Bacteroidales,Prevotellaceae,Prevotella,Prevotella melaninogenica,3,-23.33,100,55,1
+4441682.3,M5RNA,Bacteria,Bacteroidetes,Bacteroidia,Bacteroidales,Prevotellaceae,Prevotella,Prevotella oralis,1,-30,100,65,1
+4441682.3,M5RNA,Bacteria,Bacteroidetes,Bacteroidia,Bacteroidales,Prevotellaceae,Prevotella,Prevotella oris,1,-21,100,50,1
+4441682.3,M5RNA,Bacteria,Bacteroidetes,Bacteroidia,Bacteroidales,Prevotellaceae,Prevotella,Prevotella ruminicola,16,-42.03,100,86.43,4
+4441682.3,M5RNA,Bacteria,Bacteroidetes,Bacteroidia,Bacteroidales,Prevotellaceae,Prevotella,Prevotella sp. oral taxon 299,1,-35,100,73,1
+4441682.3,M5RNA,Bacteria,Bacteroidetes,Bacteroidia,Bacteroidales,Prevotellaceae,Prevotella,Prevotella sp. oral taxon 472,2,-48,100,96,1
+4441682.3,M5RNA,Bacteria,Bacteroidetes,Bacteroidia,Bacteroidales,Prevotellaceae,Prevotella,Prevotella veroralis,1,-35,100,75,1
+4441682.3,M5RNA,Bacteria,Bacteroidetes,Bacteroidia,Bacteroidales,Rikenellaceae,Alistipes,Alistipes shahii,1,-32,100,70,1
+4441682.3,M5RNA,Bacteria,Bacteroidetes,Flavobacteriia,Flavobacteriales,Flavobacteriaceae,Flavobacterium,Flavobacterium psychrophilum,2,-30,100,65,2
+4441682.3,M5RNA,Bacteria,Bacteroidetes,Flavobacteriia,Flavobacteriales,unclassified (derived from Flavobacteriales),Candidatus Sulcia,Candidatus Sulcia muelleri,1,-26,100,60,1
+4441682.3,M5RNA,Bacteria,Cyanobacteria,unclassified (derived from Cyanobacteria),Chroococcales,unclassified (derived from Chroococcales),Microcystis,Microcystis aeruginosa,1,-24,100,55,1
+4441682.3,M5RNA,Bacteria,Dictyoglomi,Dictyoglomia,Dictyoglomales,Dictyoglomaceae,Dictyoglomus,Dictyoglomus thermophilum,1,-33,100,70,1
+4441682.3,M5RNA,Bacteria,Firmicutes,Bacilli,Bacillales,Alicyclobacillaceae,Alicyclobacillus,Alicyclobacillus acidocaldarius,1,-21,100,50,1
+4441682.3,M5RNA,Bacteria,Firmicutes,Bacilli,Bacillales,Alicyclobacillaceae,Alicyclobacillus,Alicyclobacillus contaminans,1,-24,100,57,1
+4441682.3,M5RNA,Bacteria,Firmicutes,Bacilli,Bacillales,Bacillaceae,Bacillus,Bacillus clausii,1,-32,100,69,1
+4441682.3,M5RNA,Bacteria,Firmicutes,Bacilli,Bacillales,Bacillaceae,Bacillus,Bacillus cytotoxicus,1,-21,100,50,1
+4441682.3,M5RNA,Bacteria,Firmicutes,Bacilli,Bacillales,Bacillaceae,Bacillus,Bacillus halodurans,1,-39,100,80,1
+4441682.3,M5RNA,Bacteria,Firmicutes,Bacilli,Bacillales,Bacillaceae,Geobacillus,Geobacillus kaustophilus,2,-28,100,63,1
+4441682.3,M5RNA,Bacteria,Firmicutes,Bacilli,Bacillales,Listeriaceae,Listeria,Listeria monocytogenes,1,-26,100,59,1
+4441682.3,M5RNA,Bacteria,Firmicutes,Bacilli,Bacillales,Paenibacillaceae,Paenibacillus,Paenibacillus polymyxa,1,-47,100,95,1
+4441682.3,M5RNA,Bacteria,Firmicutes,Bacilli,Bacillales,unclassified (derived from Bacillales),Gemella,Gemella haemolysans,1,-29,100,65,1
+4441682.3,M5RNA,Bacteria,Firmicutes,Bacilli,Lactobacillales,Carnobacteriaceae,Carnobacterium,Carnobacterium sp. AT7,1,-26,100,59,1
+4441682.3,M5RNA,Bacteria,Firmicutes,Bacilli,Lactobacillales,Enterococcaceae,Enterococcus,Enterococcus gallinarum,1,-21,100,51,1
+4441682.3,M5RNA,Bacteria,Firmicutes,Bacilli,Lactobacillales,Enterococcaceae,Tetragenococcus,Tetragenococcus solitarius,1,-26,100,59,1
+4441682.3,M5RNA,Bacteria,Firmicutes,Bacilli,Lactobacillales,Lactobacillaceae,Lactobacillus,Lactobacillus plantarum,1,-36,100,76,1
+4441682.3,M5RNA,Bacteria,Firmicutes,Bacilli,Lactobacillales,Lactobacillaceae,Lactobacillus,Lactobacillus rhamnosus,1,-21,100,51,1
+4441682.3,M5RNA,Bacteria,Firmicutes,Bacilli,Lactobacillales,Streptococcaceae,Streptococcus,Streptococcus dysgalactiae,1,-52,100,104,1
+4441682.3,M5RNA,Bacteria,Firmicutes,Bacilli,Lactobacillales,Streptococcaceae,Streptococcus,Streptococcus equinus,2,-57,100,112.5,1
+4441682.3,M5RNA,Bacteria,Firmicutes,Bacilli,Lactobacillales,Streptococcaceae,Streptococcus,Streptococcus salivarius,1,-34,100,73,1
+4441682.3,M5RNA,Bacteria,Firmicutes,Clostridia,Clostridiales,Clostridiaceae,Alkaliphilus,Alkaliphilus metalliredigens,1,-39,100,80,1
+4441682.3,M5RNA,Bacteria,Firmicutes,Clostridia,Clostridiales,Clostridiaceae,Clostridium,Clostridium aminophilum,2,-43,100,87,2
+4441682.3,M5RNA,Bacteria,Firmicutes,Clostridia,Clostridiales,Clostridiaceae,Clostridium,Clostridium asparagiforme,1,-35,100,75,1
+4441682.3,M5RNA,Bacteria,Firmicutes,Clostridia,Clostridiales,Clostridiaceae,Clostridium,Clostridium bolteae,1,-47,100,94,1
+4441682.3,M5RNA,Bacteria,Firmicutes,Clostridia,Clostridiales,Clostridiaceae,Clostridium,Clostridium botulinum,8,-27,100,60.78,5
+4441682.3,M5RNA,Bacteria,Firmicutes,Clostridia,Clostridiales,Clostridiaceae,Clostridium,Clostridium butyricum,1,-23,100,54,1
+4441682.3,M5RNA,Bacteria,Firmicutes,Clostridia,Clostridiales,Clostridiaceae,Clostridium,Clostridium leptum,3,-34.33,100,73,1
+4441682.3,M5RNA,Bacteria,Firmicutes,Clostridia,Clostridiales,Clostridiaceae,Clostridium,Clostridium methylpentosum,1,-25,100,58,1
+4441682.3,M5RNA,Bacteria,Firmicutes,Clostridia,Clostridiales,Clostridiaceae,Clostridium,Clostridium perfringens,3,-30,100,66.5,3
+4441682.3,M5RNA,Bacteria,Firmicutes,Clostridia,Clostridiales,Clostridiaceae,Clostridium,Clostridium phytofermentans,2,-40,100,82.5,2
+4441682.3,M5RNA,Bacteria,Firmicutes,Clostridia,Clostridiales,Clostridiaceae,Clostridium,Clostridium saccharolyticum,1,-51,100,100,1
+4441682.3,M5RNA,Bacteria,Firmicutes,Clostridia,Clostridiales,Clostridiaceae,Clostridium,Clostridium scindens,1,-30,100,66,1
+4441682.3,M5RNA,Bacteria,Firmicutes,Clostridia,Clostridiales,Clostridiaceae,Clostridium,Clostridium sp. SS2/1,2,-31,100,67.5,2
+4441682.3,M5RNA,Bacteria,Firmicutes,Clostridia,Clostridiales,Clostridiales Family XI. Incertae Sedis,Anaerococcus,Anaerococcus tetradius,1,-31,100,67,1
+4441682.3,M5RNA,Bacteria,Firmicutes,Clostridia,Clostridiales,Clostridiales Family XVIII. Incertae Sedis,Symbiobacterium,Symbiobacterium thermophilum,4,-40,100,82.5,1
+4441682.3,M5RNA,Bacteria,Firmicutes,Clostridia,Clostridiales,Eubacteriaceae,Acetobacterium,Acetobacterium psammolithicum,1,-52,100,102,1
+4441682.3,M5RNA,Bacteria,Firmicutes,Clostridia,Clostridiales,Eubacteriaceae,Eubacterium,Eubacterium eligens,1,-23,100,55,1
+4441682.3,M5RNA,Bacteria,Firmicutes,Clostridia,Clostridiales,Eubacteriaceae,Eubacterium,Eubacterium hallii,1,-34,100,73,1
+4441682.3,M5RNA,Bacteria,Firmicutes,Clostridia,Clostridiales,Eubacteriaceae,Eubacterium,Eubacterium limosum,1,-25,100,57,1
+4441682.3,M5RNA,Bacteria,Firmicutes,Clostridia,Clostridiales,Eubacteriaceae,Eubacterium,Eubacterium rectale,8,-47.36,98.97,96.07,4
+4441682.3,M5RNA,Bacteria,Firmicutes,Clostridia,Clostridiales,Eubacteriaceae,Eubacterium,Eubacterium saphenum,1,-23,100,53,1
+4441682.3,M5RNA,Bacteria,Firmicutes,Clostridia,Clostridiales,Eubacteriaceae,Eubacterium,Eubacterium siraeum,4,-39.17,100,81.5,2
+4441682.3,M5RNA,Bacteria,Firmicutes,Clostridia,Clostridiales,Eubacteriaceae,Eubacterium,Eubacterium ventriosum,3,-30.33,100,66.67,1
+4441682.3,M5RNA,Bacteria,Firmicutes,Clostridia,Clostridiales,Lachnospiraceae,Blautia,Blautia hansenii,1,-21,100,50,1
+4441682.3,M5RNA,Bacteria,Firmicutes,Clostridia,Clostridiales,Lachnospiraceae,Blautia,[Ruminococcus] gnavus,1,-32,100,70,1
+4441682.3,M5RNA,Bacteria,Firmicutes,Clostridia,Clostridiales,Lachnospiraceae,Blautia,[Ruminococcus] obeum,2,-43,99.58,88,1
+4441682.3,M5RNA,Bacteria,Firmicutes,Clostridia,Clostridiales,Lachnospiraceae,Blautia,[Ruminococcus] torques,2,-29,100,64.5,2
+4441682.3,M5RNA,Bacteria,Firmicutes,Clostridia,Clostridiales,Lachnospiraceae,Butyrivibrio,Butyrivibrio crossotus,3,-46,100,92.75,2
+4441682.3,M5RNA,Bacteria,Firmicutes,Clostridia,Clostridiales,Lachnospiraceae,Butyrivibrio,Butyrivibrio fibrisolvens,7,-49.86,100,99.57,4
+4441682.3,M5RNA,Bacteria,Firmicutes,Clostridia,Clostridiales,Lachnospiraceae,Butyrivibrio,Butyrivibrio hungatei,2,-39.67,100,82.67,2
+4441682.3,M5RNA,Bacteria,Firmicutes,Clostridia,Clostridiales,Lachnospiraceae,Coprococcus,Coprococcus eutactus,3,-42.5,100,86.75,2
+4441682.3,M5RNA,Bacteria,Firmicutes,Clostridia,Clostridiales,Lachnospiraceae,Dorea,Dorea formicigenerans,3,-26.33,100,59.67,2
+4441682.3,M5RNA,Bacteria,Firmicutes,Clostridia,Clostridiales,Lachnospiraceae,Oribacterium,Oribacterium sinus,2,-51.5,100,102.5,1
+4441682.3,M5RNA,Bacteria,Firmicutes,Clostridia,Clostridiales,Lachnospiraceae,Roseburia,Roseburia intestinalis,1,-23,100,53,1
+4441682.3,M5RNA,Bacteria,Firmicutes,Clostridia,Clostridiales,Lachnospiraceae,Shuttleworthia,Shuttleworthia satelles,1,-40,100,82,1
+4441682.3,M5RNA,Bacteria,Firmicutes,Clostridia,Clostridiales,Peptococcaceae,Desulfitobacterium,Desulfitobacterium hafniense,1,-28,100,63,1
+4441682.3,M5RNA,Bacteria,Firmicutes,Clostridia,Clostridiales,Peptococcaceae,Thermincola,Thermincola potens,1,-29,100,64,1
+4441682.3,M5RNA,Bacteria,Firmicutes,Clostridia,Clostridiales,Peptostreptococcaceae,unclassified (derived from Peptostreptococcaceae),[Clostridium] difficile,3,-28,100,63,2
+4441682.3,M5RNA,Bacteria,Firmicutes,Clostridia,Clostridiales,Peptostreptococcaceae,unclassified (derived from Peptostreptococcaceae),[Clostridium] hiranonis,1,-49,100,98,1
+4441682.3,M5RNA,Bacteria,Firmicutes,Clostridia,Clostridiales,Ruminococcaceae,Anaerotruncus,Anaerotruncus colihominis,1,-33,100,71,1
+4441682.3,M5RNA,Bacteria,Firmicutes,Clostridia,Clostridiales,Ruminococcaceae,Faecalibacterium,Faecalibacterium prausnitzii,1,-27,100,61,1
+4441682.3,M5RNA,Bacteria,Firmicutes,Clostridia,Clostridiales,Ruminococcaceae,Ruminococcus,Ruminococcus bromii,3,-27.33,100,62,1
+4441682.3,M5RNA,Bacteria,Firmicutes,Clostridia,Clostridiales,Ruminococcaceae,Ruminococcus,Ruminococcus champanellensis,1,-30,100,65,1
+4441682.3,M5RNA,Bacteria,Firmicutes,Clostridia,Clostridiales,Ruminococcaceae,Ruminococcus,Ruminococcus flavefaciens,3,-47.67,100,96,1
+4441682.3,M5RNA,Bacteria,Firmicutes,Clostridia,Clostridiales,Ruminococcaceae,Ruminococcus,Ruminococcus lactaris,9,-38.67,100,80.78,1
+4441682.3,M5RNA,Bacteria,Firmicutes,Clostridia,Clostridiales,Ruminococcaceae,Ruminococcus,Ruminococcus sp. SR1/5,3,-34,100,71.67,2
+4441682.3,M5RNA,Bacteria,Firmicutes,Clostridia,Clostridiales,Ruminococcaceae,Subdoligranulum,Subdoligranulum variabile,1,-32,100,69,1
+4441682.3,M5RNA,Bacteria,Firmicutes,Clostridia,Clostridiales,Ruminococcaceae,unclassified (derived from Ruminococcaceae),Ruminococcaceae bacterium D16,4,-39.5,100,81.75,2
+4441682.3,M5RNA,Bacteria,Firmicutes,Clostridia,Clostridiales,unclassified (derived from Clostridiales),Epulopiscium,Epulopiscium sp. 'N.t. morphotype B',2,-24,99.12,56,1
+4441682.3,M5RNA,Bacteria,Firmicutes,Clostridia,Clostridiales,unclassified (derived from Clostridiales),Pseudoflavonifractor,Pseudoflavonifractor capillosus,4,-33.25,100,70.75,2
+4441682.3,M5RNA,Bacteria,Firmicutes,Clostridia,Clostridiales,unclassified (derived from Clostridiales),unclassified (derived from Clostridiales),[Bacteroides] pectinophilus,3,-26.33,100,60,1
+4441682.3,M5RNA,Bacteria,Firmicutes,Clostridia,Clostridiales,unclassified (derived from Clostridiales),unclassified (derived from Clostridiales),butyrate-producing bacterium SM4/1,2,-34.5,100,73.5,1
+4441682.3,M5RNA,Bacteria,Firmicutes,Clostridia,Thermoanaerobacterales,Thermoanaerobacterales Family III. Incertae Sedis,Caldicellulosiruptor,Caldicellulosiruptor saccharolyticus,1,-26,100,59,1
+4441682.3,M5RNA,Bacteria,Firmicutes,Erysipelotrichi,Erysipelotrichales,Erysipelotrichaceae,Erysipelothrix,Erysipelothrix rhusiopathiae,1,-24,100,55,1
+4441682.3,M5RNA,Bacteria,Firmicutes,Erysipelotrichi,Erysipelotrichales,Erysipelotrichaceae,Holdemania,Holdemania filiformis,1,-31,100,67,1
+4441682.3,M5RNA,Bacteria,Firmicutes,Erysipelotrichi,Erysipelotrichales,Erysipelotrichaceae,unclassified (derived from Erysipelotrichaceae),Clostridium ramosum,1,-30,100,65,1
+4441682.3,M5RNA,Bacteria,Firmicutes,Negativicutes,Selenomonadales,Acidaminococcaceae,Acidaminococcus,Acidaminococcus fermentans,2,-26.5,100,59.5,1
+4441682.3,M5RNA,Bacteria,Proteobacteria,Alphaproteobacteria,Rhizobiales,Methylobacteriaceae,Methylobacterium,Methylobacterium nodulans,1,-35,100,75,1
+4441682.3,M5RNA,Bacteria,Proteobacteria,Alphaproteobacteria,Rickettsiales,Rickettsiaceae,Rickettsia,Rickettsia prowazekii,1,-26,100,59,1
+4441682.3,M5RNA,Bacteria,Proteobacteria,Betaproteobacteria,Burkholderiales,Burkholderiaceae,Polynucleobacter,Polynucleobacter necessarius,2,-22.5,100,53,1
+4441682.3,M5RNA,Bacteria,Proteobacteria,Betaproteobacteria,Burkholderiales,Comamonadaceae,Albidiferax,Albidiferax ferrireducens,1,-29,100,64,1
+4441682.3,M5RNA,Bacteria,Proteobacteria,Deltaproteobacteria,Desulfobacterales,Desulfobulbaceae,Desulfotalea,Desulfotalea psychrophila,1,-26,100,60,1
+4441682.3,M5RNA,Bacteria,Proteobacteria,Deltaproteobacteria,Desulfovibrionales,Desulfovibrionaceae,Desulfovibrio,Desulfovibrio desulfuricans,1,-22,100,52,1
+4441682.3,M5RNA,Bacteria,Proteobacteria,Gammaproteobacteria,Pseudomonadales,Pseudomonadaceae,Pseudomonas,Pseudomonas oleovorans,1,-27,100,61,1
+4441682.3,M5RNA,Bacteria,Proteobacteria,Zetaproteobacteria,Mariprofundales,Mariprofundaceae,Mariprofundus,Mariprofundus ferrooxydans,1,-39,100,82,1
+4441682.3,M5RNA,Bacteria,Spirochaetes,Spirochaetia,Spirochaetales,Spirochaetaceae,Borrelia,Borrelia duttonii,2,-34,100,73,1
+4441682.3,M5RNA,Bacteria,Spirochaetes,Spirochaetia,Spirochaetales,Spirochaetaceae,Borrelia,Borrelia sp. SV1,2,-35,100,75,1
+4441682.3,M5RNA,Bacteria,Tenericutes,Mollicutes,Acholeplasmatales,Acholeplasmataceae,Acholeplasma,Acholeplasma cavigenitalium,1,-21,100,51,1
+4441682.3,M5RNA,Bacteria,Tenericutes,Mollicutes,Entomoplasmatales,Spiroplasmataceae,Spiroplasma,Spiroplasma kunkelii,1,-24,100,56,1
+4441682.3,M5RNA,Bacteria,Tenericutes,Mollicutes,Mycoplasmatales,Mycoplasmataceae,Mycoplasma,Mycoplasma mobile,1,-28,100,63,1
+4441682.3,M5RNA,Eukaryota,Arthropoda,Insecta,Isoptera,Rhinotermitidae,Coptotermes,Coptotermes formosanus,5,-35.2,100,74.4,5
+4441682.3,M5RNA,Eukaryota,Basidiomycota,unclassified (derived from Basidiomycota),Pucciniales,Cronartiaceae,Endocronartium,Endocronartium harknessii,1,-25,100,57,1
+4441682.3,M5RNA,Eukaryota,Streptophyta,Liliopsida,Poales,Poaceae,Zea,Zea mays,1,-35,100,75,1
+4441682.3,M5RNA,Eukaryota,unclassified (derived from Eukaryota),unclassified (derived from Eukaryota),Tritrichomonadida,Tritrichomonadidae,Tritrichomonas,Tritrichomonas foetus,1,-58,100,114,1
+4441682.3,M5RNA,unassigned,unassigned,unassigned,unassigned,unassigned,unassigned,unassigned,2,-57,100,112.5,1
