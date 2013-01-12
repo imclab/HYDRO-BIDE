@@ -79,7 +79,7 @@ def death_emigration(COBcom,num_out):
         random_i = randrange(0,len(COBcom)) # randomly pick an individual
         if COBcom[random_i][1] == 1: num_A += 1 # count the number of active individuals lost
         COBcom.pop(random_i) # die/emigrate
-    
+        ct+=1
     return [COBcom,num_A]
 
 
@@ -87,16 +87,18 @@ def death_emigration(COBcom,num_out):
 """ Things that will remain constant through time, the values of which, must be reasonable
     or the COB will crash, explode, or worse 
 
-    Values for cow rumen obtainable here: http://microbewiki.kenyon.edu/index.php/Bovine_Rumen """
+    Some values for cow rumen obtainable here: http://microbewiki.kenyon.edu/index.php/Bovine_Rumen """
     
-V = 70.0        # volume of the COB                                                                                                  
-r = 10.0**2     # influent rate (unit volume/unit time)                                                                  
-prop_dens = 5.0 # propagule density, (cells or biomass per unit volume of inflowing medium)
+V = 100.0       # volume of the COB                                                                                                  
+r = 10.0        # influent rate (unit volume/unit time)                                                                  
+prop_dens = 50.0 # propagule density, (cells or biomass per unit volume of inflowing medium)
 
-res_dens = 0.01 # resource concentration of inflowing medium, (unit resource)/(unit volume)
-                # assume initially that resource concentration of the influent equals
+res_dens = 0.1  # growth limiting resource concentration of inflowing medium,
+                # e.g. (grams cellulose + grams x + grams y) / (liters of medium flowing in) 
+                
+                # Assume initially that resource concentration of the influent equals
                 # the resource concentration of the COB. This makes sense if we're 
-                # starting with an empty community.
+                # starting with a community of zero individuals.
 
 im_rate = int(round(prop_dens * r)) # immigration rate (cells/unit time)                                     
 res_rate = res_dens * r # resource delivery rate, (unit resource/unit time) 
@@ -119,28 +121,29 @@ num_A = comlist[1]  # number of active individuals in COBcom
 #sys.exit()
             
 """ Things that will change as the community changes """         
-c = 1.0 # a constant of proportionality
+c = 1.0 # constant of proportionality; will eventually be used to create taxa differences
 R += res_rate # R increases due to inflow
 R -= c*num_A  # Starting assumption: total resources (R) decreases
               # in direct proportion to the number of active individuals
 
-a = 1.0 # constant of proportionality    
+a = 1.0 # constant of proportionality; will eventually be used to create taxa differences    
 ind_res = R/num_A # per capita resource availability
 ind_grow = a*ind_res # proportion growth towards reproductive viability achieved per unit time (not constant)
                      # This makes per capita growth rate directly proportional to per capita resource availability.
                      # So, in general, individuals grow according to their share of resources
                      
-dorm_lim = 0.10 # dormancy threshold; dormancy is undertaken if per capita resource availability
+dorm_lim = 0.01 # dormancy threshold; dormancy is undertaken if per capita resource availability
                 # is below some threshhold (low resources -> low metabolism -> slow growth = go dormant)
-
+                # This could be made to vary among species
+                
 """ Having set up the community, it's time to turn it loose. From here on, community size, biomass,
     dormancy, compositional and noncompositional community structure, population structure,
     replacement, & turnover will all ride on random drift. """
     
-time = 4   # length of the experiment
+time = 10000   # length of the experiment
 t = 0
 while t < time: # looping one time unit at a time
-    print 'time',t
+    #print 'time',t,' ','size =',N,'number active',num_A
     """ inflow of individuals, i.e., immigration """
     comlist = immigration(COBcom, im_rate) # add some propagules to the community
     COBcom = comlist[0]
@@ -160,7 +163,6 @@ while t < time: # looping one time unit at a time
     # into the COB occurs independently of the community dynamics inside.
        
     for i, v in enumerate(COBcom):
-        print i,v
         
         if v[1] == 1:  # if the individual is active
             
@@ -175,6 +177,7 @@ while t < time: # looping one time unit at a time
                 elif x == 1: 
                     COBcom.pop(i) # starve and die
                     N -= 1
+                    num_A -= 1
                     
             else: # if there are enough resources to grow or reproduce
                 if v[2] >= 100.0:
@@ -224,7 +227,8 @@ while t < time: # looping one time unit at a time
     second index representing active/dormant, & the
     third index representing % growth to reproductive
     viability. We can do a lot with this list of lists."""
-    
+
+sys.exit()    
 # write the list to a file
 OUT = open('/home/kenlocey/COBcom.txt','w+')
 for _list in COBcom:
