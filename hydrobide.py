@@ -21,7 +21,7 @@ from random import randrange#                             |   |     \           
 #                                              V
 #                                    To intestines & beyond  
 
-"""  This script runs nicely, but parameter values need to be examined  """
+"""  This script runs, but needs to be checked for bugs  """
 
 """  The following is a simulation-based ecological neutral model for a                                                       
      chemostat/organ/bioreactor (COB) scenario. There is 1 source, 1 community, and
