@@ -207,13 +207,6 @@ while t < time: # looping one time unit at a time
     
     t += 1
     
-    """ and that was one interval of inflow, which is long enough for every
-        individual in the community to undergo so form of change """
-    
-    # Note: if everything was dormant and there were no resources, then the rate of immigration would
-    # come to equal the rate of inflow. This is because nothing would reproduce and the COB would
-    # equilibrate to the propagule density. This scenario should be possible under this model.
-        
-    # Note: if everything was active and flush with resources, the population should grow until
-    # per capita resource availability hits the dormancy threshold
+    """ and that was one interval of inflow/outflow, which is long enough for every
+        individual in the community to have the chance to undergo some form of change """
         
