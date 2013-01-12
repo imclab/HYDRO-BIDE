@@ -27,6 +27,7 @@ from random import randrange#                             |   |     \           
      chemostat/organ/bioreactor (COB) scenario. There is 1 source, 1 community, and
      1 outlet. This model incorporates dormancy and per capita resource limitation.
      The eventual goal will be to include species, taxa, and trait differences.
+     Accounting for temperature and pH would be fun, too.
      
      The model is spatially implicit, which makes sense because COBs are often
      well-mixed and we have no interest in tracking individual bacteria
@@ -53,7 +54,8 @@ from random import randrange#                             |   |     \           
 
 """ Some functions to simulate immigration and death/emigration """                      
 def immigration(COBcom,im_rate):
-    props = np.random.logseries(0.70,im_rate) # An initial set of propagules; a list of log-series distributed integers.
+    p = 0.7 # arbitrarily set log-series parameter
+    props = np.random.logseries(p,im_rate) # An initial set of propagules; a list of log-series distributed integers.
                                               # Assume the source community is infinite. Because large communities are
                                               # approximately log-series distributed (most things are rare and relatively
                                               # few things are abundant) immigration of propagules will occur in a log-series
@@ -83,9 +85,11 @@ def death_emigration(COBcom,num_out):
 
 
 """ Things that will remain constant through time, the values of which, must be reasonable
-    or the COB will crash, explode, or worse """ # I haven't thought out the values yet
+    or the COB will crash, explode, or worse 
+
+    Values for cow rumen obtainable here: http://microbewiki.kenyon.edu/index.php/Bovine_Rumen """
     
-V = 10.0**6     # volume of the COB                                                                                                  
+V = 70.0        # volume of the COB                                                                                                  
 r = 10.0**2     # influent rate (unit volume/unit time)                                                                  
 prop_dens = 5.0 # propagule density, (cells or biomass per unit volume of inflowing medium)
 
