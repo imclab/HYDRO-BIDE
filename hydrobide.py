@@ -207,6 +207,5 @@ while t < time: # looping one time unit at a time
     
     t += 1
     
-    """ and that was one interval of inflow/outflow, which is long enough for every
-        individual in the community to have the chance to undergo some form of change """
+    """ and that was one interval of inflow/outflow """
         
