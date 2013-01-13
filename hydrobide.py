@@ -78,8 +78,8 @@ def get_rad(CODcom):
     return rad
 
 """ Some functions to simulate immigration and death/emigration """                      
-def immigration(COBcom,im_rate):
-    p = 0.8 # arbitrarily set log-series parameter
+def immigration(COBcom,im_rate,bp):
+    p = 0.70 # arbitrarily set log-series parameter
     props = np.random.logseries(p,im_rate) # An initial set of propagules; a list of log-series distributed integers.
                                               # Assume the source community is infinite. Because large communities are
                                               # approximately log-series distributed (most things are rare and relatively
@@ -87,9 +87,9 @@ def immigration(COBcom,im_rate):
                                               # distributed fashion (i.e. not all species have the same chance of contributing 
                                               # propagules. Still neutral in the per capita sense.
     num_A = 0 # number of active individuals
-    p = 0.5 # arbitrarily set binomial probability
+    
     for prop in props: 
-        state = np.random.binomial(1,p,1) #   starting assumptions: 1. propagules are as likely to be active (1) as dormant (2)
+        state = np.random.binomial(1,bp,1) #   
         if state == 1: num_A += 1
         else: state == 2
         growth = float(np.random.randint(0,101))#       2. propagules have equal chances of being 0 to 100% reproductively viable  
@@ -116,20 +116,23 @@ def death_emigration(COBcom,num_out):
 
     Some values for cow rumen obtainable here: http://microbewiki.kenyon.edu/index.php/Bovine_Rumen """
     
-V = 1000.0       # volume of the COB                                                                                                  
-r = 200.0        # influent rate (unit volume/unit time)                                                                  
-prop_dens = 10.0 # propagule density, (cells or biomass per unit volume of inflowing medium)
+V = 1000.0      # volume of the COB                                                                                                  
+r = 10.0        # influent rate (unit volume/unit time)                                                                  
 
-res_dens = 0.9  # growth limiting resource concentration of inflowing medium,
-                # e.g. (grams cellulose + grams x + grams y) / (grams of medium flowing in) 
-                     
+res_dens = 1.0 # growth limiting resource concentration of inflowing medium,
+                # e.g. (grams cellulose + grams x + grams y)/ (liter of inflowing medium) 
+
+prop_dens = 1.0 # propagule density, (cells per unit volume of inflowing medium)                     
                 # Assume initially that resource concentration of the influent equals
                 # the resource concentration of the COB. This makes sense if we're 
                 # starting with a community of zero individuals.
 
-dorm_lim = 0.001 # dormancy threshold; dormancy is undertaken if per capita resource availability
+dorm_lim = 0.01  # dormancy threshold; dormancy is undertaken if per capita resource availability
                 # is below some threshhold (low resources -> low metabolism -> slow growth = go dormant)
                 # This could be made to vary among species
+
+bp = 0.5 # arbitrarily set binomial probability
+         # the probability that a propagule is active
 
 im_rate = int(round(prop_dens * r)) # immigration rate (cells/unit time)                                     
 res_rate = res_dens * r # resource delivery rate, (unit resource/unit time) 
@@ -140,7 +143,7 @@ R = V * res_dens # Amount of resources in the COB before inoculation. If inflow 
 
 """ The community (COBcom) will be a list of lists: """
 COBcom = []
-comlist = immigration(COBcom, im_rate) # inoculate the community with propagules using the above function
+comlist = immigration(COBcom, im_rate, bp) # inoculate the community with propagules using the above function
 COBcom = comlist[0] # The community
 N = len(COBcom)     # size of the community
 num_A = comlist[1]  # number of active individuals in COBcom 
@@ -168,7 +171,8 @@ ind_grow = a*ind_res # proportion growth towards reproductive viability achieved
     dormancy, compositional and noncompositional community structure, population structure,
     replacement, & turnover will all ride on random drift. """
     
-time = 100   # length of the experiment
+time = 800   # length of the experiment
+burnin = 700  # number of initial time steps to discard
 
 N_COBcom = []   # list to track N over time
 A_COBcom = []   # list to track number of active individuals over time
@@ -188,7 +192,7 @@ while t <= time: # looping one time unit at a time
     print 'time',t,'immigrants',im_rate,' ','size=',N,'per capita resources=',ind_res,'active',num_A#,ct
     
     """ inflow of individuals, i.e., immigration """
-    comlist = immigration(COBcom, im_rate) # add some propagules to the community
+    comlist = immigration(COBcom, im_rate, bp) # add some propagules to the community
     COBcom = comlist[0]
     
     """ recalculate parameter values """
@@ -259,8 +263,8 @@ while t <= time: # looping one time unit at a time
     ind_res = R/num_A  # per capita resource availability may change
     ind_grow = a*ind_res # per capita growth rate may change
     
-    burnin = 20
-    if t >= burnin: #and t%10 == 0: # allow a burn-in
+    
+    if t >= burnin:# and t%10 == 0: # allow a burn-in
         N_COBcom.append(np.log(N)) # using natural logs when values can be enormous
         A_COBcom.append(np.log(num_A))
         D_COBcom.append(np.log(N-num_A))
@@ -282,8 +286,8 @@ while t <= time: # looping one time unit at a time
                            # from arising in the next iteration of the 
                            # for loop
     """ Here, we have completed one time interval of inflow/outflow """
-
-nRADs = 5
+#print len(RAD_Ahigh),len(RAD_Amedium),len(RAD_Alow)
+nRADs = 10
 if len(RAD_Ahigh) > nRADs: RAD_Ahigh = random.sample(RAD_Ahigh,nRADs) 
 if len(RAD_Amedium) > nRADs: RAD_Amedium = random.sample(RAD_Amedium,nRADs) 
 if len(RAD_Alow) > nRADs: RAD_Alow = random.sample(RAD_Alow,nRADs)
@@ -310,8 +314,8 @@ fig = plt.figure(figsize=(10.0,8.0))
 
 ax = plt.subplot2grid((2,2), (0,0), rowspan=1) # plotting N, dormancy, & activity through time
 plt.plot(N_COBcom,'0.5',label='Total')
-plt.plot(A_COBcom,'b',label='Active')
-plt.plot(D_COBcom,'r',label='Dormant')
+plt.plot(A_COBcom,'r',label='Active')
+plt.plot(D_COBcom,'b',label='Dormant')
 ymax = max(N_COBcom)+0.1
 ymin = min(min(A_COBcom),min(D_COBcom))-0.1
 plt.ylim(ymin,ymax) 
@@ -344,8 +348,8 @@ plt.ylabel("ln(dormant abundance)",fontsize=12)
 
 ax = plt.subplot2grid((2,2), (1,1), rowspan=1) # plotting activity vs. dormancy
 ct = 0
-colors = ['r','b','0.2']
-series = ['high activity', 'medium activity', 'low activity'] 
+colors = ['r','0.4','b']
+series = ['high activity', 'medium activity', 'high dormancy'] 
 for RADs in sets_of_RADS:
     plt.plot([0],[0],color=colors[ct],label=series[ct],lw=3)
     for RAD in RADs:
@@ -360,9 +364,9 @@ plt.title(str(nRADs)+' randomly chosen RADs per activity level',fontsize=12)
 leg = plt.legend(loc=1,prop={'size':12})
 leg.draw_frame(False)
 
+
 plt.subplots_adjust(wspace=0.2, hspace=0.3)
 plt.savefig('results/COBcom V='+str(V)+' r'+str(r)+' resdens='+str(res_dens)+' propdens='+str(prop_dens)+' dormlim='+str(dorm_lim)+'.png', dpi=400, bbox_inches = 'tight', pad_inches=0.1) 
-
 
 sys.exit()    
 # write the list to a file
