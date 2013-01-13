@@ -113,7 +113,7 @@ def death_emigration(COBcom,num_out):
     Some values for cow rumen obtainable here: http://microbewiki.kenyon.edu/index.php/Bovine_Rumen """
     
 V = 1000.0       # volume of the COB                                                                                                  
-r = 100.0        # influent rate (unit volume/unit time)                                                                  
+r = 150.0        # influent rate (unit volume/unit time)                                                                  
 prop_dens = 10.0 # propagule density, (cells or biomass per unit volume of inflowing medium)
 
 res_dens = 0.7  # growth limiting resource concentration of inflowing medium,
@@ -308,8 +308,9 @@ ax = plt.subplot2grid((2,2), (0,0), rowspan=1) # plotting N, dormancy, & activit
 plt.plot(N_COBcom,'0.5',label='Total')
 plt.plot(A_COBcom,'b',label='Active')
 plt.plot(D_COBcom,'r',label='Dormant')
-#ymax = max(N_COBcom)+0.5
-#plt.ylim(3.0,ymax) 
+ymax = max(N_COBcom)+0.1
+ymin = min(min(A_COBcom),min(D_COBcom))-0.1
+plt.ylim(ymin,ymax) 
 plt.xlabel("Time",fontsize=12)
 plt.ylabel("ln(abundance)",fontsize=12)
 #plt.text(40,10.0,'Volume = '+str(V)+', inflow rate = '+str(r),fontsize=14,color='k',weight='heavy')
@@ -329,11 +330,12 @@ t_range = range(0,(time - burnin),10)
 for t in t_range:
     plt.axvline(x=t,color='0.80',ls='--',lw=1) # plot a vertical line at the mode
 # Add legend
-leg = plt.legend(loc=8,prop={'size':12})
+leg = plt.legend(loc=10,prop={'size':12})
 leg.draw_frame(False)
 
 ax = plt.subplot2grid((2,2), (1,0), rowspan=1) # plotting activity vs. dormancy
 plt.scatter(A_COBcom, D_COBcom, c='0.4', lw=0.5)#, label='active vs. dormant')
+plt.title("Each point represents a time step",fontsize=12) 
 plt.xlabel("ln(active abundance)",fontsize=12)
 plt.ylabel("ln(dormant abundance)",fontsize=12)
 
