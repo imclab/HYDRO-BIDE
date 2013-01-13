@@ -1,18 +1,19 @@
-#!/usr/local/bin/python                                                                    _____ 
+#!/usr/local/bin/python                                                                   
+#                                                                                          _____
 #                                                                                        //  _  \
 #                                                                                        || | |_|
 import sys#                                              Esophagus                       || |  _  CHEMOSTAT
-import numpy as np#                                         |                            || |_| |__ 
-import  matplotlib.pyplot as plt#      (inflow of resources & immigration )              \\____/   \
-import re#                                                  |                               || | | |
-from pylab import *#                                      | V |                             || | | | ORGAN
-from random import choice#                                |   |_____                        || |_| |__           
-from random import randrange#                             |   |     \                       \\____/   \
-import math#                                              |         |                          || |_| |
-from scipy import stats#                                  / birth   | -biomass turnover?       ||  _ <  BIOREACTOR
-#                                                        /    &     |                          || |_| |
-#                                               ________/   death  /  -community structure?    ||____/
-#                                              /  ___             /
+import os#                                                  |                            || |_| |__ 
+import  matplotlib.pyplot as plt#      (inflow of resources & immigration )              \\_____/  \
+from pylab import *#                                        |                               || | | |
+import numpy as np#                                       | V |                             || | | | ORGAN
+from scipy import stats#                                  |   |_____                        || |_| |__           
+import random#                                            |   |     \                       \\_____/  \
+from random import choice#                                |         |                          || |_| |
+import re#                                                / birth   | -biomass turnover?       ||  _ <  BIOREACTOR
+from decimal import *#                                   /    &     |                          || |_| |
+import math#                                    ________/   death  /  -community structure?    ||_____/
+from random import randrange#                  /  ___             /
 #                                             /  /  \            /    -dormancy dynamic?
 #                                              |     \__________/ 
 #                                              |       
@@ -21,7 +22,14 @@ from scipy import stats#                                  / birth   | -biomass t
 #                                              V
 #                                    To intestines & beyond  
 
-"""  This script runs nicely, but needs to be checked for bugs.  """
+"""  This script runs nicely, and appears to operate bug free. yippie!
+     
+     So far, the active dormant portions of the community appear
+     to behave in a reasonable way according to resource change.
+     Likewise, as should happen, the dormant community can be
+     forced to near extinction by increasing flowthrough; note
+     that propagules have a 50/50 chance of being dormant in this
+     model. """
 
 """  The following is a simulation-based ecological neutral model for a                                                       
      chemostat/organ/bioreactor (COB) scenario. There is 1 source, 1 community, and
@@ -68,7 +76,7 @@ def get_rad(CODcom):
 
 """ Some functions to simulate immigration and death/emigration """                      
 def immigration(COBcom,im_rate):
-    p = 0.7 # arbitrarily set log-series parameter
+    p = 0.9 # arbitrarily set log-series parameter
     props = np.random.logseries(p,im_rate) # An initial set of propagules; a list of log-series distributed integers.
                                               # Assume the source community is infinite. Because large communities are
                                               # approximately log-series distributed (most things are rare and relatively
@@ -104,17 +112,17 @@ def death_emigration(COBcom,num_out):
     Some values for cow rumen obtainable here: http://microbewiki.kenyon.edu/index.php/Bovine_Rumen """
     
 V = 1000.0       # volume of the COB                                                                                                  
-r = 100.0         # influent rate (unit volume/unit time)                                                                  
+r = 900.0         # influent rate (unit volume/unit time)                                                                  
 prop_dens = 10.0 # propagule density, (cells or biomass per unit volume of inflowing medium)
 
-res_dens = 0.1  # growth limiting resource concentration of inflowing medium,
+res_dens = 0.2  # growth limiting resource concentration of inflowing medium,
                 # e.g. (grams cellulose + grams x + grams y) / (grams of medium flowing in) 
                 
                 # Assume initially that resource concentration of the influent equals
                 # the resource concentration of the COB. This makes sense if we're 
                 # starting with a community of zero individuals.
 
-dorm_lim = 0.05 # dormancy threshold; dormancy is undertaken if per capita resource availability
+dorm_lim = 0.01 # dormancy threshold; dormancy is undertaken if per capita resource availability
                 # is below some threshhold (low resources -> low metabolism -> slow growth = go dormant)
                 # This could be made to vary among species
 
@@ -162,6 +170,10 @@ A_COBcom = []   # list to track number of active individuals over time
 pcr_COBcom = [] # list to tack per capita resources over time
 R_COBcom = []   # list to track total resources over time
 D_COBcom = []   # list to track dormancy
+
+RAD_Ahigh = []  # lists to hold the community at various stages
+RAD_Alow = [] 
+RAD_Amedium = [] 
 
 t = 0
 while t <= time: # looping one time unit at a time
@@ -249,10 +261,27 @@ while t <= time: # looping one time unit at a time
         D_COBcom.append(np.log(N-num_A))
         pcr_COBcom.append(ind_res)
         R_COBcom.append(np.log(R))
-    
+        
+        percent_A = num_A/float(N)
+        if percent_A >= 0.66:
+            RAD = get_rad(COBcom)
+            RAD_Ahigh.append(RAD)
+        elif percent_A < 0.33:
+           RAD = get_rad(COBcom)
+           RAD_Alow.append(RAD)
+        else:
+           RAD = get_rad(COBcom)
+           RAD_Amedium.append(RAD)
     t += 1
-    
+
     """ Here, we have completed one time interval of inflow/outflow """
+
+if len(RAD_Ahigh) > 5: RAD_Ahigh = random.sample(RAD_Ahigh,5) 
+if len(RAD_Amedium) > 5: RAD_Amedium = random.sample(RAD_Amedium,5) 
+if len(RAD_Alow) > 5: RAD_Alow = random.sample(RAD_Alow,5)
+
+sets_of_RADS = [RAD_Ahigh,RAD_Amedium,RAD_Alow] # A list to hold lists that have captured the community
+                                                # at times of high, low, and medium activity
     
 """ Here, we end the experiment and the result is
     a huge list of small lists. Each small list
@@ -288,13 +317,12 @@ ax = plt.subplot2grid((2,2), (0,1), rowspan=1) # plotting N, R, & per capita res
 plt.plot(N_COBcom, '0.5', label='ln(total abundance)')
 plt.plot(R_COBcom, 'b', label='ln(total resources)')
 plt.plot(pcr_COBcom, 'r', label='per capita resources')
-
+plt.xlabel("Time",fontsize=12)
+plt.ylabel("Value",fontsize=12)
+# add some vertical gridlines
 t_range = range(0,(time - burnin),10)
 for t in t_range:
     plt.axvline(x=t,color='0.80',ls='--',lw=1) # plot a vertical line at the mode
-
-plt.xlabel("Time",fontsize=12)
-plt.ylabel("Value",fontsize=12)
 # Add legend
 leg = plt.legend(loc=8,prop={'size':12})
 leg.draw_frame(False)
@@ -303,14 +331,16 @@ ax = plt.subplot2grid((2,2), (1,0), rowspan=1) # plotting activity vs. dormancy
 plt.scatter(A_COBcom, D_COBcom, c='0.4', lw=0.5)#, label='active vs. dormant')
 plt.xlabel("ln(active abundance)",fontsize=12)
 plt.ylabel("ln(dormant abundance)",fontsize=12)
-# Add legend
-#leg = plt.legend(loc=3,prop={'size':12})
-#leg.draw_frame(False)
 
 ax = plt.subplot2grid((2,2), (1,1), rowspan=1) # plotting activity vs. dormancy
-RAD = get_rad(COBcom)
-rank = range(1,len(RAD)+1)
-plt.scatter(rank, RAD, c='0.4', lw=0.5)#, label='RAD')
+ct = 0
+for RADs in sets_of_RADS:
+    colors = ['r','b','0.2']
+    for RAD in RADs:
+        rank = range(1,len(RAD)+1)
+        plt.plot(rank, RAD, c=colors[ct], lw=0.5)
+    ct += 1
+
 plt.xlabel("Rank",fontsize=12)
 plt.ylabel("ln(abundance)",fontsize=12)
 # Add legend
@@ -318,12 +348,12 @@ plt.ylabel("ln(abundance)",fontsize=12)
 #leg.draw_frame(False)
 
 plt.subplots_adjust(wspace=0.2, hspace=0.2)
-plt.savefig('COBcom.png', dpi=400, bbox_inches = 'tight', pad_inches=0.1) 
+plt.savefig('COBcom V='+str(V)+' r'+str(r)+' R='+str(res_dens)+' propdens='+str(prop_dens)+' dormlim='+str(dorm_lim)+'.png', dpi=400, bbox_inches = 'tight', pad_inches=0.1) 
 
 
 sys.exit()    
 # write the list to a file
-OUT = open('/home/kenlocey/COBcom.txt','w+')
+OUT = open('/home/kenlocey/COBcom V='+str(V)+' r'+str(r)+' R='+str(res_dens)+' propdens='+str(prop_dens)+' dormlim='+str(dorm_lim),'w+')
 for _list in COBcom:
     print>>OUT, _list[0],_list[1],_list[2]    
 OUT.close() 
