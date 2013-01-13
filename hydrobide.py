@@ -155,7 +155,7 @@ ind_grow = a*ind_res # proportion growth towards reproductive viability achieved
     dormancy, compositional and noncompositional community structure, population structure,
     replacement, & turnover will all ride on random drift. """
     
-time = 1000   # length of the experiment
+time = 100   # length of the experiment
 
 N_COBcom = []   # list to track N over time
 A_COBcom = []   # list to track number of active individuals over time
@@ -164,7 +164,7 @@ R_COBcom = []   # list to track total resources over time
 D_COBcom = []   # list to track dormancy
 
 t = 0
-while t < time: # looping one time unit at a time
+while t <= time: # looping one time unit at a time
     #ct = 0
     #for i in COBcom:
     #    if i[1] == 1: ct += 1
@@ -242,7 +242,8 @@ while t < time: # looping one time unit at a time
     ind_res = R/num_A  # per capita resource availability may change
     ind_grow = a*ind_res # per capita growth rate may change
     
-    if t >= 20 and t%10 == 0: # allow a burn-in
+    burnin = 20
+    if t >= burnin: #and t%10 == 0: # allow a burn-in
         N_COBcom.append(np.log(N)) # using natural logs when values can be enormous
         A_COBcom.append(np.log(num_A))
         D_COBcom.append(np.log(N-num_A))
@@ -269,6 +270,7 @@ while t < time: # looping one time unit at a time
 
 fig = plt.figure(figsize=(10.0,8.0))
 
+
 ax = plt.subplot2grid((2,2), (0,0), rowspan=1) # plotting N, dormancy, & activity through time
 plt.plot(N_COBcom,'0.5',label='Total')
 plt.plot(A_COBcom,'b',label='Active')
@@ -276,18 +278,25 @@ plt.plot(D_COBcom,'r',label='Dormant')
 plt.ylim(3.0,9.0) 
 plt.xlabel("Time",fontsize=12)
 plt.ylabel("ln(abundance)",fontsize=12)
+plt.text(40,10.0,'Volume = '+str(V)+', inflow rate = '+str(r),fontsize=14,color='k',weight='heavy')
+plt.text(-10.0,9.4,'Resource density = '+str(res_dens)+', Propagule density = '+str(prop_dens)+', Dormancy threshold = '+str(dorm_lim),fontsize=14,color='k',weight='heavy')
 # Add legend
-leg = plt.legend(loc=8,prop={'size':10})
+leg = plt.legend(loc=8,prop={'size':12})
 leg.draw_frame(False)
 
 ax = plt.subplot2grid((2,2), (0,1), rowspan=1) # plotting N, R, & per capita resources through time
 plt.plot(N_COBcom, '0.5', label='ln(total abundance)')
 plt.plot(R_COBcom, 'b', label='ln(total resources)')
 plt.plot(pcr_COBcom, 'r', label='per capita resources')
+
+t_range = range(0,(time - burnin),10)
+for t in t_range:
+    plt.axvline(x=t,color='0.80',ls='--',lw=1) # plot a vertical line at the mode
+
 plt.xlabel("Time",fontsize=12)
 plt.ylabel("Value",fontsize=12)
 # Add legend
-leg = plt.legend(loc=8,prop={'size':10})
+leg = plt.legend(loc=8,prop={'size':12})
 leg.draw_frame(False)
 
 ax = plt.subplot2grid((2,2), (1,0), rowspan=1) # plotting activity vs. dormancy
@@ -308,7 +317,7 @@ plt.ylabel("ln(abundance)",fontsize=12)
 #leg = plt.legend(loc=1,prop={'size':12})
 #leg.draw_frame(False)
 
-plt.subplots_adjust(wspace=0.2, hspace=0.4)
+plt.subplots_adjust(wspace=0.2, hspace=0.2)
 plt.savefig('COBcom.png', dpi=400, bbox_inches = 'tight', pad_inches=0.1) 
 
 
