@@ -116,14 +116,14 @@ V = 1000.0       # volume of the COB
 r = 100.0        # influent rate (unit volume/unit time)                                                                  
 prop_dens = 10.0 # propagule density, (cells or biomass per unit volume of inflowing medium)
 
-res_dens = 0.8  # growth limiting resource concentration of inflowing medium,
+res_dens = 0.7  # growth limiting resource concentration of inflowing medium,
                 # e.g. (grams cellulose + grams x + grams y) / (grams of medium flowing in) 
                      
                 # Assume initially that resource concentration of the influent equals
                 # the resource concentration of the COB. This makes sense if we're 
                 # starting with a community of zero individuals.
 
-dorm_lim = .05 # dormancy threshold; dormancy is undertaken if per capita resource availability
+dorm_lim = 0.05 # dormancy threshold; dormancy is undertaken if per capita resource availability
                 # is below some threshhold (low resources -> low metabolism -> slow growth = go dormant)
                 # This could be made to vary among species
 
@@ -279,9 +279,10 @@ while t <= time: # looping one time unit at a time
                            # for loop
     """ Here, we have completed one time interval of inflow/outflow """
 
-if len(RAD_Ahigh) > 5: RAD_Ahigh = random.sample(RAD_Ahigh,5) 
-if len(RAD_Amedium) > 5: RAD_Amedium = random.sample(RAD_Amedium,5) 
-if len(RAD_Alow) > 5: RAD_Alow = random.sample(RAD_Alow,5)
+nRADs = 5
+if len(RAD_Ahigh) > nRADs: RAD_Ahigh = random.sample(RAD_Ahigh,nRADs) 
+if len(RAD_Amedium) > nRADs: RAD_Amedium = random.sample(RAD_Amedium,nRADs) 
+if len(RAD_Alow) > nRADs: RAD_Alow = random.sample(RAD_Alow,nRADs)
 
 sets_of_RADS = [RAD_Ahigh,RAD_Amedium,RAD_Alow] # A list to hold lists that have captured the community
                                                 # at times of high, low, and medium activity
@@ -318,7 +319,7 @@ leg = plt.legend(loc=10,prop={'size':12})
 leg.draw_frame(False)
 
 ax = plt.subplot2grid((2,2), (0,1), rowspan=1) # plotting N, R, & per capita resources through time
-plt.plot(N_COBcom, '0.5', label='ln(total abundance)')
+plt.ylim(0.0,max(R_COBcom)+0.5)
 plt.plot(R_COBcom, 'b', label='ln(total resources)')
 plt.plot(pcr_COBcom, 'r', label='per capita resources')
 plt.xlabel("Time",fontsize=12)
@@ -349,11 +350,12 @@ for RADs in sets_of_RADS:
 # add labels
 plt.xlabel("Rank",fontsize=12)
 plt.ylabel("ln(abundance)",fontsize=12)
+plt.title(str(nRADs)+' randomly chosen RADs per activity level',fontsize=12) 
 # Add legend
 leg = plt.legend(loc=1,prop={'size':12})
 leg.draw_frame(False)
 
-plt.subplots_adjust(wspace=0.2, hspace=0.2)
+plt.subplots_adjust(wspace=0.2, hspace=0.3)
 plt.savefig('results/COBcom V='+str(V)+' r'+str(r)+' resdens='+str(res_dens)+' propdens='+str(prop_dens)+' dormlim='+str(dorm_lim)+'.png', dpi=400, bbox_inches = 'tight', pad_inches=0.1) 
 
 
