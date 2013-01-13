@@ -87,11 +87,13 @@ def immigration(COBcom,im_rate):
                                               # distributed fashion (i.e. not all species have the same chance of contributing 
                                               # propagules. Still neutral in the per capita sense.
     num_A = 0 # number of active individuals
-    for p in props: 
-        state = choice([1,2]) #   starting assumptions: 1. propagules are as likely to be active (1) as dormant (2)
+    p = 0.5 # arbitrarily set binomial probability
+    for prop in props: 
+        state = np.random.binomial(1,p,1) #   starting assumptions: 1. propagules are as likely to be active (1) as dormant (2)
         if state == 1: num_A += 1
+        else: state == 2
         growth = float(np.random.randint(0,101))#       2. propagules have equal chances of being 0 to 100% reproductively viable  
-        i = [p,state,growth] 
+        i = [prop,state,growth] 
         COBcom.append(i) # adding the propagule's taxa label, activity state, and growth state to the community 
     
     return [COBcom,num_A]
@@ -115,17 +117,17 @@ def death_emigration(COBcom,num_out):
     Some values for cow rumen obtainable here: http://microbewiki.kenyon.edu/index.php/Bovine_Rumen """
     
 V = 1000.0       # volume of the COB                                                                                                  
-r = 400.0        # influent rate (unit volume/unit time)                                                                  
+r = 200.0        # influent rate (unit volume/unit time)                                                                  
 prop_dens = 10.0 # propagule density, (cells or biomass per unit volume of inflowing medium)
 
-res_dens = 0.7  # growth limiting resource concentration of inflowing medium,
+res_dens = 0.9  # growth limiting resource concentration of inflowing medium,
                 # e.g. (grams cellulose + grams x + grams y) / (grams of medium flowing in) 
                      
                 # Assume initially that resource concentration of the influent equals
                 # the resource concentration of the COB. This makes sense if we're 
                 # starting with a community of zero individuals.
 
-dorm_lim = 0.05 # dormancy threshold; dormancy is undertaken if per capita resource availability
+dorm_lim = 0.001 # dormancy threshold; dormancy is undertaken if per capita resource availability
                 # is below some threshhold (low resources -> low metabolism -> slow growth = go dormant)
                 # This could be made to vary among species
 
@@ -183,7 +185,7 @@ while t <= time: # looping one time unit at a time
     #ct = 0
     #for i in COBcom:
     #    if i[1] == 1: ct += 1
-    print 'time',t,' ','size=',N,'per capita resources=',ind_res,'active',num_A#,ct
+    print 'time',t,'immigrants',im_rate,' ','size=',N,'per capita resources=',ind_res,'active',num_A#,ct
     
     """ inflow of individuals, i.e., immigration """
     comlist = immigration(COBcom, im_rate) # add some propagules to the community
@@ -321,7 +323,7 @@ leg = plt.legend(loc=10,prop={'size':12})
 leg.draw_frame(False)
 
 ax = plt.subplot2grid((2,2), (0,1), rowspan=1) # plotting N, R, & per capita resources through time
-plt.ylim(0.0,max(R_COBcom)+0.5)
+plt.ylim(-0.1,max(R_COBcom)+0.5)
 plt.plot(R_COBcom, 'b', label='ln(total resources)')
 plt.plot(pcr_COBcom, 'r', label='per capita resources')
 plt.xlabel("Time",fontsize=12)
