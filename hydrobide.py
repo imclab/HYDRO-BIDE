@@ -115,7 +115,7 @@ def death_emigration(COBcom,num_out):
     Some values for cow rumen obtainable here: http://microbewiki.kenyon.edu/index.php/Bovine_Rumen """
     
 V = 1000.0       # volume of the COB                                                                                                  
-r = 900.0         # influent rate (unit volume/unit time)                                                                  
+r = 100.0         # influent rate (unit volume/unit time)                                                                  
 prop_dens = 10.0 # propagule density, (cells or biomass per unit volume of inflowing medium)
 
 res_dens = 0.2  # growth limiting resource concentration of inflowing medium,
@@ -337,18 +337,20 @@ plt.ylabel("ln(dormant abundance)",fontsize=12)
 
 ax = plt.subplot2grid((2,2), (1,1), rowspan=1) # plotting activity vs. dormancy
 ct = 0
+colors = ['r','b','0.2']
+series = ['high activity', 'medium activity', 'low activity'] 
 for RADs in sets_of_RADS:
-    colors = ['r','b','0.2']
+    plt.plot([0],[0],color=colors[ct],label=series[ct],lw=3)
     for RAD in RADs:
         rank = range(1,len(RAD)+1)
         plt.plot(rank, RAD, c=colors[ct], lw=0.5)
     ct += 1
-
+# add labels
 plt.xlabel("Rank",fontsize=12)
 plt.ylabel("ln(abundance)",fontsize=12)
 # Add legend
-#leg = plt.legend(loc=1,prop={'size':12})
-#leg.draw_frame(False)
+leg = plt.legend(loc=1,prop={'size':12})
+leg.draw_frame(False)
 
 plt.subplots_adjust(wspace=0.2, hspace=0.2)
 plt.savefig('COBcom V='+str(V)+' r'+str(r)+' R='+str(res_dens)+' propdens='+str(prop_dens)+' dormlim='+str(dorm_lim)+'.png', dpi=400, bbox_inches = 'tight', pad_inches=0.1) 
