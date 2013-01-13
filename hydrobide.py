@@ -57,7 +57,10 @@ from random import randrange#                  /  ___             /
      'born' into a state of reproductive maturity. Individuals are modeled such
      that they can grow to a reproductively viable state. The rate of per capita
      growth is then influenced by resource availability (R) and R is influenced
-     by V, r, and the concentration of resources in the inflowing medium. """
+     by V, r, and the concentration of resources in the inflowing medium. 
+
+     This script will eventually be carved up into more manageable pieces, but
+     at the moment, I'm just plowing through. """     
 
 """ A function to find the RAD of the community """
 def get_rad(CODcom):
