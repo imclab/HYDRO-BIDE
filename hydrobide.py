@@ -21,7 +21,7 @@ from random import randrange#                             |   |     \           
 #                                              V
 #                                    To intestines & beyond  
 
-"""  This script runs, but needs to be checked for bugs  """
+"""  This script runs nicely, but parameter values need to be examined  """
 
 """  The following is a simulation-based ecological neutral model for a                                                       
      chemostat/organ/bioreactor (COB) scenario. There is 1 source, 1 community, and
@@ -89,18 +89,18 @@ def death_emigration(COBcom,num_out):
 
     Some values for cow rumen obtainable here: http://microbewiki.kenyon.edu/index.php/Bovine_Rumen """
     
-V = 1000.0       # volume of the COB                                                                                                  
+V = 100.0       # volume of the COB                                                                                                  
 r = 10.0         # influent rate (unit volume/unit time)                                                                  
-prop_dens = 50.0 # propagule density, (cells or biomass per unit volume of inflowing medium)
+prop_dens = 10.0 # propagule density, (cells or biomass per unit volume of inflowing medium)
 
-res_dens = 0.5  # growth limiting resource concentration of inflowing medium,
+res_dens = 0.1  # growth limiting resource concentration of inflowing medium,
                 # e.g. (grams cellulose + grams x + grams y) / (grams of medium flowing in) 
                 
                 # Assume initially that resource concentration of the influent equals
                 # the resource concentration of the COB. This makes sense if we're 
                 # starting with a community of zero individuals.
 
-dorm_lim = 0.1 # dormancy threshold; dormancy is undertaken if per capita resource availability
+dorm_lim = 0.05 # dormancy threshold; dormancy is undertaken if per capita resource availability
                 # is below some threshhold (low resources -> low metabolism -> slow growth = go dormant)
                 # This could be made to vary among species
 
@@ -141,10 +141,13 @@ ind_grow = a*ind_res # proportion growth towards reproductive viability achieved
     dormancy, compositional and noncompositional community structure, population structure,
     replacement, & turnover will all ride on random drift. """
     
-time = 10000   # length of the experiment
+time = 1000   # length of the experiment
 t = 0
 while t < time: # looping one time unit at a time
-    print 'time',t,' ','size =',N,'number active',num_A
+    #ct = 0
+    #for i in COBcom:
+    #    if i[1] == 1: ct += 1
+    print 'time',t,' ','size =',N,'active',num_A,ct
     
     """ inflow of individuals, i.e., immigration """
     comlist = immigration(COBcom, im_rate) # add some propagules to the community
@@ -153,6 +156,7 @@ while t < time: # looping one time unit at a time
     """ recalculate parameter values """
     N = len(COBcom)     # Total community size will increase
     num_A += comlist[1]  # total number of active individuals may increase
+    
     R += res_rate        # total resources increases
     ind_res = R/num_A  # per capita resource availability may change
                        # according to a change in the active portion
@@ -198,9 +202,8 @@ while t < time: # looping one time unit at a time
                     
         elif v[1] == 2: # if the individual is dormant
             if ind_res > dorm_lim: # if per capita resource availability > the dormancy threshold
-                COBcom[i][1] = 'a' # go active
+                COBcom[i][1] = 1 # go active
                 num_A += 1
-                
     """ outflow of individuals, i.e., death/emigration """
     N = len(COBcom)
     num_out = int(round(N/V * r)) # no. individuals lost per unit time
@@ -208,7 +211,7 @@ while t < time: # looping one time unit at a time
     if num_out >= 1:
         comlist = death_emigration(COBcom, num_out)
         COBcom = comlist[0] # the newly decreased community
-        num_a = int(comlist[1]) # account for the number of lost active individuals
+        num_a = comlist[1]  # account for the number of lost active individuals
     
     """ recalculate parameter values """
     N = len(COBcom)  # total community size will have decreased
