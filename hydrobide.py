@@ -24,12 +24,10 @@ from random import randrange#                  /  ___             /
 
 """  This script runs nicely, and appears to operate bug free. yippie!
      
-     So far, the active dormant portions of the community appear
-     to behave in a reasonable way according to resource change.
-     Likewise, as should happen, the dormant community can be
-     forced to near extinction by increasing flowthrough; note
-     that propagules have a 50/50 chance of being dormant in this
-     model. """
+     It will need to be checked for artifacts and mis-encoded processes
+     As should happen, the dormant community can be forced to near
+     extinction by increasing flowthrough; note that propagules have
+     a 50/50 chance of being dormant in this model. """
 
 """  The following is a simulation-based ecological neutral model for a                                                       
      chemostat/organ/bioreactor (COB) scenario. There is 1 source, 1 community, and
@@ -79,7 +77,7 @@ def get_rad(CODcom):
 
 """ Some functions to simulate immigration and death/emigration """                      
 def immigration(COBcom,im_rate):
-    p = 0.9 # arbitrarily set log-series parameter
+    p = 0.8 # arbitrarily set log-series parameter
     props = np.random.logseries(p,im_rate) # An initial set of propagules; a list of log-series distributed integers.
                                               # Assume the source community is infinite. Because large communities are
                                               # approximately log-series distributed (most things are rare and relatively
@@ -118,9 +116,9 @@ V = 1000.0       # volume of the COB
 r = 100.0         # influent rate (unit volume/unit time)                                                                  
 prop_dens = 10.0 # propagule density, (cells or biomass per unit volume of inflowing medium)
 
-res_dens = 0.2  # growth limiting resource concentration of inflowing medium,
+res_dens = 0.1  # growth limiting resource concentration of inflowing medium,
                 # e.g. (grams cellulose + grams x + grams y) / (grams of medium flowing in) 
-                
+                     
                 # Assume initially that resource concentration of the influent equals
                 # the resource concentration of the COB. This makes sense if we're 
                 # starting with a community of zero individuals.
@@ -276,7 +274,9 @@ while t <= time: # looping one time unit at a time
            RAD = get_rad(COBcom)
            RAD_Amedium.append(RAD)
     t += 1
-
+    random.shuffle(COBcom) # randomize the community, prevent artifacts
+                           # from arising in the next iteration of the 
+                           # for loop
     """ Here, we have completed one time interval of inflow/outflow """
 
 if len(RAD_Ahigh) > 5: RAD_Ahigh = random.sample(RAD_Ahigh,5) 
@@ -307,7 +307,8 @@ ax = plt.subplot2grid((2,2), (0,0), rowspan=1) # plotting N, dormancy, & activit
 plt.plot(N_COBcom,'0.5',label='Total')
 plt.plot(A_COBcom,'b',label='Active')
 plt.plot(D_COBcom,'r',label='Dormant')
-plt.ylim(3.0,9.0) 
+ymax = max(N_COBcom)+0.5
+plt.ylim(3.0,ymax) 
 plt.xlabel("Time",fontsize=12)
 plt.ylabel("ln(abundance)",fontsize=12)
 plt.text(40,10.0,'Volume = '+str(V)+', inflow rate = '+str(r),fontsize=14,color='k',weight='heavy')
