@@ -113,17 +113,17 @@ def death_emigration(COBcom,num_out):
     Some values for cow rumen obtainable here: http://microbewiki.kenyon.edu/index.php/Bovine_Rumen """
     
 V = 1000.0       # volume of the COB                                                                                                  
-r = 100.0         # influent rate (unit volume/unit time)                                                                  
+r = 100.0        # influent rate (unit volume/unit time)                                                                  
 prop_dens = 10.0 # propagule density, (cells or biomass per unit volume of inflowing medium)
 
-res_dens = 0.1  # growth limiting resource concentration of inflowing medium,
+res_dens = 0.3  # growth limiting resource concentration of inflowing medium,
                 # e.g. (grams cellulose + grams x + grams y) / (grams of medium flowing in) 
                      
                 # Assume initially that resource concentration of the influent equals
                 # the resource concentration of the COB. This makes sense if we're 
                 # starting with a community of zero individuals.
 
-dorm_lim = 0.01 # dormancy threshold; dormancy is undertaken if per capita resource availability
+dorm_lim = .1 # dormancy threshold; dormancy is undertaken if per capita resource availability
                 # is below some threshhold (low resources -> low metabolism -> slow growth = go dormant)
                 # This could be made to vary among species
 
@@ -181,7 +181,7 @@ while t <= time: # looping one time unit at a time
     #ct = 0
     #for i in COBcom:
     #    if i[1] == 1: ct += 1
-    print 'time',t,' ','size =',N,'active',num_A#,ct
+    print 'time',t,' ','size=',N,'per capita resources=',ind_res,'active',num_A#,ct
     
     """ inflow of individuals, i.e., immigration """
     comlist = immigration(COBcom, im_rate) # add some propagules to the community
@@ -354,12 +354,12 @@ leg = plt.legend(loc=1,prop={'size':12})
 leg.draw_frame(False)
 
 plt.subplots_adjust(wspace=0.2, hspace=0.2)
-plt.savefig('COBcom V='+str(V)+' r'+str(r)+' R='+str(res_dens)+' propdens='+str(prop_dens)+' dormlim='+str(dorm_lim)+'.png', dpi=400, bbox_inches = 'tight', pad_inches=0.1) 
+plt.savefig('results/COBcom V='+str(V)+' r'+str(r)+' resdens='+str(res_dens)+' propdens='+str(prop_dens)+' dormlim='+str(dorm_lim)+'.png', dpi=400, bbox_inches = 'tight', pad_inches=0.1) 
 
 
 sys.exit()    
 # write the list to a file
-OUT = open('/home/kenlocey/COBcom V='+str(V)+' r'+str(r)+' R='+str(res_dens)+' propdens='+str(prop_dens)+' dormlim='+str(dorm_lim),'w+')
+OUT = open('/results/COBcom V='+str(V)+' r'+str(r)+' resdens='+str(res_dens)+' propdens='+str(prop_dens)+' dormlim='+str(dorm_lim),'w+')
 for _list in COBcom:
     print>>OUT, _list[0],_list[1],_list[2]    
 OUT.close() 
