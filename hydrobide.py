@@ -147,7 +147,7 @@ while t < time: # looping one time unit at a time
     #ct = 0
     #for i in COBcom:
     #    if i[1] == 1: ct += 1
-    print 'time',t,' ','size =',N,'active',num_A,ct
+    print 'time',t,' ','size =',N,'active',num_A#,ct
     
     """ inflow of individuals, i.e., immigration """
     comlist = immigration(COBcom, im_rate) # add some propagules to the community
