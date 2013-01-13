@@ -113,7 +113,7 @@ def death_emigration(COBcom,num_out):
     Some values for cow rumen obtainable here: http://microbewiki.kenyon.edu/index.php/Bovine_Rumen """
     
 V = 1000.0       # volume of the COB                                                                                                  
-r = 150.0        # influent rate (unit volume/unit time)                                                                  
+r = 200.0        # influent rate (unit volume/unit time)                                                                  
 prop_dens = 10.0 # propagule density, (cells or biomass per unit volume of inflowing medium)
 
 res_dens = 0.7  # growth limiting resource concentration of inflowing medium,
@@ -313,8 +313,7 @@ ymin = min(min(A_COBcom),min(D_COBcom))-0.1
 plt.ylim(ymin,ymax) 
 plt.xlabel("Time",fontsize=12)
 plt.ylabel("ln(abundance)",fontsize=12)
-#plt.text(40,10.0,'Volume = '+str(V)+', inflow rate = '+str(r),fontsize=14,color='k',weight='heavy')
-#plt.text(-10.0,9.4,'Resource density = '+str(res_dens)+', Propagule density = '+str(prop_dens)+', Dormancy threshold = '+str(dorm_lim),fontsize=14,color='k',weight='heavy')
+plt.title("EQ: N ~constant, D & A change in sync",fontsize=12) 
 # Add legend
 leg = plt.legend(loc=10,prop={'size':12})
 leg.draw_frame(False)
