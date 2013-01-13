@@ -8,8 +8,8 @@ import re#                                                  |                   
 from pylab import *#                                      | V |                             || | | | ORGAN
 from random import choice#                                |   |_____                        || |_| |__           
 from random import randrange#                             |   |     \                       \\____/   \
-#                                                         |         |                          || |_| |
-#                                                         / birth   | -biomass turnover?       ||  _ <  BIOREACTOR
+import math#                                              |         |                          || |_| |
+from scipy import stats#                                  / birth   | -biomass turnover?       ||  _ <  BIOREACTOR
 #                                                        /    &     |                          || |_| |
 #                                               ________/   death  /  -community structure?    ||____/
 #                                              /  ___             /
@@ -89,9 +89,9 @@ def death_emigration(COBcom,num_out):
 
     Some values for cow rumen obtainable here: http://microbewiki.kenyon.edu/index.php/Bovine_Rumen """
     
-V = 10000.0       # volume of the COB                                                                                                  
+V = 1000.0       # volume of the COB                                                                                                  
 r = 100.0         # influent rate (unit volume/unit time)                                                                  
-prop_dens = 50.0 # propagule density, (cells or biomass per unit volume of inflowing medium)
+prop_dens = 10.0 # propagule density, (cells or biomass per unit volume of inflowing medium)
 
 res_dens = 0.1  # growth limiting resource concentration of inflowing medium,
                 # e.g. (grams cellulose + grams x + grams y) / (grams of medium flowing in) 
@@ -141,7 +141,7 @@ ind_grow = a*ind_res # proportion growth towards reproductive viability achieved
     dormancy, compositional and noncompositional community structure, population structure,
     replacement, & turnover will all ride on random drift. """
     
-time = 10000   # length of the experiment
+time = 100   # length of the experiment
 
 N_COBcom = []   # list to track N over time
 A_COBcom = []   # list to track number of active individuals over time
@@ -227,10 +227,10 @@ while t < time: # looping one time unit at a time
     ind_res = R/num_A  # per capita resource availability may change
     ind_grow = a*ind_res # per capita growth rate may change
     
-    N_COBcom.append(N)
-    A_COBcom.append(num_A)
+    N_COBcom.append(np.log(N)) # using natural logs when values can be enormous
+    A_COBcom.append(np.log(num_A))
     pcr_COBcom.append(ind_res)
-    R_COBcom.append(R)
+    R_COBcom.append(np.log(R))
     
     t += 1
     
@@ -244,7 +244,10 @@ while t < time: # looping one time unit at a time
     third index representing % growth to reproductive
     viability. We can do a lot with this list of lists."""
 
-
+fig = plt.figure()
+plt.plot(N_COBcom,'k')
+plt.plot(A_COBcom,'b')
+plt.savefig('COBcom.png', dpi=400, bbox_inches = 'tight', pad_inches=0.1)  
 
 sys.exit()    
 # write the list to a file
