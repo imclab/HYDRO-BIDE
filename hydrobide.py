@@ -21,7 +21,7 @@ from random import randrange#                             |   |     \           
 #                                              V
 #                                    To intestines & beyond  
 
-"""  This script runs nicely, but parameter values need to be examined  """
+"""  This script runs nicely, but needs to be checked for bugs.  """
 
 """  The following is a simulation-based ecological neutral model for a                                                       
      chemostat/organ/bioreactor (COB) scenario. There is 1 source, 1 community, and
@@ -89,9 +89,9 @@ def death_emigration(COBcom,num_out):
 
     Some values for cow rumen obtainable here: http://microbewiki.kenyon.edu/index.php/Bovine_Rumen """
     
-V = 100.0       # volume of the COB                                                                                                  
-r = 10.0         # influent rate (unit volume/unit time)                                                                  
-prop_dens = 10.0 # propagule density, (cells or biomass per unit volume of inflowing medium)
+V = 10000.0       # volume of the COB                                                                                                  
+r = 100.0         # influent rate (unit volume/unit time)                                                                  
+prop_dens = 50.0 # propagule density, (cells or biomass per unit volume of inflowing medium)
 
 res_dens = 0.1  # growth limiting resource concentration of inflowing medium,
                 # e.g. (grams cellulose + grams x + grams y) / (grams of medium flowing in) 
@@ -141,7 +141,13 @@ ind_grow = a*ind_res # proportion growth towards reproductive viability achieved
     dormancy, compositional and noncompositional community structure, population structure,
     replacement, & turnover will all ride on random drift. """
     
-time = 1000   # length of the experiment
+time = 10000   # length of the experiment
+
+N_COBcom = []   # list to track N over time
+A_COBcom = []   # list to track number of active individuals over time
+pcr_COBcom = [] # list to tack per capita resources over time
+R_COBcom = []   # list to track total resources over time
+
 t = 0
 while t < time: # looping one time unit at a time
     #ct = 0
@@ -221,6 +227,11 @@ while t < time: # looping one time unit at a time
     ind_res = R/num_A  # per capita resource availability may change
     ind_grow = a*ind_res # per capita growth rate may change
     
+    N_COBcom.append(N)
+    A_COBcom.append(num_A)
+    pcr_COBcom.append(ind_res)
+    R_COBcom.append(R)
+    
     t += 1
     
     """ Here, we have completed one time interval of inflow/outflow """
@@ -232,6 +243,8 @@ while t < time: # looping one time unit at a time
     second index representing active/dormant, & the
     third index representing % growth to reproductive
     viability. We can do a lot with this list of lists."""
+
+
 
 sys.exit()    
 # write the list to a file
