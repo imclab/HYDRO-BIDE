@@ -116,14 +116,14 @@ V = 1000.0       # volume of the COB
 r = 100.0        # influent rate (unit volume/unit time)                                                                  
 prop_dens = 10.0 # propagule density, (cells or biomass per unit volume of inflowing medium)
 
-res_dens = 0.3  # growth limiting resource concentration of inflowing medium,
+res_dens = 0.8  # growth limiting resource concentration of inflowing medium,
                 # e.g. (grams cellulose + grams x + grams y) / (grams of medium flowing in) 
                      
                 # Assume initially that resource concentration of the influent equals
                 # the resource concentration of the COB. This makes sense if we're 
                 # starting with a community of zero individuals.
 
-dorm_lim = .1 # dormancy threshold; dormancy is undertaken if per capita resource availability
+dorm_lim = .05 # dormancy threshold; dormancy is undertaken if per capita resource availability
                 # is below some threshhold (low resources -> low metabolism -> slow growth = go dormant)
                 # This could be made to vary among species
 
@@ -307,14 +307,14 @@ ax = plt.subplot2grid((2,2), (0,0), rowspan=1) # plotting N, dormancy, & activit
 plt.plot(N_COBcom,'0.5',label='Total')
 plt.plot(A_COBcom,'b',label='Active')
 plt.plot(D_COBcom,'r',label='Dormant')
-ymax = max(N_COBcom)+0.5
-plt.ylim(3.0,ymax) 
+#ymax = max(N_COBcom)+0.5
+#plt.ylim(3.0,ymax) 
 plt.xlabel("Time",fontsize=12)
 plt.ylabel("ln(abundance)",fontsize=12)
-plt.text(40,10.0,'Volume = '+str(V)+', inflow rate = '+str(r),fontsize=14,color='k',weight='heavy')
-plt.text(-10.0,9.4,'Resource density = '+str(res_dens)+', Propagule density = '+str(prop_dens)+', Dormancy threshold = '+str(dorm_lim),fontsize=14,color='k',weight='heavy')
+#plt.text(40,10.0,'Volume = '+str(V)+', inflow rate = '+str(r),fontsize=14,color='k',weight='heavy')
+#plt.text(-10.0,9.4,'Resource density = '+str(res_dens)+', Propagule density = '+str(prop_dens)+', Dormancy threshold = '+str(dorm_lim),fontsize=14,color='k',weight='heavy')
 # Add legend
-leg = plt.legend(loc=8,prop={'size':12})
+leg = plt.legend(loc=10,prop={'size':12})
 leg.draw_frame(False)
 
 ax = plt.subplot2grid((2,2), (0,1), rowspan=1) # plotting N, R, & per capita resources through time
