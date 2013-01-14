@@ -1,16 +1,19 @@
 #!/usr/local/bin/python                                                                   
                                                                        
-import sys                                          
-import os                                                                  
-import  matplotlib.pyplot as plt   
-from pylab import *                                        
-import numpy as np                                     
-from scipy import stats                                      
-import random                                            
-from random import choice                               
-import re                                               
-from decimal import *                               
-import math                                 
+import sys                                            
+import os                                                  
+import  matplotlib.pyplot as plt     
+sys.path.append("/home/kenlocey/hydrobide_modules")
+import hydrobide_modules as hm
+from mpl_toolkits.axes_grid.inset_locator import inset_axes
+from pylab import *                                       
+import numpy as np                                    
+from scipy import stats                                 
+import random                                           
+from random import choice                          
+import re                                             
+from decimal import *                                 
+import math                                    
 from random import randrange
 
 """ FUTURE SITE OF DROOP/CELL QUOTA MODEL, CHECK BACK LATER """
