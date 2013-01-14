@@ -3,11 +3,17 @@ HYDRO-BIDE
 
 A repository to hold scripts and data for studying effects of hydrodynamic constraints on microbial systems
 
-As of 13-Jan-2013 the repository contains:
+As of 13-Jan-2013 the repository contained:
 * 1 Python script of a hydrodynamic BIDE (birth,immigration,death,emigration) model
 * 1 example .png file of the figures the script creates
 * 4 files containing metagenomic data obtained from samples of bovine rumen.
 * a readme file
+
+Near future additions:
+* Monod model
+* Droop model
+* Module holding plotting and analysis functions
+* Lake microbe metagenomic data
 
 License
 =======
