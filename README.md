@@ -32,13 +32,6 @@ Ken Locey's email: ken@weecology.org and locey@biology.usu.edu
 
 *Go to [Ken's website](kenlocey.wordpress.com)*
 
-Included files
--------------------------
-
-* Python modules (soon to come)
-* Python scripts to simulate neutral and nonneutral chemostat, organ, and bioreactor communities
-and to examine the potential influences of volume, inflow rate, etc.
-* Cython setup files (soon to come)
 
 Programs and packages used by the authors
 -------------------------------
@@ -50,6 +43,8 @@ Cython (optional)
 
 Cython
 ------
+Most scripts will eventually have associated Cython setup files.
+
 
 Cython is a language that makes writing C extensions for the Python language as easy as Python itself.
 It is based on the well-known Pyrex, but supports more cutting edge functionality and optimizations.
@@ -70,6 +65,3 @@ iPython and iPython Notebook
 We are currently rescripting copies of repository files to be used in iPython Notebook. Running scripts in
 iPython notebook will enable users to read comments in a convenient form, run blocks of code, and visualize
 results between blocks of code. 
-
-The biggest problem is that most of the scripts in this repository use Sage, and calling Sage within the iPython
-notebook is going to take some thinking.
