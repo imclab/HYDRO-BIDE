@@ -1,26 +1,21 @@
 #!/usr/local/bin/python                                                                   
-#                                                                                          _____
-#                                                                                        //  _  \
-#                                                                                        || | |_|
-import sys#                                              Esophagus                       || |  _  CHEMOSTAT
-import os#                                                  |                            || |_| |__ 
-import  matplotlib.pyplot as plt#      (inflow of resources & immigration )              \\_____/  \
-from pylab import *#                                        |                               || | | |
-import numpy as np#                                       | V |                             || | | | ORGAN
-from scipy import stats#                                  |   |_____                        || |_| |__           
-import random#                                            |   |     \                       \\_____/  \
-from random import choice#                                |         |                          || |_| |
-import re#                                                / birth   | -biomass turnover?       ||  _ <  BIOREACTOR
-from decimal import *#                                   /    &     |                          || |_| |
-import math#                                    ________/   death  /  -community structure?    ||_____/
-from random import randrange#                  /  ___             /
-#                                             /  /  \            /    -dormancy dynamic?
-#                                              |     \__________/ 
-#                                              |       
-#                           (death, emigration, & loss of resources)      
-#                                              |
-#                                              V
-#                                    To intestines & beyond  
+
+import sys                                            
+import os                                                  
+import  matplotlib.pyplot as plt     
+sys.path.append("/home/kenlocey/hydrobide_modules")
+import hydrobide_modules as hm
+from mpl_toolkits.axes_grid.inset_locator import inset_axes
+from pylab import *                                       
+import numpy as np                                    
+from scipy import stats                                 
+import random                                           
+from random import choice                          
+import re                                             
+from decimal import *                                 
+import math                                    
+from random import randrange                
+
 
 """  This script runs nicely, and appears to operate bug free. yippie!
      It will need to be checked for artifacts and mis-encoded processes. """
@@ -62,59 +57,9 @@ from random import randrange#                  /  ___             /
      This script will eventually be carved up into more manageable pieces, but
      at the moment, I'm just plowing through. """     
 
-""" A function to find the RAD of the community """
-def get_rad(CODcom):
-    rad = []
-    tx_labels = []
-    for i in CODcom:
-        tx_labels.append(i[0])
-    taxa = set(tx_labels)
-    for t in taxa:
-        ab = tx_labels.count(t)
-        rad.append(np.log(ab))
-    rad.sort()
-    rad.reverse()
-    
-    return rad
-
-""" Some functions to simulate immigration and death/emigration """                      
-def immigration(COBcom,im_rate,bp):
-    p = 0.70 # arbitrarily set log-series parameter
-    props = np.random.logseries(p,im_rate) # An initial set of propagules; a list of log-series distributed integers.
-                                              # Assume the source community is infinite. Because large communities are
-                                              # approximately log-series distributed (most things are rare and relatively
-                                              # few things are abundant) immigration of propagules will occur in a log-series
-                                              # distributed fashion (i.e. not all species have the same chance of contributing 
-                                              # propagules. Still neutral in the per capita sense.
-    num_A = 0 # number of active individuals
-    
-    for prop in props: 
-        state = np.random.binomial(1,bp,1) #   
-        if state == 1: num_A += 1
-        else: state == 2
-        growth = float(np.random.randint(0,101))#       2. propagules have equal chances of being 0 to 100% reproductively viable  
-        i = [prop,state,growth] 
-        COBcom.append(i) # adding the propagule's taxa label, activity state, and growth state to the community 
-    
-    return [COBcom,num_A]
-
-    
-def death_emigration(COBcom,num_out):
-    ct = 0
-    num_A = 0
-    while ct < num_out:
-        random_i = randrange(0,len(COBcom)) # randomly pick an individual
-        if COBcom[random_i][1] == 1: num_A += 1 # count the number of active individuals lost
-        COBcom.pop(random_i) # die/emigrate
-        ct+=1
-    return [COBcom,num_A]
-
-
 
 """ Things that will remain constant through time, the values of which, must be reasonable
-    or the COB will crash, explode, or worse 
-
-    Some values for cow rumen obtainable here: http://microbewiki.kenyon.edu/index.php/Bovine_Rumen """
+    or the COB will crash, explode, or worse """
     
 V = 1000.0      # volume of the COB                                                                                                  
 r = 10.0        # influent rate (unit volume/unit time)                                                                  
@@ -143,7 +88,7 @@ R = V * res_dens # Amount of resources in the COB before inoculation. If inflow 
 
 """ The community (COBcom) will be a list of lists: """
 COBcom = []
-comlist = immigration(COBcom, im_rate, bp) # inoculate the community with propagules using the above function
+comlist = hm.immigration(COBcom, im_rate, bp,lgp = 0.7) # inoculate the community with propagules using the above function
 COBcom = comlist[0] # The community
 N = len(COBcom)     # size of the community
 num_A = comlist[1]  # number of active individuals in COBcom 
@@ -151,9 +96,6 @@ num_A = comlist[1]  # number of active individuals in COBcom
                     # individual is dormant or active, and how close the individuals is to          
                     # being reproductively viable.                                                  
 
-#print COBcom
-#sys.exit()
-            
 """ Things that will change as the community changes """         
 c = 1.0 # constant of proportionality; will eventually be used to create taxa differences
 R += res_rate # R increases due to inflow
@@ -171,8 +113,8 @@ ind_grow = a*ind_res # proportion growth towards reproductive viability achieved
     dormancy, compositional and noncompositional community structure, population structure,
     replacement, & turnover will all ride on random drift. """
     
-time = 800   # length of the experiment
-burnin = 700  # number of initial time steps to discard
+time = 400   # length of the experiment
+burnin = 300  # number of initial time steps to discard
 
 N_COBcom = []   # list to track N over time
 A_COBcom = []   # list to track number of active individuals over time
@@ -192,7 +134,7 @@ while t <= time: # looping one time unit at a time
     print 'time',t,'immigrants',im_rate,' ','size=',N,'per capita resources=',ind_res,'active',num_A#,ct
     
     """ inflow of individuals, i.e., immigration """
-    comlist = immigration(COBcom, im_rate, bp) # add some propagules to the community
+    comlist = hm.immigration(COBcom, im_rate, bp, lgp=0.7) # add some propagules to the community
     COBcom = comlist[0]
     
     """ recalculate parameter values """
@@ -251,7 +193,7 @@ while t <= time: # looping one time unit at a time
     num_out = int(round(N/V * r)) # no. individuals lost per unit time
     num_a = 0
     if num_out >= 1:
-        comlist = death_emigration(COBcom, num_out)
+        comlist = hm.death_emigration(COBcom, num_out)
         COBcom = comlist[0] # the newly decreased community
         num_a = comlist[1]  # account for the number of lost active individuals
     
@@ -273,13 +215,13 @@ while t <= time: # looping one time unit at a time
         
         percent_A = num_A/float(N)
         if percent_A >= 0.66:
-            RAD = get_rad(COBcom)
+            RAD = hm.get_rad(COBcom)
             RAD_Ahigh.append(RAD)
         elif percent_A < 0.33:
-           RAD = get_rad(COBcom)
+           RAD = hm.get_rad(COBcom)
            RAD_Alow.append(RAD)
         else:
-           RAD = get_rad(COBcom)
+           RAD = hm.get_rad(COBcom)
            RAD_Amedium.append(RAD)
     t += 1
     random.shuffle(COBcom) # randomize the community, prevent artifacts
@@ -303,74 +245,7 @@ sets_of_RADS = [RAD_Ahigh,RAD_Amedium,RAD_Alow] # A list to hold lists that have
     third index representing % growth to reproductive
     viability. """
 
-
-
-""" NOTE: Everything below pertains to plotting and graphing.
-    This code will eventually be moved to a module KL will
-    create for this project """
-
-fig = plt.figure(figsize=(10.0,8.0))
-
-
-ax = plt.subplot2grid((2,2), (0,0), rowspan=1) # plotting N, dormancy, & activity through time
-plt.plot(N_COBcom,'0.5',label='Total')
-plt.plot(A_COBcom,'r',label='Active')
-plt.plot(D_COBcom,'b',label='Dormant')
-ymax = max(N_COBcom)+0.1
-ymin = min(min(A_COBcom),min(D_COBcom))-0.1
-plt.ylim(ymin,ymax) 
-plt.xlabel("Time",fontsize=12)
-plt.ylabel("ln(abundance)",fontsize=12)
-plt.title("EQ: N ~constant, D & A change in sync",fontsize=12) 
-# Add legend
-leg = plt.legend(loc=10,prop={'size':12})
-leg.draw_frame(False)
-
-ax = plt.subplot2grid((2,2), (0,1), rowspan=1) # plotting N, R, & per capita resources through time
-plt.ylim(-0.1,max(R_COBcom)+0.5)
-plt.plot(R_COBcom, 'b', label='ln(total resources)')
-plt.plot(pcr_COBcom, 'r', label='per capita resources')
-plt.xlabel("Time",fontsize=12)
-plt.ylabel("Value",fontsize=12)
-# add some vertical gridlines
-t_range = range(0,(time - burnin),10)
-for t in t_range:
-    plt.axvline(x=t,color='0.80',ls='--',lw=1) # plot a vertical line at the mode
-# Add legend
-leg = plt.legend(loc=10,prop={'size':12})
-leg.draw_frame(False)
-
-ax = plt.subplot2grid((2,2), (1,0), rowspan=1) # plotting activity vs. dormancy
-plt.scatter(A_COBcom, D_COBcom, c='0.4', lw=0.5)#, label='active vs. dormant')
-plt.title("Each point represents a time step",fontsize=12) 
-plt.xlabel("ln(active abundance)",fontsize=12)
-plt.ylabel("ln(dormant abundance)",fontsize=12)
-
-ax = plt.subplot2grid((2,2), (1,1), rowspan=1) # plotting activity vs. dormancy
-ct = 0
-colors = ['r','0.4','b']
-series = ['high activity', 'medium activity', 'high dormancy'] 
-for RADs in sets_of_RADS:
-    plt.plot([0],[0],color=colors[ct],label=series[ct],lw=3)
-    for RAD in RADs:
-        rank = range(1,len(RAD)+1)
-        plt.plot(rank, RAD, c=colors[ct], lw=0.5)
-    ct += 1
-# add labels
-plt.xlabel("Rank",fontsize=12)
-plt.ylabel("ln(abundance)",fontsize=12)
-plt.title(str(nRADs)+' randomly chosen RADs per activity level',fontsize=12) 
-# Add legend
-leg = plt.legend(loc=1,prop={'size':12})
-leg.draw_frame(False)
-
-
-plt.subplots_adjust(wspace=0.2, hspace=0.3)
-plt.savefig('results/COBcom V='+str(V)+' r'+str(r)+' resdens='+str(res_dens)+' propdens='+str(prop_dens)+' dormlim='+str(dorm_lim)+'.png', dpi=400, bbox_inches = 'tight', pad_inches=0.1) 
-
-sys.exit()    
-# write the list to a file
-OUT = open('/results/COBcom V='+str(V)+' r'+str(r)+' resdens='+str(res_dens)+' propdens='+str(prop_dens)+' dormlim='+str(dorm_lim),'w+')
-for _list in COBcom:
-    print>>OUT, _list[0],_list[1],_list[2]    
-OUT.close() 
+# plot fig1
+hm.fig1(N_COBcom,A_COBcom,D_COBcom,R_COBcom,pcr_COBcom,time,burnin,sets_of_RADS,V,r,res_dens,prop_dens,dorm_lim,nRADs)
+# write the community to a file
+#hm.comm_to_file(COBcom)
