@@ -31,24 +31,111 @@ from random import randrange
      mu_max = max. specific growth rate, nutrient-saturated reproductive rate
      Ks = half-saturation coefficient; S when mu/mu_max = 0.5., concentration at which µ is one-half its maximum
      
-     Here, community dynamics are NOT necessarily neutral but they ARE stochastic. This maintains a
-     non-deterministic form of competition for limiting resources among many distinct species. This means that
-     individuals are still picked at random to immigrate, die, reproduce, emigrate, etc. but according to
+     Here, community dynamics are NOT necessarily neutral but they DO have a stochastic component that maintains a
+     non-deterministic competition for limiting resources among many distinct species. This means that
+     individuals are still picked at random to immigrate, reproduce, emigrate, etc. but according to
      probabilities that may or may not differ among species (i.e. neutral or non-neutral).  
      
-     The model will simulate a community under varying resource concentration. The inflow of a limiting resource
-     and propagules will remain constant, and so will the volume of the environment. But, due to changing community
-     size, composition, and the number of dormant and active individuals, the concentration of limiting resource
-     or substrate will change from one time period to the next. 
+     The inflow of a limiting resource and propagules will remain constant through time and so will the volume
+     of the environment. Volume, inflow rate, proportion of active individuals, and concentration of inflowing
+     resources all influence resource concentration. Resource concentration influences specific growth rate (mu).
+     Mu can be translated to a per capita probability of reproducing in a given time step (during which all
+     individuals could theoretically reproduce if S was not limiting).   
+         
+     In a given time period when individuals can either reproduce or not, and the lack of reproduction
+     implies dormancy and not death (outflow captures death + emigration):
+         
+         Note: the ratio of specific growth rate (mu) to max specific growth rate (mu_max), varies from 0 to 1.
+               Ks occurs midway in this range.
+         
+         1. Let Pr be the per capita probability of reproducing
+                  
+         2. Let Smax be the smallest resource concentration required for mu_max
+         
+         3. Then at a concentration at or above Smax, mu = mu_max & Pr = 1.0
+               i.e. everybody reproduces during a period when everybody has the opportunity
+                    to reproduce once, Malthusian growth
+         
+         4. Now, let there be a threshold on resource concentration (Smin) below which, growth/reproduction
+              cannot occur. In this case, individuals persist in the environment without growing/reproducing
+              but do not die (i.e. effectively dormant).
+              
+         In a given time period when individuals can either reproduce or not, and the lack of reproduction
+         implies dormancy and not death, this means:
+                 
+             The probability of being dormant (Pd) is one minus the probability of reproducing, i.e. Pd = 1 - Pr 
+                 
+             In an infinitely large population (or neutral community), the probability of reproducing would 
+             equal the portion of active individuals. Likewise, the probability of being dormant would equal
+             one minus the probability of reproducing, i.e.
+                 Pd = (D/N) = 1 - (A/N) = 1 - Pr   
+         
+             Consequently, knowing Pr can be used to sample the community. So, how do we find Pr?
+                 
+             Knowing that:
+                 at Smax, mu = mu_max & Pr = 1
+                 at Smin, mu = 0 & Pr = 0
+                 at Smin < S < Smax, 0 < mu < mu_max
+                 
+                 Ask: How do we relate S to mu?
+                 Answer:   
+                 
+                 Account for the floor (mu = 0 when S = Smin)
+                     subtract Smin from each term:
+                         S' = S - Smin
+                         Smax' = Smax - Smin
+                 
+                 Account for the ceiling (mu = 1 when S = Smax)
+                     if S' > Smax':
+                         mu = (S' - (S' - Smax')) / Smax'
+                     if Smin < S <= Smax: 
+                         mu = S'/Smax'
+                         
+                 Finally:
+                     mu = p = [(S' + Smax') - max(S', Smax')]/Smax' 
+          
+      Letting dormancy occur naturally:
+          Chance of being dormant decreases with the chance of reproducing (i.e. with mu)
+          pD = probability of being dormant
+          mu = probability of reproducing
+          
+          Something like a decreasing logistic curve:
+          
+          logistic equation (increasing): y = 1/(1 + e^(-t))
+          
+          
+          
+           pD = 1/(1 + e^(c*mu)) , c controls the slope
+                
+          
+          a certain probability, reflecting that resource concentration is too
+          low to expect growth.
+          
+          
+          
+          All this can vary among species.
      
-     The growth rate (mu) will actually be a probability of reproducing. This probability will be influenced
-     by the concentration of resources in the environment (S). S will then be driven by the rate of inflow (r),
-     volume of the environment (V), and concentration of resources in the inflowing medium, as well as by the size of
-     the active portion of the community in the previous time step.
+     Rescource concentration will then be driven by the rate of inflow (r), volume of the environment (V),
+     the inflowing concentration of resources, and the size of the active portion of the community in the
+     previous time step.
      
-     Since the community will have active and dormant portions that vary in size and composition through time, and
-     since the community will not be at a steady state, specific growth rate and dilution rate (volume/flow rate)
-     will not be equivalent.
+     Dilution rate will determine rates of emigration and death, which will vary with the community size.
+     When mu drops below a certain probability, things go dormant (or die)
+     When mu is above a certain probability, dormant things can become active
+     
+     This model will capture aspects of:
+     
+     Tilman (2004). Niche tradeoffs, neutrality, and community structure: A stochastic theory of resource
+     competition, invasion, and community assembly. PNAS, 101:10854-10861.
+     
+         Tilman (2004) recognizes the importance of niche differences and stochastic dynamics
+     
+     Pueyo S, Fangliang H & Zillio T (2007) The maximum entropy formalism and the idiosyncratic theory
+     of biodiversity. Ecology Letters, 10:1017-1028.
+     
+         Whereas neutral theory ignores all species differences, the idiosyncratic theory of Pueyo et al. (2007) 
+         ignores all species similarities. These represent the two ends of a continuum of possible models that
+         produce realistic log-series like community structure. 
      
        """
 
