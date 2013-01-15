@@ -121,6 +121,11 @@ while t <= time:
     """ Here, we have completed one time interval of inflow/outflow """
 
 
+""" Here, we end the experiment and the result is a huge list of small lists. Each small list
+    looks something like [1, 2, 50.0] with the first index representing the taxa label, the
+    second index representing active/dormant, & the third index representing % growth to reproductive
+    viability. """
+
 nRADs = 10
 if len(RAD_Ahigh) > nRADs: RAD_Ahigh = random.sample(RAD_Ahigh,nRADs) 
 if len(RAD_Amedium) > nRADs: RAD_Amedium = random.sample(RAD_Amedium,nRADs) 
@@ -129,10 +134,6 @@ if len(RAD_Alow) > nRADs: RAD_Alow = random.sample(RAD_Alow,nRADs)
 sets_of_RADS = [RAD_Ahigh,RAD_Amedium,RAD_Alow] # A list to hold lists that have captured the community
                                                 # at times of high, low, and medium activity
     
-""" Here, we end the experiment and the result is a huge list of small lists. Each small list
-    looks something like [1, 2, 50.0] with the first index representing the taxa label, the
-    second index representing active/dormant, & the third index representing % growth to reproductive
-    viability. """
 
 # plot fig1
 hm.fig1(N_COBcom,A_COBcom,D_COBcom,R_COBcom,pcr_COBcom,time,burnin,sets_of_RADS,V,r,res_dens,prop_dens,dorm_lim,nRADs)
