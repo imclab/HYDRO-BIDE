@@ -105,7 +105,6 @@ while t <= time:
     N = len(COBcom)
     
     """ outflow of individuals and resources """
-    
     COBcom, num_a = hm.death_emigration(COBcom, N, V, r)
     N = len(COBcom)
     #recalculate parameter values """
@@ -114,26 +113,13 @@ while t <= time:
     
     """ recording community info from time-steps """
     if t >= burnin:# and t%10 == 0: # allow a burn-in
-        N_COBcom.append(np.log(N)) # using natural logs when values can be enormous
-        A_COBcom.append(np.log(num_A))
-        D_COBcom.append(np.log(N-num_A))
-        pcr_COBcom.append(ind_res)
-        R_COBcom.append(np.log(R))
+        # call function to add information to lists, will be used for plotting changes, e.g. across time
+        N_COBcom, A_COBcom, D_COBcom, pcr_COBcom, R_COBcom, RAD_Ahigh, RAD_Alow, RAD_Amedium = hm.add_to_lists_neutral(COBcom, N, num_A, ind_res, R, N_COBcom, A_COBcom, D_COBcom, pcr_COBcom, R_COBcom, RAD_Ahigh, RAD_Alow, RAD_Amedium)
         
-        percent_A = num_A/float(N)
-        if percent_A >= 0.66:
-            RAD = hm.get_rad(COBcom)
-            RAD_Ahigh.append(RAD)
-        elif percent_A < 0.33:
-           RAD = hm.get_rad(COBcom)
-           RAD_Alow.append(RAD)
-        else:
-           RAD = hm.get_rad(COBcom)
-           RAD_Amedium.append(RAD)
-
     t += 1
     random.shuffle(COBcom) # randomize the community, prevent artifacts from arising due to list order
     """ Here, we have completed one time interval of inflow/outflow """
+
 
 nRADs = 10
 if len(RAD_Ahigh) > nRADs: RAD_Ahigh = random.sample(RAD_Ahigh,nRADs) 
