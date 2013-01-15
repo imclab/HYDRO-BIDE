@@ -32,15 +32,13 @@ from random import randrange
      Ks = half-saturation coefficient; S when mu/mu_max = 0.5., concentration at which µ is one-half its maximum
      
      Here, community dynamics are NOT necessarily neutral but they DO have a stochastic component that maintains a
-     non-deterministic competition for limiting resources among many distinct species. This means that
+     non-deterministic competition for limiting resources among many potentially distinct species. This means that
      individuals are still picked at random to immigrate, reproduce, emigrate, etc. but according to
      probabilities that may or may not differ among species (i.e. neutral or non-neutral).  
      
      The inflow of a limiting resource and propagules will remain constant through time and so will the volume
-     of the environment. Volume, inflow rate, proportion of active individuals, and concentration of inflowing
-     resources all influence resource concentration. Resource concentration influences specific growth rate (mu).
-     Mu can be translated to a per capita probability of reproducing in a given time step (during which all
-     individuals could theoretically reproduce if S was not limiting).   
+     of the environment. Volume, inflow rate, and concentration of incoming resources will influence S.
+     S influences specific growth rate (mu).
      
      In a time period when metabolically active growing individuals would reproduce, during which, the lack of
      reproduction implies dormancy and not death (outflow will capture death & emigration):
@@ -52,8 +50,8 @@ from random import randrange
                 Smax = 2*Ks
              
          3. At a concentration S at or above Smax, mu = mu_max & Pr = 1.0
-               i.e. everybody is expected to reproduce during a period when everybody has had the opportunity,
-                    Malthusian growth
+               i.e. everybody is expected to grow and reproduce during a period when everybody has
+                    the opportunity, i.e. Malthusian growth
          
          4. Let there be a threshold on resource concentration (Smin) at which, growth/reproduction cannot occur.
             Individuals persist without growing/reproducing (i.e. effectively dormant).
