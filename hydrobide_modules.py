@@ -12,9 +12,8 @@ import re
 from decimal import *                               
 import math                                 
 from random import randrange                
-                                          
-                                  
-
+             
+             
 """  UNDER HEAVY CONSTRUCTION. FUTURE SITE OF MANY COOL FUNCTIONS
 
      This file contains functions for plotting, statistical analysis,
@@ -35,6 +34,14 @@ def get_rad(CODcom):
     rad.reverse()
     
     return rad
+
+""" A function to get rates of immigration and resource delivery """
+def get_in_rates(r,prop_dens,res_dens):
+    
+    im_rate = int(round(prop_dens * r)) # immigration rate (cells/unit time)                                     
+    res_rate = res_dens * r # resource delivery rate, (unit resource/unit time) 
+
+    return [im_rate,res_rate]
 
 """ Some functions to simulate immigration and death/emigration """                      
 def immigration(COBcom,im_rate,bp,lgp):
@@ -58,17 +65,84 @@ def immigration(COBcom,im_rate,bp,lgp):
     return [COBcom,num_A]
 
     
-def death_emigration(COBcom,num_out):
-    ct = 0
-    num_A = 0
-    while ct < num_out:
-        random_i = randrange(0,len(COBcom)) # randomly pick an individual
-        if COBcom[random_i][1] == 1: num_A += 1 # count the number of active individuals lost
-        COBcom.pop(random_i) # die/emigrate
-        ct+=1
-    return [COBcom,num_A]
+def death_emigration(COBcom, N, V, r):
+    num_out = int(round(N/V * r)) # no. individuals lost per unit time
+    
+    if num_out <= 0: 
+        num_a = 0
+        return [COBcom,num_a]
+    
+    else:
+        ct = 0
+        num_a = 0
+        while ct < num_out:
+            random_i = randrange(0,len(COBcom)) # randomly pick an individual
+            if COBcom[random_i][1] == 1: num_a += 1 # count the number of active individuals lost
+            COBcom.pop(random_i) # die/emigrate
+            ct+=1
+    return [COBcom,num_a]
 
 
+""" A function to recalculate parameter values for the neutral hydrobide model """
+def params_neutral(V, r, a, num_A, num_a, R, ind_res, res_rate, in_or_out):
+
+    if in_or_out == 'in':
+        num_A += num_a 
+        R += res_rate        
+        ind_res = R/num_A  
+        ind_grow = a*ind_res 
+    
+    elif in_or_out == 'out':
+        num_A -= num_a
+        R -= (R/V) * r 
+        ind_res = R/num_A  
+        ind_grow = a*ind_res 
+    
+    return [num_A, R, ind_res, ind_grow]
+
+
+""" A function that loops through a list containing a neutral-style community """
+def loop_thru_neutral_comm(COBcom, ind_res, dorm_lim, num_A, N, ind_grow, R, a):
+    
+    for i, v in enumerate(COBcom):
+        
+        if v[1] == 1:  # if the individual is active
+            if ind_res <= dorm_lim: # if per capita resource availability <= dormancy threshold, 
+                                    # then the individual can go dormant or starve and die
+                
+                x = choice([1,2]) # assume 50/50 chance of going dormant 
+                                  # this could be made to vary among taxa
+                if x == 2:
+                    COBcom[i][1] = 2 # go dormant
+                    num_A -= 1
+                elif x == 1: 
+                    COBcom.pop(i) # starve and die
+                    N -= 1
+                    num_A -= 1
+                    
+            else: # if there are enough resources to grow or reproduce
+                if v[2] >= 100.0:
+                    COBcom.append([v[0],1,0.0]) # reproduce if mature, offspring are active
+                    COBcom[i][2] = 0.0          # one individual produces two sister cells at growth level 0  
+                    num_A += 1
+                    
+                else:
+                    COBcom[i][2] += ind_grow # grow if not mature
+                    R -= ind_grow
+                    if num_A != 0: ind_res = R/num_A
+                    ind_grow = a*ind_res
+                    
+        elif v[1] == 2: # if the individual is dormant
+            if ind_res > dorm_lim: # if per capita resource availability > the dormancy threshold
+                COBcom[i][1] = 1 # go active
+                num_A += 1
+
+    return(COBcom, ind_res, num_A, N, ind_grow, R)
+
+
+
+    
+    
 """ Some plotting function and figures """
 
 def fig1(N_COBcom,A_COBcom,D_COBcom,R_COBcom,pcr_COBcom,time,burnin,sets_of_RADS,V,r,res_dens,prop_dens,dorm_lim,nRADs):
