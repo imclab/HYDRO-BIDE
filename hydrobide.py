@@ -107,39 +107,7 @@ while t <= time:
     """" The community responds to the inflow & changes """
     # Simulation should reflect that the flow of individuals and resources
     # into the COB occurs independently of the community dynamics inside.
-       
-    for i, v in enumerate(COBcom):
-        
-        if v[1] == 1:  # if the individual is active
-            if ind_res <= dorm_lim: # if per capita resource availability <= dormancy threshold, 
-                                    # then the individual can go dormant or starve and die
-                
-                x = choice([1,2]) # assume 50/50 chance of going dormant 
-                                  # this could be made to vary among taxa
-                if x == 2:
-                    COBcom[i][1] = 2 # go dormant
-                    num_A -= 1
-                elif x == 1: 
-                    COBcom.pop(i) # starve and die
-                    N -= 1
-                    num_A -= 1
-                    
-            else: # if there are enough resources to grow or reproduce
-                if v[2] >= 100.0:
-                    COBcom.append([v[0],1,0.0]) # reproduce if mature, offspring are active
-                    COBcom[i][2] = 0.0          # one individual produces two sister cells at growth level 0  
-                    num_A += 1
-                    
-                else:
-                    COBcom[i][2] += ind_grow # grow if not mature
-                    R -= ind_grow
-                    if num_A != 0: ind_res = R/num_A
-                    ind_grow = a*ind_res
-                    
-        elif v[1] == 2: # if the individual is dormant
-            if ind_res > dorm_lim: # if per capita resource availability > the dormancy threshold
-                COBcom[i][1] = 1 # go active
-                num_A += 1
+    COBcom, ind_res, num_A, N, ind_grow, R = hm.loop_thru_neutral_comm(COBcom, ind_res, dorm_lim, num_A, N, ind_grow, R, a)
     
     """ outflow of individuals, i.e., death/emigration """
     N = len(COBcom)
