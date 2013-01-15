@@ -98,9 +98,10 @@ from random import randrange
                      mu = mu_max * Pr
                      
      
-     Dilution rate (r/V) will determine rates of emigration and death, which will vary with the community size.
-     When mu drops below a certain probability, things go dormant (or die)
-     When mu is above a certain probability, dormant things can become active
+     Dilution rate (r/V) will determine rates of emigration (E) and death (D). That is,
+     all individuals dormant and active have the same probability of leaving, which will
+     vary across time with the community size. 
+     
      
      This model will capture aspects of:
      
