@@ -65,11 +65,11 @@ from random import randrange
          Knowing that:
              if S = Smax, then mu = mu_max & Pr = 1
              if S = Smin, then mu = 0 & Pr = 0
-             if Smin < S < Smax, then 0 < mu < mu_max & 0 < Pr < 1
+             if Smin < S < Smax, then  0 < mu < mu_max  &  0 < Pr < 1
              So, let Pr = mu/mu_max 
                  
              Proposition:
-             We can use the resource concentrations of S, Smax, & Smin to derive Pr.
+             We can use the concentrations of S, Smax, & Smin to derive Pr.
              We can use Pr to 1.) sample the community to induce dormancy and reproduction
                               2.) derive expected size of dormant and active portions 
                               3.) link constraints like V and r to 1 & 2
@@ -77,10 +77,7 @@ from random import randrange
                               5.) induce immigration
                                
              Q. How do we find Pr?
-             A. Through
-                1.) observed concentration (S)
-                2.) concentration at which mu_max is achieved (Smax)
-                3.) concentration at which reproduction stops (Smin)
+             A. Through S, Smax, & Smin
                  
              Account for the floor (Pr = 0 when S = Smin):
                  subtract Smin from each term:
@@ -97,13 +94,15 @@ from random import randrange
                  Pr = [(S' + Smax') - max(S', Smax')]/Smax' 
                  mu = mu_max * Pr
                      
-     The presumed benefit to dormancy, in this model, is that not having enough 
-     resources to grow/reproduce does not lead to death. Actually, in this model,
-     the only thing that leads to deat is getting flushed out.
+     The presumed benefit to dormancy, in this Monod-type biogeographic/community model,
+     is that not having enough resources to grow/reproduce does not lead to death.
+     Actually, in this model, the only thing that leads to death is getting flushed out.
      
      Dilution rate (r/V) will determine the rate of emigration+death (ED). That is,
      all individuals dormant and active have the same probability of leaving the 
-     community. This probability will vary with community size.
+     community. The number of individuals flowing out will vary with community size.
+     Highly active populations are more buffered against dilution than highly dormant ones.
+     
      
      This model will capture aspects of:
      
