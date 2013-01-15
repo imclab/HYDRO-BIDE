@@ -20,7 +20,7 @@ from random import randrange
 """  This script runs nicely, and appears to operate bug free. yippie!
      It will need to be checked for artifacts and mis-encoded processes. """
 
-"""  The following is a simulation-based ecological neutral model for a                                                       
+"""  The following is a somewhat naive simulation-based ecological neutral model for a                                                       
      chemostat/organ/bioreactor (COB) scenario. There is 1 source, 1 community, and
      1 outlet. This model incorporates dormancy and per capita resource limitation.
      The eventual goal will be to include species, taxa, and trait differences.
