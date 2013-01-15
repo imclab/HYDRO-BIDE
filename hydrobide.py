@@ -91,40 +91,28 @@ t = 0
 while t <= time: 
     #print 'time',t,'immigrants',im_rate,' ','size=',N,'per capita resources=',ind_res,'active',num_A#,ct
     
-    """ inflow of individuals, i.e., immigration """
-    comlist = hm.immigration(COBcom, im_rate, bp, lgp=0.7) # add some propagules to the community
-    COBcom = comlist[0]
+    """ inflow of individuals and resources """
+    COBcom, num_a = hm.immigration(COBcom, im_rate, bp, lgp=0.7) # add some propagules to the community
+    N = len(COBcom)
+    # recalculate parameter values
+    in_or_out = 'in'
+    num_A, R, ind_res, ind_grow = hm.params_neutral(V, r, a, num_A, num_a, R, ind_res, res_rate, in_or_out)
     
-    """ recalculate parameter values """
-    N = len(COBcom)     
-    num_A += comlist[1] 
-    R += res_rate        
-    ind_res = R/num_A  # per capita resource availability may change
-                       # according to a change in the active portion
-                       # of the COB community
-    ind_grow = a*ind_res 
-    
-    """" The community responds to the inflow & changes """
+    """" Community responds to inflow """
     # Simulation should reflect that the flow of individuals and resources
     # into the COB occurs independently of the community dynamics inside.
     COBcom, ind_res, num_A, N, ind_grow, R = hm.loop_thru_neutral_comm(COBcom, ind_res, dorm_lim, num_A, N, ind_grow, R, a)
-    
-    """ outflow of individuals, i.e., death/emigration """
     N = len(COBcom)
-    num_out = int(round(N/V * r)) # no. individuals lost per unit time
-    num_a = 0
-    if num_out >= 1:
-        comlist = hm.death_emigration(COBcom, num_out)
-        COBcom = comlist[0] 
-        num_a = comlist[1]  
     
-    """ recalculate parameter values """
-    N = len(COBcom)  
-    num_A -= num_a 
-    R -= (R/V) * r 
-    ind_res = R/num_A  
-    ind_grow = a*ind_res 
+    """ outflow of individuals and resources """
     
+    COBcom, num_a = hm.death_emigration(COBcom, N, V, r)
+    N = len(COBcom)
+    #recalculate parameter values """
+    in_or_out = 'out'
+    num_A, R, ind_res, ind_grow = hm.params_neutral(V, r, a, num_A, num_a, R, ind_res, res_rate, in_or_out)
+    
+    """ recording community info from time-steps """
     if t >= burnin:# and t%10 == 0: # allow a burn-in
         N_COBcom.append(np.log(N)) # using natural logs when values can be enormous
         A_COBcom.append(np.log(num_A))
