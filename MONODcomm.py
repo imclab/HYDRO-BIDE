@@ -56,7 +56,7 @@ from random import randrange
                     Malthusian growth
          
          4. Let there be a threshold on resource concentration (Smin) at which, growth/reproduction cannot occur.
-            Individuals persist in the environment without reproducing but do not die (i.e. effectively dormant).
+            Individuals persist without growing/reproducing (i.e. effectively dormant).
               
          Now, in an infinitely large population, the probability of reproducing would equal the frequency 
          of active individuals. Likewise, the probability of being dormant would equal one minus the
