@@ -21,37 +21,35 @@ from random import randrange
 
 """  The following is a simulation-based combination of ecological neutral theory and
      the Monod chemostat model of microbial growth. There is 1 source, 1 community,
-     and 1 outlet. Like the Monod model, growth is related to the concentration of 
-     a limiting substrate in the medium.
-     
-     Like the Monod model, per capita growth is influenced by:
-     
-     S = concentration of a limiting substrate/resource
-     mu = specific growth rate (aka reproductive rate)
-     mu_max = max. specific growth rate (aka nutrient-saturated
-     reproductive rate
-     Ks = half-saturation constant; value of S when mu/mu_max = 0.5.
-     
-     mu_max and Ks are empirical coefficients that differ among species and ambient
-     environmental conditions. 
+     and 1 outlet. The model is spatially implicit. Like the Monod model, growth is
+     influenced by the concentration of a limiting substrate in the medium.
      
      MONOD EQUATION: mu = mu_max * ( S / (Ks + S))
      
-     The following model will 
-     in the environment and that is influenced by V, r, and the concentration
-     of inflowing resources (res_dens). because N can fluctuate and individuals can go dormant
-     the concentration of resources in the environment can change.
+     S = concentration of a limiting substrate or resource
+     mu = specific growth rate, increase in cell mass per unit time, grams of cells per gram of cell per hour
+     mu_max = max. specific growth rate, nutrient-saturated reproductive rate
+     Ks = half-saturation coefficient; value of S when mu/mu_max = 0.5., the concentration at which µ is one-half of its maximum
+     note: mu_max and Ks are empirical coefficients that can differ among species and ambient environmental conditions 
      
-     This model is biogeographic in that it incorporate immigration and emigration
-     in an ecologically neutral way, pulling from a log-series distributed source
-     community.
+     Here, growth as in many neutral and community ecological models is per capita. population and community dynamics
+     are NOT necessarily neutral but they ARE stochastic. This maintains a non-deterministic form of competition for
+     limiting resources. This means that individuals are still picked at random to immigrate, die, reproduce, emigrate,
+     etc. but according to probabilities that may or may not differ among species (i.e. neutral or non-neutral).  
      
-     Volume (V), influent rate (r), are modeled as influencing multiple resource
-     and community-related rates and dynamics. Dilution rate also needs to be accounted
-     for. Influent rate (r) is the constraining rate on all passively in-flowing things. 
-     Community size (N) is not fixed and can fluctuate.           
+     The model will simulate a community under varying resource concentration. The inflow of resources will remain
+     constant, and so will the volume. But, due to changing community size, composition, and the number of dormant
+     and active individuals, the concentration of limiting resource or substrate will change from one time period
+     to the next. 
      
-      """
+     Since the community will have active and dormant portions that vary in size and composition through time, and
+     since the community will not be at a steady state, specific growth rate and dilution rate (volume/flow rate)
+     will not be equivalent.
+     
+     The specific growth rate (mu) will actually be a probability of reproducing. This probability will be influenced
+     by the concentration of resources in the environment (S). S will then be driven by the rate of inflow (r),
+     volume of the environment (V), and concentration of resources in the inflowing medium, as well as by the size of
+     the active portion of the community in the previous time step.  """
 
     
 V = 1000.0      # volume                                                                                           
