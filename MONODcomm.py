@@ -42,66 +42,68 @@ from random import randrange
      Mu can be translated to a per capita probability of reproducing in a given time step (during which all
      individuals could theoretically reproduce if S was not limiting).   
      
-     In a given time period when individuals can either reproduce or not, and the lack of reproduction
-     implies dormancy and not death (outflow captures death + emigration):
+     In a time period when metabolically active growing individuals would reproduce, during which, the lack of
+     reproduction implies dormancy and not death (outflow will capture death & emigration):
          
-         1. Let Pr be the per capita probability of reproducing
+         1. Let Pr be the per capita probability of reproducing. Then the probability of being dormant (Pd)
+            during the time period is one minus the probability of reproducing, Pd = 1-Pr
                   
          2. Let Smax be the smallest resource concentration required for mu_max
-         
-         3. At a concentration S at or above Smax, mu = mu_max & Pr = 1.0
-               i.e. everybody is expected to reproduce during a period when everybody
-                    has the opportunity, Malthusian growth
-         
-         4. Let there be a threshold on resource concentration (Smin) at which, growth/reproduction
-              does not occur. In this case, individuals persist in the environment without growing/reproducing
-              but do not die (i.e. effectively dormant).
-              
-         In a given time period when individuals can either reproduce or not, and the lack of reproduction
-         implies dormancy and not death, this means:
-                 
-             The probability of being dormant (Pd) is one minus the probability of reproducing, Pd = 1-Pr 
-                 
-             In an infinitely large population (or neutral community), the probability of reproducing would 
-             equal the portion of active individuals. Likewise, the probability of being dormant would equal
-             one minus the probability of reproducing, i.e.
-                 Pd = (D/N) = 1 - (A/N) = 1 - Pr   
-         
+                Smax = 2*Ks
              
-             Knowing that:
-                 if S = Smax, then mu = mu_max & Pr = 1
-                 if S = Smin, then mu = 0 & Pr = 0
-                 if Smin < S < Smax, then 0 < mu < mu_max & 0 < Pr < 1
+         3. At a concentration S at or above Smax, mu = mu_max & Pr = 1.0
+               i.e. everybody is expected to reproduce during a period when everybody has had the opportunity,
+                    Malthusian growth
+         
+         4. Let there be a threshold on resource concentration (Smin) at which, growth/reproduction cannot occur.
+            Individuals persist in the environment without reproducing but do not die (i.e. effectively dormant).
+              
+         Now, in an infinitely large population, the probability of reproducing would equal the frequency 
+         of active individuals. Likewise, the probability of being dormant would equal one minus the
+         active frequency, i.e. Pd = (D/N) = 1 - (A/N) = 1 - Pr   
+         
+         Knowing that:
+             if S = Smax, then mu = mu_max & Pr = 1
+             if S = Smin, then mu = 0 & Pr = 0
+             if Smin < S < Smax, then 0 < mu < mu_max & 0 < Pr < 1
+             So, let Pr = mu/mu_max 
                  
-                 Proposition:
-                 We can use S, Smax, Smin to derive Pr.
-                 We can use Pr to 1.) sample the community, inducing dormancy and activity
-                                  2.) derive expected size of dormant and active portions 
-                                  3.) induce immigration (see below).
+             Proposition:
+             We can use the resource concentrations of S, Smax, & Smin to derive Pr.
+             We can use Pr to 1.) sample the community to induce dormancy and reproduction
+                              2.) derive expected size of dormant and active portions 
+                              3.) link constraints like V and r to 1 & 2
+                              4.) derive mu
+                              5.) induce immigration
+                               
+             Q. How do we find Pr?
+             A. Through
+                1.) observed concentration (S)
+                2.) concentration at which mu_max is achieved (Smax)
+                3.) concentration at which reproduction stops (Smin)
                  
-                 Q. How do we find Pr?
-                 A. Relate S, Smax, and Smin to Pr
+             Account for the floor (Pr = 0 when S = Smin):
+                 subtract Smin from each term:
+                     S' = S - Smin
+                     Smax' = Smax - Smin
                  
-                 Account for the floor (Pr = 0 when S = Smin)
-                     subtract Smin from each term:
-                         S' = S - Smin
-                         Smax' = Smax - Smin
-                 
-                 Account for the ceiling (Pr = 1 when S = Smax)
-                     if S' > Smax':
-                         Pr = (S' - (S' - Smax')) / Smax'
-                     if Smin < S <= Smax: 
-                         Pr = S'/Smax'
+             Account for the ceiling (Pr = 1 when S = Smax):
+                 if S' > Smax':
+                     Pr = (S' - (S' - Smax')) / Smax'
+                 if Smin < S <= Smax: 
+                     Pr = S'/Smax'
                          
-                 Finally:
-                     Pr = [(S' + Smax') - max(S', Smax')]/Smax' 
-                     mu = mu_max * Pr
+             Finally:
+                 Pr = [(S' + Smax') - max(S', Smax')]/Smax' 
+                 mu = mu_max * Pr
                      
+     The presumed benefit to dormancy, in this model, is that not having enough 
+     resources to grow/reproduce does not lead to death. Actually, in this model,
+     the only thing that leads to deat is getting flushed out.
      
-     Dilution rate (r/V) will determine rates of emigration (E) and death (D). That is,
-     all individuals dormant and active have the same probability of leaving, which will
-     vary across time with the community size. 
-     
+     Dilution rate (r/V) will determine the rate of emigration+death (ED). That is,
+     all individuals dormant and active have the same probability of leaving the 
+     community. This probability will vary with community size.
      
      This model will capture aspects of:
      
