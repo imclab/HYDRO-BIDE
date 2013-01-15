@@ -95,32 +95,8 @@ from random import randrange
                          
                  Finally:
                      Pr = [(S' + Smax') - max(S', Smax')]/Smax' 
+                     mu = mu_max * Pr
                      
-                     
-      Letting dormancy occur naturally:
-          Chance of being dormant decreases with the chance of reproducing (i.e. with mu)
-          pD = probability of being dormant
-          mu = probability of reproducing
-          
-          Something like a decreasing logistic curve:
-          
-          logistic equation (increasing): y = 1/(1 + e^(-t))
-          
-          
-          
-           pD = 1/(1 + e^(c*mu)) , c controls the slope
-                
-          
-          a certain probability, reflecting that resource concentration is too
-          low to expect growth.
-          
-          
-          
-          All this can vary among species.
-     
-     Rescource concentration will then be driven by the rate of inflow (r), volume of the environment (V),
-     the inflowing concentration of resources, and the size of the active portion of the community in the
-     previous time step.
      
      Dilution rate will determine rates of emigration and death, which will vary with the community size.
      When mu drops below a certain probability, things go dormant (or die)
