@@ -72,8 +72,6 @@ ind_grow = a*ind_res # proportion growth towards reproductive viability achieved
                      # This makes per capita growth rate directly proportional to per capita resource availability.
                      # So, in general, individuals grow according to their share of resources
                 
-""" Having set up the community, it's time to turn it loose. """
-    
 time = 400   # length of the experiment
 burnin = int(0.75*time)  # number of initial time steps to discard
 
@@ -87,6 +85,8 @@ RAD_Ahigh = []  # lists to hold the community at various stages
 RAD_Alow = [] 
 RAD_Amedium = [] 
 
+
+""" Having set up the community, it's time to turn it loose. """
 t = 0
 while t <= time: 
     #print 'time',t,'immigrants',im_rate,' ','size=',N,'per capita resources=',ind_res,'active',num_A#,ct
