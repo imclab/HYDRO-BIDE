@@ -34,10 +34,10 @@ from random import randrange
      
      note: mu_max and Ks are empirical coefficients that can differ among species and ambient environmental conditions 
      
-     Here, growth as in many neutral and community ecological models is per capita. population and community dynamics
-     are NOT necessarily neutral but they ARE stochastic. This maintains a non-deterministic form of competition for
-     limiting resources. This means that individuals are still picked at random to immigrate, die, reproduce, emigrate,
-     etc. but according to probabilities that may or may not differ among species (i.e. neutral or non-neutral).  
+     Here, population and community dynamics are NOT necessarily neutral but they ARE stochastic. This maintains
+     a non-deterministic form of competition for limiting resources among many distinct species. This means that
+     individuals are still picked at random to immigrate, die, reproduce, emigrate, etc. but according to
+     probabilities that may or may not differ among species (i.e. neutral or non-neutral).  
      
      The model will simulate a community under varying resource concentration. The inflow of resources will remain
      constant, and so will the volume. But, due to changing community size, composition, and the number of dormant
