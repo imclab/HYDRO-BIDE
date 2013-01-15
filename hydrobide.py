@@ -60,7 +60,8 @@ COBcom = comlist[0] # The community
 N = len(COBcom)     # size of the community
 num_A = comlist[1]  # number of active individuals.                                      
 
-""" Things that will change as the community changes """         
+
+""" more variables """       
 c = 1.0 # constant of proportionality; will eventually be used to create taxa differences
 R += res_rate # R increases due to inflow
 R -= c*num_A  # Starting assumption: total resources (R) decreases
@@ -74,6 +75,8 @@ ind_grow = a*ind_res # proportion growth towards reproductive viability achieved
                 
 time = 400   # length of the experiment
 burnin = int(0.75*time)  # number of initial time steps to discard
+
+""" lists to track changes over time """
 
 N_COBcom = []   # list to track N over time
 A_COBcom = []   # list to track number of active individuals over time
