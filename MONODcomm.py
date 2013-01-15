@@ -29,29 +29,28 @@ from random import randrange
      S = concentration of a limiting substrate or resource
      mu = specific growth rate, increase in cell mass per unit time, grams of cells per gram of cell per hour
      mu_max = max. specific growth rate, nutrient-saturated reproductive rate
-     Ks = half-saturation coefficient; value of S when mu/mu_max = 0.5., the concentration at which µ is one-half
-     of its maximum
+     Ks = half-saturation coefficient; S when mu/mu_max = 0.5., concentration at which µ is one-half its maximum
      
-     note: mu_max and Ks are empirical coefficients that can differ among species and ambient environmental conditions 
-     
-     Here, population and community dynamics are NOT necessarily neutral but they ARE stochastic. This maintains
-     a non-deterministic form of competition for limiting resources among many distinct species. This means that
+     Here, community dynamics are NOT necessarily neutral but they ARE stochastic. This maintains a
+     non-deterministic form of competition for limiting resources among many distinct species. This means that
      individuals are still picked at random to immigrate, die, reproduce, emigrate, etc. but according to
      probabilities that may or may not differ among species (i.e. neutral or non-neutral).  
      
-     The model will simulate a community under varying resource concentration. The inflow of resources will remain
-     constant, and so will the volume. But, due to changing community size, composition, and the number of dormant
-     and active individuals, the concentration of limiting resource or substrate will change from one time period
-     to the next. 
+     The model will simulate a community under varying resource concentration. The inflow of a limiting resource
+     and propagules will remain constant, and so will the volume of the environment. But, due to changing community
+     size, composition, and the number of dormant and active individuals, the concentration of limiting resource
+     or substrate will change from one time period to the next. 
+     
+     The growth rate (mu) will actually be a probability of reproducing. This probability will be influenced
+     by the concentration of resources in the environment (S). S will then be driven by the rate of inflow (r),
+     volume of the environment (V), and concentration of resources in the inflowing medium, as well as by the size of
+     the active portion of the community in the previous time step.
      
      Since the community will have active and dormant portions that vary in size and composition through time, and
      since the community will not be at a steady state, specific growth rate and dilution rate (volume/flow rate)
      will not be equivalent.
      
-     The specific growth rate (mu) will actually be a probability of reproducing. This probability will be influenced
-     by the concentration of resources in the environment (S). S will then be driven by the rate of inflow (r),
-     volume of the environment (V), and concentration of resources in the inflowing medium, as well as by the size of
-     the active portion of the community in the previous time step.  """
+       """
 
     
 V = 1000.0      # volume                                                                                           
