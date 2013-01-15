@@ -69,9 +69,9 @@ from random import randrange
          
              
              Knowing that:
-                 at Smax, mu = mu_max & Pr = 1
-                 at Smin, mu = 0 & Pr = 0
-                 at Smin < S < Smax, 0 < mu < mu_max
+                 if S = Smax, then mu = mu_max & Pr = 1
+                 if S = Smin, then mu = 0 & Pr = 0
+                 if Smin < S < Smax, then 0 < mu < mu_max & 0 < Pr < 1
                  
                  Proposition:
                  We can use S, Smax, Smin to derive Pr.
@@ -98,7 +98,7 @@ from random import randrange
                      mu = mu_max * Pr
                      
      
-     Dilution rate will determine rates of emigration and death, which will vary with the community size.
+     Dilution rate (r/V) will determine rates of emigration and death, which will vary with the community size.
      When mu drops below a certain probability, things go dormant (or die)
      When mu is above a certain probability, dormant things can become active
      
