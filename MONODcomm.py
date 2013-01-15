@@ -29,7 +29,9 @@ from random import randrange
      S = concentration of a limiting substrate or resource
      mu = specific growth rate, increase in cell mass per unit time, grams of cells per gram of cell per hour
      mu_max = max. specific growth rate, nutrient-saturated reproductive rate
-     Ks = half-saturation coefficient; value of S when mu/mu_max = 0.5., the concentration at which µ is one-half of its maximum
+     Ks = half-saturation coefficient; value of S when mu/mu_max = 0.5., the concentration at which µ is one-half
+     of its maximum
+     
      note: mu_max and Ks are empirical coefficients that can differ among species and ambient environmental conditions 
      
      Here, growth as in many neutral and community ecological models is per capita. population and community dynamics
