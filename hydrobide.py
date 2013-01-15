@@ -37,7 +37,9 @@ from random import randrange
      The rate of per capita growth is then influenced by resource availability (R)
      and R is influenced by V, r, and the concentration of resources in the inflowing medium. 
      In this way, the model is similar to the Monod growth model. """     
-
+     
+"""  Dormancy occurs probabilistically, but the probabilities are arbitrarily chosen.
+     The number of dormant individuals is recorded with num_A and num_a. """
     
 V = 1000.0      # volume                                                                                           
 r = 10.0        # influent rate                                                             
