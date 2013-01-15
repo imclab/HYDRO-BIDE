@@ -41,59 +41,62 @@ from random import randrange
      resources all influence resource concentration. Resource concentration influences specific growth rate (mu).
      Mu can be translated to a per capita probability of reproducing in a given time step (during which all
      individuals could theoretically reproduce if S was not limiting).   
-         
+     
      In a given time period when individuals can either reproduce or not, and the lack of reproduction
      implies dormancy and not death (outflow captures death + emigration):
-         
-         Note: the ratio of specific growth rate (mu) to max specific growth rate (mu_max), varies from 0 to 1.
-               Ks occurs midway in this range.
          
          1. Let Pr be the per capita probability of reproducing
                   
          2. Let Smax be the smallest resource concentration required for mu_max
          
-         3. Then at a concentration at or above Smax, mu = mu_max & Pr = 1.0
-               i.e. everybody reproduces during a period when everybody has the opportunity
-                    to reproduce once, Malthusian growth
+         3. At a concentration S at or above Smax, mu = mu_max & Pr = 1.0
+               i.e. everybody is expected to reproduce during a period when everybody
+                    has the opportunity, Malthusian growth
          
-         4. Now, let there be a threshold on resource concentration (Smin) below which, growth/reproduction
-              cannot occur. In this case, individuals persist in the environment without growing/reproducing
+         4. Let there be a threshold on resource concentration (Smin) at which, growth/reproduction
+              does not occur. In this case, individuals persist in the environment without growing/reproducing
               but do not die (i.e. effectively dormant).
               
          In a given time period when individuals can either reproduce or not, and the lack of reproduction
          implies dormancy and not death, this means:
                  
-             The probability of being dormant (Pd) is one minus the probability of reproducing, i.e. Pd = 1 - Pr 
+             The probability of being dormant (Pd) is one minus the probability of reproducing, Pd = 1-Pr 
                  
              In an infinitely large population (or neutral community), the probability of reproducing would 
              equal the portion of active individuals. Likewise, the probability of being dormant would equal
              one minus the probability of reproducing, i.e.
                  Pd = (D/N) = 1 - (A/N) = 1 - Pr   
          
-             Consequently, knowing Pr can be used to sample the community. So, how do we find Pr?
-                 
+             
              Knowing that:
                  at Smax, mu = mu_max & Pr = 1
                  at Smin, mu = 0 & Pr = 0
                  at Smin < S < Smax, 0 < mu < mu_max
                  
-                 Ask: How do we relate S to mu?
-                 Answer:   
+                 Proposition:
+                 We can use S, Smax, Smin to derive Pr.
+                 We can use Pr to 1.) sample the community, inducing dormancy and activity
+                                  2.) derive expected size of dormant and active portions 
+                                  3.) induce immigration (see below).
                  
-                 Account for the floor (mu = 0 when S = Smin)
+                 Q. How do we find Pr?
+                 A. Relate S, Smax, and Smin to Pr
+                 
+                 Account for the floor (Pr = 0 when S = Smin)
                      subtract Smin from each term:
                          S' = S - Smin
                          Smax' = Smax - Smin
                  
-                 Account for the ceiling (mu = 1 when S = Smax)
+                 Account for the ceiling (Pr = 1 when S = Smax)
                      if S' > Smax':
-                         mu = (S' - (S' - Smax')) / Smax'
+                         Pr = (S' - (S' - Smax')) / Smax'
                      if Smin < S <= Smax: 
-                         mu = S'/Smax'
+                         Pr = S'/Smax'
                          
                  Finally:
-                     mu = p = [(S' + Smax') - max(S', Smax')]/Smax' 
-          
+                     Pr = [(S' + Smax') - max(S', Smax')]/Smax' 
+                     
+                     
       Letting dormancy occur naturally:
           Chance of being dormant decreases with the chance of reproducing (i.e. with mu)
           pD = probability of being dormant
