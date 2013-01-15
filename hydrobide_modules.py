@@ -101,6 +101,28 @@ def params_neutral(V, r, a, num_A, num_a, R, ind_res, res_rate, in_or_out):
     return [num_A, R, ind_res, ind_grow]
 
 
+""" A function to add info about dormancy, activity, community size, per capita resources, and total resources to lists  """
+def add_to_lists_neutral(COBcom,N,num_A,ind_res,R,N_COBcom,A_COBcom,D_COBcom,pcr_COBcom,R_COBcom,RAD_Ahigh,RAD_Alow,RAD_Amedium):
+
+    N_COBcom.append(np.log(N)) # using natural logs when values can be enormous
+    A_COBcom.append(np.log(num_A))
+    D_COBcom.append(np.log(N-num_A))
+    pcr_COBcom.append(ind_res)
+    R_COBcom.append(np.log(R))
+        
+    percent_A = num_A/float(N)
+    if percent_A >= 0.66:
+        RAD = get_rad(COBcom)
+        RAD_Ahigh.append(RAD)
+    elif percent_A < 0.33:
+        RAD = get_rad(COBcom)
+        RAD_Alow.append(RAD)
+    else:
+        RAD = get_rad(COBcom)
+        RAD_Amedium.append(RAD)
+    
+    return [N_COBcom, A_COBcom, D_COBcom, pcr_COBcom, R_COBcom, RAD_Ahigh, RAD_Alow, RAD_Amedium]
+
 """ A function that loops through a list containing a neutral-style community """
 def loop_thru_neutral_comm(COBcom, ind_res, dorm_lim, num_A, N, ind_grow, R, a):
     
