@@ -30,7 +30,7 @@ Contact information
 -------------------
 Ken Locey's email: ken@weecology.org and locey@biology.usu.edu
 
-*Go to [Ken's website](kenlocey.wordpress.com)*
+*Go to [Ken's website](kenlocey.wecology.org)*
 
 
 Programs and packages used by the authors
