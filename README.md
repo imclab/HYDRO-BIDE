@@ -9,7 +9,8 @@ It contains aspects of conventional chemostate models (e.g. Monod, Droop).
 * 1 Biogeographical simulation-based Monod model.
 * 1 Biogeogrpahical simulation-based Droop (Cell Quota) Model.
 * example files (.png) of figures the script creates
-* files containing metagenomic data.
+* files containing metagenomic data.  
+  cow rumen data obtained from MG-RAST  http://metagenomics.anl.gov/metagenomics.cgi?page=MetagenomeProject&project=24 
 * Module holding plotting and analysis functions
 
 License
