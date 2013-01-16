@@ -29,7 +29,12 @@ from random import randrange
      mu = specific growth rate, increase in cell mass per unit time, grams of cells per gram of cell per hour
      mu_max = max. specific growth rate, growth rate at infinite cell quota, theoretical maximal reproductive rate
      Q = cell quota, intracellular concentration of a growth limiting resource
-     kq = sometimes (Qmin) the minimum quota necessary for life (or activity)
+     kq or Qmin = the minimum quota necessary for life (or activity)
+     
+     A normalized form of the Droop equation makes the parameter mu_max meaningful, such that when Q = Qmax then
+     mu = mu_max (max growth achieved at max cell quota):
+     
+     RELATIVIZED DROOP EQUATION: mu_rel = mu/mu_max = (1 - Qmin/Q) / (1 - Qmin/Qmax)
      
      Other: Nr = specific nutrient uptake rate
      
@@ -68,7 +73,7 @@ r = 10.0        # influent rate (unit volume/unit time)
 res_dens = 1.0 # growth limiting resource concentration of inflowing medium,
                 # e.g. (grams cellulose + grams x + grams y)/ (liter of inflowing medium) 
 
-prop_dens = 1.0 # propagule density, (cells per unit volume of inflowing medium)                                                                                       
+prop_dens = 1.0 # propagule density, (cells per unit volume of inflowing medium)                     
                 # Assume initially that resource concentration of the influent equals
                 # the resource concentration of the COB. This makes sense if we're 
                 # starting with a community of zero individuals.
