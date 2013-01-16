@@ -22,8 +22,8 @@ from random import randrange
 """  The following is (or will be) a simulation-based combination of ecological neutral theory and
      the Droop/Cell Quota chemostat model of microbial growth. There is 1 source, 1 community, and 1 outlet.
      The model is spatially implicit. Like the Droop model, growth is influenced by the intracellular
-     concentration of a limiting substrate. It would be nice if this model wasn't so constrained as to only
-     apply to microbes and aquatic organisms.
+     concentration of a limiting substrate. This model has the potential to apply to ecological
+     communities (i.e. populations of species partitioning a common limiting resource), in general.
      
      DROOP EQUATION: mu = mu_max * ( 1 - kq/Q)
      
