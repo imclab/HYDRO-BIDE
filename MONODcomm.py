@@ -19,12 +19,12 @@ from random import randrange
 
 """  UNDER HEAVY CONSTRUCTION. BIOGEOGRAPHIC MONOD MODEL
 
-     None of the Python code below actually accounts (yet) for the following comments.  """
+     None of the Python code below actually accounts (yet) for any of the following comments.  """
 
-"""  The following is a simulation-based combination of ecological neutral theory and
-     the Monod chemostat model of microbial growth. There is 1 source, 1 community,
-     and 1 outlet. The model is spatially implicit. Like the Monod model, growth is
-     influenced by the concentration of a limiting substrate in the medium.
+"""  The following is (or will be) a simulation-based combination of ecological neutral theory and
+     the Monod chemostat model of microbial growth. There is 1 source, 1 community, and 1 outlet.
+     The model is spatially implicit. Like the Monod model, growth is influenced by the concentration
+     of a limiting substrate in the medium.
      
      MONOD EQUATION: mu = mu_max * ( S / (Ks + S))
      
@@ -43,7 +43,7 @@ from random import randrange
      S influences specific growth rate (mu).
      
      In a time period when metabolically active growing individuals would reproduce, during which, the lack of
-     reproduction implies dormancy and not death (outflow will capture death & emigration):
+     reproduction implies dormancy and not death (i.e. outflow will capture death & emigration):
          
          1. Let Pr be the per capita probability of reproducing. Then the probability of being dormant (Pd)
             during the time period is one minus the probability of reproducing, Pd = 1-Pr
@@ -58,41 +58,40 @@ from random import randrange
          4. Let there be a threshold on resource concentration (Smin) at which, growth/reproduction cannot occur.
             Individuals persist without growing/reproducing (i.e. effectively dormant).
               
-         Now, in an infinitely large population, the probability of reproducing would equal the frequency 
-         of active individuals. Likewise, the probability of being dormant would equal one minus the
+         Now, in an infinitely large population, the probability of reproducing could equal the frequency 
+         of active individuals. Likewise, the probability of being dormant could equal one minus the
          active frequency, i.e. Pd = (D/N) = 1 - (A/N) = 1 - Pr   
          
-         Knowing that:
-             if S = Smax, then mu = mu_max & Pr = 1
-             if S = Smin, then mu = 0 & Pr = 0
-             if Smin < S < Smax, then  0 < mu < mu_max  &  0 < Pr < 1
-             So, let Pr = mu/mu_max 
+         if S = Smax, then mu = mu_max & Pr = 1
+         if S = Smin, then mu = 0 & Pr = 0
+         if Smin < S < Smax, then  0 < mu < mu_max  &  0 < Pr < 1
+         So, let Pr = mu/mu_max 
                  
-             Proposition:
-             We can use the concentrations of S, Smax, & Smin to derive Pr.
-             We can use Pr to 1.) sample the community to induce dormancy and reproduction
-                              2.) derive expected size of dormant and active portions 
-                              3.) link constraints like V and r to 1 & 2
-                              4.) derive mu
-                              5.) induce immigration
-                               
-             Q. How do we find Pr?
-             A. Through S, Smax, & Smin
+         Proposition:
+         We can use the concentrations of S, Smax, & Smin to derive Pr.
+         We can use Pr to 1.) sample the community to induce dormancy and reproduction
+                          2.) derive expected size of dormant and active portions 
+                          3.) link constraints like V and r to 1 & 2
+                          4.) derive mu
+                          5.) induce immigration from the source
+         
+         Q. How do we find Pr?
+         A. Through S, Smax, & Smin
                  
-             Account for the floor (Pr = 0 when S = Smin):
-                 subtract Smin from each term:
-                     S' = S - Smin
-                     Smax' = Smax - Smin
+         Account for the floor (Pr = 0 when S = Smin):
+             subtract Smin from each term:
+                 S' = S - Smin
+                 Smax' = Smax - Smin
                  
-             Account for the ceiling (Pr = 1 when S = Smax):
-                 if S' > Smax':
-                     Pr = (S' - (S' - Smax')) / Smax'
-                 if Smin < S <= Smax: 
-                     Pr = S'/Smax'
+         Account for the ceiling (Pr = 1 when S = Smax):
+             if S' > Smax':
+                 Pr = (S' - (S' - Smax')) / Smax'
+             if Smin < S <= Smax: 
+                 Pr = S'/Smax'
                          
-             Finally:
-                 Pr = [(S' + Smax') - max(S', Smax')]/Smax' 
-                 mu = mu_max * Pr
+         Finally:
+             Pr = [(S' + Smax') - max(S', Smax')]/Smax' 
+             mu = mu_max * Pr
                      
      The presumed benefit to dormancy, in this Monod-type biogeographic/community model,
      is that not having enough resources to grow/reproduce does not lead to death.
@@ -104,11 +103,11 @@ from random import randrange
      Highly active populations are more buffered against dilution than highly dormant ones.
      
      Consequently, this model (as is) does not allow an active/dormant tradeoff:
-         i.e. active => maybe reproduce and maybe die in a harsh environment 
+         i.e.  active => maybe reproduce but maybe die in a harsh environment 
               dormant => don't reproduce but don't die in a harsh environment
      
      Perhaps, a harsh environment should be built-in because, right now, there are no drawback to being active. 
-     Perhaps, allows something in the environment that, at a certain level, kills active things?
+     Perhaps, we should allow something in the environment that, at a certain level, kills active things.
      
      Regardless of examining the dormancy/activity tradeoff, this model could capture aspects of:
      
@@ -126,8 +125,7 @@ from random import randrange
              produce realistic log-series like community structure. This Monod-type model can vary between totally
              neutral and totally idiosyncratic.
      
-       
-       None of the code below actually accounts for anything above. """
+       None of the code below actually accounts (yet) for any of the above comments. """
 
     
 V = 1000.0      # volume                                                                                           
