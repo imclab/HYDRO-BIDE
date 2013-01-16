@@ -124,7 +124,8 @@ from random import randrange
              produce realistic log-series like community structure. This Monod-type model can vary between totally
              neutral and totally idiosyncratic.
      
-       """
+       
+       None of the code below actually accounts for anything above. """
 
     
 V = 1000.0      # volume                                                                                           
