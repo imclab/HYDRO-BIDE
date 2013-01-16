@@ -101,27 +101,28 @@ from random import randrange
      community. The number of individuals flowing out will vary with community size.
      Highly active populations are more buffered against dilution than highly dormant ones.
      
-     Consequently, this model, as is, does not provide room to investigate an active/dormant tradeoff:
+     Consequently, this model (as is) does not allow an active/dormant tradeoff:
+         i.e. active => maybe reproduce and maybe die in a harsh environment 
+              dormant => don't reproduce but don't die in a harsh environment
      
-     i.e. active => maybe reproduce and maybe die in a harsh environment 
-          dormant => don't reproduce but don't die in a harsh environment
-     
-     A harsh environment should be built-in because, right now, there are no drawback to being active. 
-     
+     Perhaps, a harsh environment should be built-in because, right now, there are no drawback to being active. 
+     Perhaps, allows something in the environment that, at a certain level, kills active things?
      
      Regardless of examining the dormancy/activity tradeoff, this model could capture aspects of:
      
-     Tilman (2004). Niche tradeoffs, neutrality, and community structure: A stochastic theory of resource
-     competition, invasion, and community assembly. PNAS, 101:10854-10861.
+         Tilman (2004). Niche tradeoffs, neutrality, and community structure: A stochastic theory of resource
+         competition, invasion, and community assembly. PNAS, 101:10854-10861.
      
-         Tilman (2004) recognizes the importance of niche differences and stochastic dynamics
+             Tilman (2004) recognizes the importance of niche differences and stochastic dynamics. This Monod-type
+             model allows niche differences and random drift.
      
-     Pueyo S, Fangliang H & Zillio T (2007) The maximum entropy formalism and the idiosyncratic theory
-     of biodiversity. Ecology Letters, 10:1017-1028.
+         Pueyo S, Fangliang H & Zillio T (2007) The maximum entropy formalism and the idiosyncratic theory
+         of biodiversity. Ecology Letters, 10:1017-1028.
      
-         Whereas neutral theory ignores all species differences, the idiosyncratic theory of Pueyo et al. (2007) 
-         ignores all species similarities. These represent the two ends of a continuum of possible models that
-         produce realistic log-series like community structure. 
+             Whereas neutral theory ignores all species differences, the idiosyncratic theory of Pueyo et al. (2007) 
+             ignores all species similarities. These represent the two ends of a continuum of possible models that
+             produce realistic log-series like community structure. This Monod-type model can vary between totally
+             neutral and totally idiosyncratic.
      
        """
 
