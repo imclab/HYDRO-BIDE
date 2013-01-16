@@ -24,8 +24,8 @@ from random import randrange
 """  The following is (or will be) a simulation-based combination of ecological neutral theory and
      the Monod chemostat model of microbial growth. There is 1 source, 1 community, and 1 outlet.
      The model is spatially implicit. Like the Monod model, growth is influenced by the concentration
-     of a limiting substrate in the medium. It would be nice if this model wasn't so constrained as to only
-     apply to microbes and aquatic organisms.
+     of a limiting substrate in the medium. This model has the potential to be applied to ecological 
+     communities in general (see sources below).
      
      MONOD EQUATION: mu = mu_max * S/(Ks + S)
      
