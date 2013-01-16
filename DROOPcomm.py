@@ -1,5 +1,5 @@
 #!/usr/local/bin/python                                                                   
-                                                                       
+
 import sys                                            
 import os                                                  
 import  matplotlib.pyplot as plt     
@@ -14,19 +14,61 @@ from random import choice
 import re                                             
 from decimal import *                                 
 import math                                    
-from random import randrange
-
-""" FUTURE SITE OF DROOP/CELL QUOTA MODEL, CHECK BACK LATER """
+from random import randrange                
 
 
+"""  FUTURE SITE OF A BIOGEOGRAPHIC DROOP/CELL QUOTA MODEL. CHECK BACK LATER  """
 
+"""  The following is (or will be) a simulation-based combination of ecological neutral theory and
+     the Droop/Cell Quota chemostat model of microbial growth. There is 1 source, 1 community, and 1 outlet.
+     The model is spatially implicit. Like the Droop model, growth is influenced by the intracellular
+     concentration of a limiting substrate.
+     
+     DROOP EQUATION: mu = mu_max * ( 1 - (kq/Q))
+     
+     mu = specific growth rate, increase in cell mass per unit time, grams of cells per gram of cell per hour
+     mu_max = max. specific growth rate, growth rate at infinite cell quota, theoretical maximal reproductive rate
+     Q = cell quota, intracellular concentration of a growth limiting resource
+     kq = sometimes (Qmin) the minimum quota necessary for life (or activity)
+     
+     Other: Nr = specific nutrient uptake rate
+     
+     
+     The importance of the Droop/Cell Quota model is not only in that growth is primarily influenced by
+     intracellular concentrations, but that growth can continue after resource concentrations outside the
+     cell have been greatly depleted.
+     
+     
+     
+     Here, community dynamics are NOT necessarily neutral but they DO have a stochastic component that maintains a
+     non-deterministic competition for limiting resources among many potentially distinct species. This means that
+     individuals are still picked at random to immigrate, reproduce, emigrate, etc. but according to
+     probabilities that may or may not differ among species (i.e. neutral or non-neutral).  
+     
+     The inflow of a limiting resource and propagules will remain constant through time and so will the volume
+     of the environment. Volume, inflow rate, and concentration of incoming resources will influence the
+     concentration of resource in the evironment. 
+     S influences specific growth rate (mu).
+     
+     In a time period when metabolically active growing individuals would reproduce, during which, the lack of
+     reproduction implies dormancy and not death (i.e. outflow will capture death & emigration):
+
+"""
+
+
+
+""" Things that will remain constant through time, the values of which, must be reasonable
+    or the COB will crash, explode, or worse 
+
+    Some values for cow rumen obtainable here: http://microbewiki.kenyon.edu/index.php/Bovine_Rumen """
+    
 V = 1000.0      # volume of the COB                                                                                                  
 r = 10.0        # influent rate (unit volume/unit time)                                                                  
 
 res_dens = 1.0 # growth limiting resource concentration of inflowing medium,
                 # e.g. (grams cellulose + grams x + grams y)/ (liter of inflowing medium) 
 
-prop_dens = 1.0 # propagule density, (cells per unit volume of inflowing medium)                  
+prop_dens = 1.0 # propagule density, (cells per unit volume of inflowing medium)                                                                                       
                 # Assume initially that resource concentration of the influent equals
                 # the resource concentration of the COB. This makes sense if we're 
                 # starting with a community of zero individuals.
@@ -47,7 +89,7 @@ R = V * res_dens # Amount of resources in the COB before inoculation. If inflow 
 
 """ The community (COBcom) will be a list of lists: """
 COBcom = []
-comlist = hm.immigration(COBcom, im_rate, bp,lgp = 0.7) # inoculate the community with propagules using the above function
+comlist = immigration(COBcom, im_rate, bp) # inoculate the community with propagules using the above function
 COBcom = comlist[0] # The community
 N = len(COBcom)     # size of the community
 num_A = comlist[1]  # number of active individuals in COBcom 
@@ -55,6 +97,9 @@ num_A = comlist[1]  # number of active individuals in COBcom
                     # individual is dormant or active, and how close the individuals is to          
                     # being reproductively viable.                                                  
 
+#print COBcom
+#sys.exit()
+            
 """ Things that will change as the community changes """         
 c = 1.0 # constant of proportionality; will eventually be used to create taxa differences
 R += res_rate # R increases due to inflow
@@ -72,8 +117,8 @@ ind_grow = a*ind_res # proportion growth towards reproductive viability achieved
     dormancy, compositional and noncompositional community structure, population structure,
     replacement, & turnover will all ride on random drift. """
     
-time = 400   # length of the experiment
-burnin = 300  # number of initial time steps to discard
+time = 800   # length of the experiment
+burnin = 700  # number of initial time steps to discard
 
 N_COBcom = []   # list to track N over time
 A_COBcom = []   # list to track number of active individuals over time
@@ -93,7 +138,7 @@ while t <= time: # looping one time unit at a time
     print 'time',t,'immigrants',im_rate,' ','size=',N,'per capita resources=',ind_res,'active',num_A#,ct
     
     """ inflow of individuals, i.e., immigration """
-    comlist = hm.immigration(COBcom, im_rate, bp, lgp=0.7) # add some propagules to the community
+    comlist = immigration(COBcom, im_rate, bp) # add some propagules to the community
     COBcom = comlist[0]
     
     """ recalculate parameter values """
@@ -152,7 +197,7 @@ while t <= time: # looping one time unit at a time
     num_out = int(round(N/V * r)) # no. individuals lost per unit time
     num_a = 0
     if num_out >= 1:
-        comlist = hm.death_emigration(COBcom, num_out)
+        comlist = death_emigration(COBcom, num_out)
         COBcom = comlist[0] # the newly decreased community
         num_a = comlist[1]  # account for the number of lost active individuals
     
@@ -174,13 +219,13 @@ while t <= time: # looping one time unit at a time
         
         percent_A = num_A/float(N)
         if percent_A >= 0.66:
-            RAD = hm.get_rad(COBcom)
+            RAD = get_rad(COBcom)
             RAD_Ahigh.append(RAD)
         elif percent_A < 0.33:
-           RAD = hm.get_rad(COBcom)
+           RAD = get_rad(COBcom)
            RAD_Alow.append(RAD)
         else:
-           RAD = hm.get_rad(COBcom)
+           RAD = get_rad(COBcom)
            RAD_Amedium.append(RAD)
     t += 1
     random.shuffle(COBcom) # randomize the community, prevent artifacts
@@ -204,7 +249,74 @@ sets_of_RADS = [RAD_Ahigh,RAD_Amedium,RAD_Alow] # A list to hold lists that have
     third index representing % growth to reproductive
     viability. """
 
-# plot fig1
-hm.fig1(N_COBcom,A_COBcom,D_COBcom,R_COBcom,pcr_COBcom,time,burnin,sets_of_RADS,V,r,res_dens,prop_dens,dorm_lim,nRADs)
-# write the community to a file
-#hm.comm_to_file(COBcom)
+
+
+""" NOTE: Everything below pertains to plotting and graphing.
+    This code will eventually be moved to a module KL will
+    create for this project """
+
+fig = plt.figure(figsize=(10.0,8.0))
+
+
+ax = plt.subplot2grid((2,2), (0,0), rowspan=1) # plotting N, dormancy, & activity through time
+plt.plot(N_COBcom,'0.5',label='Total')
+plt.plot(A_COBcom,'r',label='Active')
+plt.plot(D_COBcom,'b',label='Dormant')
+ymax = max(N_COBcom)+0.1
+ymin = min(min(A_COBcom),min(D_COBcom))-0.1
+plt.ylim(ymin,ymax) 
+plt.xlabel("Time",fontsize=12)
+plt.ylabel("ln(abundance)",fontsize=12)
+plt.title("EQ: N ~constant, D & A change in sync",fontsize=12) 
+# Add legend
+leg = plt.legend(loc=10,prop={'size':12})
+leg.draw_frame(False)
+
+ax = plt.subplot2grid((2,2), (0,1), rowspan=1) # plotting N, R, & per capita resources through time
+plt.ylim(-0.1,max(R_COBcom)+0.5)
+plt.plot(R_COBcom, 'b', label='ln(total resources)')
+plt.plot(pcr_COBcom, 'r', label='per capita resources')
+plt.xlabel("Time",fontsize=12)
+plt.ylabel("Value",fontsize=12)
+# add some vertical gridlines
+t_range = range(0,(time - burnin),10)
+for t in t_range:
+    plt.axvline(x=t,color='0.80',ls='--',lw=1) # plot a vertical line at the mode
+# Add legend
+leg = plt.legend(loc=10,prop={'size':12})
+leg.draw_frame(False)
+
+ax = plt.subplot2grid((2,2), (1,0), rowspan=1) # plotting activity vs. dormancy
+plt.scatter(A_COBcom, D_COBcom, c='0.4', lw=0.5)#, label='active vs. dormant')
+plt.title("Each point represents a time step",fontsize=12) 
+plt.xlabel("ln(active abundance)",fontsize=12)
+plt.ylabel("ln(dormant abundance)",fontsize=12)
+
+ax = plt.subplot2grid((2,2), (1,1), rowspan=1) # plotting activity vs. dormancy
+ct = 0
+colors = ['r','0.4','b']
+series = ['high activity', 'medium activity', 'high dormancy'] 
+for RADs in sets_of_RADS:
+    plt.plot([0],[0],color=colors[ct],label=series[ct],lw=3)
+    for RAD in RADs:
+        rank = range(1,len(RAD)+1)
+        plt.plot(rank, RAD, c=colors[ct], lw=0.5)
+    ct += 1
+# add labels
+plt.xlabel("Rank",fontsize=12)
+plt.ylabel("ln(abundance)",fontsize=12)
+plt.title(str(nRADs)+' randomly chosen RADs per activity level',fontsize=12) 
+# Add legend
+leg = plt.legend(loc=1,prop={'size':12})
+leg.draw_frame(False)
+
+
+plt.subplots_adjust(wspace=0.2, hspace=0.3)
+plt.savefig('results/COBcom V='+str(V)+' r'+str(r)+' resdens='+str(res_dens)+' propdens='+str(prop_dens)+' dormlim='+str(dorm_lim)+'.png', dpi=400, bbox_inches = 'tight', pad_inches=0.1) 
+
+sys.exit()    
+# write the list to a file
+OUT = open('/results/COBcom V='+str(V)+' r'+str(r)+' resdens='+str(res_dens)+' propdens='+str(prop_dens)+' dormlim='+str(dorm_lim),'w+')
+for _list in COBcom:
+    print>>OUT, _list[0],_list[1],_list[2]    
+OUT.close() 
