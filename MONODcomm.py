@@ -17,7 +17,9 @@ import math
 from random import randrange                
 
 
-"""  UNDER HEAVY CONSTRUCTION. BIOGEOGRAPHIC MONOD MODEL  """
+"""  UNDER HEAVY CONSTRUCTION. BIOGEOGRAPHIC MONOD MODEL
+
+     None of the Python code below actually accounts (yet) for the following comments.  """
 
 """  The following is a simulation-based combination of ecological neutral theory and
      the Monod chemostat model of microbial growth. There is 1 source, 1 community,
