@@ -26,7 +26,7 @@ from random import randrange
      The model is spatially implicit. Like the Monod model, growth is influenced by the concentration
      of a limiting substrate in the medium.
      
-     MONOD EQUATION: mu = mu_max * ( S / (Ks + S))
+     MONOD EQUATION: mu = mu_max * S/(Ks + S)
      
      S = concentration of a limiting substrate or resource
      mu = specific growth rate, increase in cell mass per unit time, grams of cells per gram of cell per hour
