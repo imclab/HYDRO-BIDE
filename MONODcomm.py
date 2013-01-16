@@ -58,9 +58,9 @@ from random import randrange
          4. Let there be a threshold on resource concentration (Smin) at which, growth/reproduction cannot occur.
             Individuals persist without growing/reproducing (i.e. effectively dormant).
               
-         Now, in an infinitely large population, the probability of reproducing could equal the frequency 
-         of active individuals. Likewise, the probability of being dormant could equal one minus the
-         active frequency, i.e. Pd = (D/N) = 1 - (A/N) = 1 - Pr   
+         Now, in an infinitely large population, the frequency of active individuals could equal the 
+         probability of being active individual. Likewise, the frequency of dormant individuals 
+         would equal one minus the active frequency, i.e. Pd = (D/N) = 1 - (A/N) = 1 - Pr   
          
          if S = Smax, then mu = mu_max & Pr = 1
          if S = Smin, then mu = 0 & Pr = 0
