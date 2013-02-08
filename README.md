@@ -1,7 +1,7 @@
 HYDRO-BIDE
 ==========
 
-A repository to hold scripts and data for studying effects of hydrodynamic constraints on microbial systems
+Microbial ecological constraint-based community models
 
 The repository contains:
 * 1 Hydrodynamic BIDE (birth,immigration,death,emigration) simulation model based on neutral theory.
