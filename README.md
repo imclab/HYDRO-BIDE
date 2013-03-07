@@ -16,7 +16,7 @@ It contains aspects of conventional chemostate models (e.g. Monod, Droop).
 License
 =======
 
-This code is available under a [BSD 2-Clause License](http://opensource.org/licenses/bsd-license.php).
+This computing scripts/code contained in this repository is available under a [BSD 2-Clause License](http://opensource.org/licenses/bsd-license.php).
 
 Copyright (c) 2013, Kenneth Locey. All rights reserved.
 
