@@ -4,14 +4,10 @@ HYDRO-BIDE
 Microbial ecological constraint-based community models
 
 The repository contains:
-* 1 Hydrodynamic BIDE (birth,immigration,death,emigration) simulation model based on neutral theory.
+A Chemostat community BIDE (birth,immigration,death,emigration) simulation model.
 It contains aspects of conventional chemostate models (e.g. Monod, Droop).
-* 1 Biogeographical simulation-based Monod model.
-* 1 Biogeogrpahical simulation-based Droop (Cell Quota) Model.
-* example files (.png) of figures the script creates
-* files containing metagenomic data.  
-  cow rumen data obtained from MG-RAST  http://metagenomics.anl.gov/metagenomics.cgi?page=MetagenomeProject&project=24 
-* Module holding plotting and analysis functions
+
+The model is scripted in iPython and should be opened/run in iPython notebook.
 
 License
 =======
@@ -30,37 +26,3 @@ Contact information
 Ken Locey's email: ken@weecology.org and locey@biology.usu.edu
 
 *Go to [Ken's website](http://kenlocey.weecology.org)*
-
-
-Programs and packages used by the authors
--------------------------------
-
-Python version 2.6.5 or higher
-Numpy
-Matplotlib
-Cython (optional)
-
-Cython
-------
-Most scripts will eventually have associated Cython setup files.
-
-
-Cython is a language that makes writing C extensions for the Python language as easy as Python itself.
-It is based on the well-known Pyrex, but supports more cutting edge functionality and optimizations.
-*http://www.cython.org/*  
-setup tutorial: *http://docs.cython.org/src/userguide/tutorial.html*
-
-Most any Python script can be run at C speeds by:
-* replacing the .py extension in your script with .pyx
-* create a setup file. To save the user a hassle, we have made several setup files for scripts in this repository.
-* run this command from within the folder containing the .pyx file and the setup file:
-
-
-        python setup_thescriptsname.py build_ext --inplace
-
-iPython and iPython Notebook
-----------------------------
-
-We are currently rescripting copies of repository files to be used in iPython Notebook. Running scripts in
-iPython notebook will enable users to read comments in a convenient form, run blocks of code, and visualize
-results between blocks of code. 
