@@ -35,7 +35,7 @@
 
 import sys                                            
 import  matplotlib.pyplot as plt
-import numpy as np                                    
+import numpy as np                                   
 from scipy import stats                                 
 import random                                           
 from random import choice, randrange
@@ -46,7 +46,7 @@ from random import choice, randrange
 
 # <codecell>
 
-Vs = [100.0, 120.0, 130.0]      # volume                                                                                           
+Vs = [100.0, 200.0, 400.0]      # volume                                                                                           
 
 # <markdowncell>
 
@@ -64,6 +64,7 @@ I_cons = 0.4  # propagule concentration of inflowing medium
 # <codecell>
 
 Qmin = 0.0 # min cell quota
+K = 1.0
 
 # <markdowncell>
 
@@ -81,6 +82,31 @@ TOlists = []
 rlists = []
 REStimes = []
 Srichness = []
+Hlists = []
+Evarlists = []
+
+# <markdowncell>
+
+# ## Define some diversity and evenness functions
+
+# <codecell>
+
+def e_var(SAD):
+    P = np.log(SAD)
+    S = len(SAD)
+    X = 0
+    for x in P:
+        X += (x - np.mean(P))**2/S
+    evar = 1 - 2/np.pi*np.arctan(X) 
+    return(evar)
+
+def H(SAD):
+    H = 0.0
+    N = sum(SAD)
+    for x in SAD:
+        x = x/float(N)
+        H += -1*(x*np.log(x))
+    return H
 
 # <markdowncell>
 
@@ -89,7 +115,7 @@ Srichness = []
 # <codecell>
 
 for V in Vs:
-    rs = range(int(V/20),int(V),int(V/20))
+    rs = range(int(V/25),int(V),int(V/25))
     rs.reverse()
     AVGN = []
     AVGR = []
@@ -97,6 +123,11 @@ for V in Vs:
     AVGTO = []
     AVGS = []
     REStime = []
+    
+    AVGH = []
+    AVGEVAR = []
+    AVGCT = []
+    
     for r in rs:
         Q = 0
         I = int(round(I_cons * r)) # propagules immigrating per unit time  
@@ -110,9 +141,11 @@ for V in Vs:
         TRlist = []  # track total resources
         TOlist = []
         Slist = []
+        Evarlist = []
+        Hlist = []
         while t <= time: 
             _in = I
-            Srich = []
+            Srich1 = []
             """ inflow of resources, Immigration of propagules """
             lgp = 0.70 # arbitrarily set log-series parameter
             props = np.random.logseries(lgp, I)  # An initial set of propagules; a list of log-series distributed integers.
@@ -152,15 +185,25 @@ for V in Vs:
                     ct+=1
             N = len(COM) # community size is reduced
             
-            for i, p in enumerate(COM): # Find species richness
-                Srich.append(p[0])
-            Srich = set(Srich)
-            S = len(Srich)
-            
             """ recording community info from time-steps """
-            if t >= burnin: # allow a burn-in and only print/record info every so many steps
+            if t >= burnin and t%1 == 0: # allow a burn-in and only print/record info every so many steps
                 #print 'Volume',V,'inflow',r,'COM size: ',N,' total resources: ',round(TR,3),' time:',t
                 """ the above print statement is useful for checking how the community changes as constraint values are changed """
+                for i, p in enumerate(COM): # Find species richness
+                    Srich1.append(p[0])
+                Srich2 = set(Srich1)
+                S = len(Srich2)
+                
+                SAD = []
+                for i in Srich2:
+                    ab = Srich1.count(i)
+                    SAD.append(ab)
+                
+                SAD.sort()
+                SAD.reverse()
+                
+                Hlist.append(H(SAD))
+                Evarlist.append(e_var(SAD))
                 tlist.append(t)
                 Nlist.append(N) 
                 Rlist.append(R)
@@ -172,27 +215,34 @@ for V in Vs:
             
         avgN = np.mean(Nlist)
         AVGN.append(np.log(avgN))
-        print 'V:',V,'r:',r,' avgN:',int(avgN),
+        print 'V',V,'r',r,' N:',int(avgN),
         
         avgR = np.mean(Rlist)
         AVGR.append(avgR)
-        #print ' avgR:',round(avgR,3),
+        print 'R:',round(avgR,3),
         
         avgTR = np.mean(TRlist)
         AVGTR.append(avgTR)
-        #print ' avgTR:',round(avgTR,3),
+        #print 'TR:',round(avgTR,3),
         
         REStime.append(np.log(V/r))
         print 'RT:',round(V/r,2),
         
         avgTO = np.mean(TOlist)
         AVGTO.append(avgTO)
-        print ' avgTO:',round(avgTO,2),
+        print 'TO:',round(avgTO,2),
         
         avgS = np.mean(Slist)
         AVGS.append(avgS)
-        print ' avgs:',int(avgS)
+        print 'S:',int(avgS),
         
+        avgH = np.mean(Hlist)
+        AVGH.append(avgH)
+        print 'H:',round(avgH,3),
+        
+        avgEvar = np.mean(Evarlist)
+        AVGEVAR.append(avgEvar)
+        print 'Evar:',round(avgEvar,3)
         
     Nlists.append(AVGN)
     Rlists.append(AVGR)
@@ -201,11 +251,14 @@ for V in Vs:
     rlists.append(rs)
     REStimes.append(REStime)
     Srichness.append(AVGS)
-    print len(rs),len(AVGN),len(AVGR),len(AVGTO),len(REStime),len(AVGS) # these lists should have equal lengths
+    Hlists.append(AVGH)
+    Evarlists.append(AVGEVAR)
+    
+    print len(rs),len(AVGN),len(AVGR),len(AVGTO),len(REStime),len(AVGS),len(AVGH),len(AVGEVAR) # these lists should have equal lengths
 
 # <markdowncell>
 
-# ### generate figures of change over time
+# ### Generate figures of change over time
 
 # <codecell>
 
@@ -247,8 +300,52 @@ plt.ylabel("Biomass turnover",fontsize=fs)
 leg = plt.legend(loc=1, prop={'size':12})
 leg.draw_frame(False)
 
-plt.show
+plt.subplots_adjust(wspace=0.5, hspace=0.3)
+plt.savefig('hydrobide_simple1.png',dpi=400)
+
+# <markdowncell>
+
+# ### Generate diversity related graphs
 
 # <codecell>
 
+fig = plt.figure(figsize=(11.0,11.0))
+fs = 12 # fontsize
+colors = ['b','r','g']
+
+ax = fig.add_subplot(2,2,1)
+for i, Hlist in enumerate(Hlists):
+    plt.plot(REStimes[i],Hlist,c=colors[i],label=str(int(Vs[i])))
+    plt.ylim(0,max(Hlist)+0.1*max(Hlist))
+plt.xlabel("log Residence time",fontsize=fs)
+plt.ylabel("Shannons Diversity)",fontsize=fs)
+leg = plt.legend(loc=4, prop={'size':12})
+leg.draw_frame(False)
+
+ax = fig.add_subplot(2,2,2)
+for i, Evarlist in enumerate(Evarlists):
+    plt.plot(REStimes[i],Evarlist,c=colors[i],label=str(int(Vs[i])))
+plt.xlabel("log Residence time",fontsize=fs)
+plt.ylabel("Species Eveness, Evar",fontsize=fs)
+leg = plt.legend(loc=2, prop={'size':12})
+leg.draw_frame(False)
+
+ax = fig.add_subplot(2,2,3)
+for i, Slist in enumerate(Srichness):
+    plt.plot(REStimes[i],Slist,c=colors[i],label=str(int(Vs[i])))
+plt.xlabel("log Residence time",fontsize=fs)
+plt.ylabel("Species richness",fontsize=fs)
+leg = plt.legend(loc=1, prop={'size':12})
+leg.draw_frame(False)
+
+ax = fig.add_subplot(2,2,4)
+for i, TOlist in enumerate(TOlists):
+    plt.plot(REStimes[i],TOlist,c=colors[i],label=str(int(Vs[i])))
+plt.xlabel("log Residence time",fontsize=fs)
+plt.ylabel("Biomass turnover",fontsize=fs)
+leg = plt.legend(loc=1, prop={'size':12})
+leg.draw_frame(False)
+
+plt.subplots_adjust(wspace=0.5, hspace=0.3)
+plt.savefig('hydrobide_simple2.png',dpi=400)
 
